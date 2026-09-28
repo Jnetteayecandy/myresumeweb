@@ -23,13 +23,13 @@ export const translations = {
       headlineHighlight: 'Practical Web Applications',
       introPrefix: 'Hello, I am',
       introName: 'Wipaporn Wikornmetkul',
-      introDesc: 'A Software Engineering student at Prince of Songkla University, Phuket Campus (PSU Phuket). Dedicated to crafting full-stack web applications with clean, intuitive user interfaces and solid, dependable backend architectures.',
+      introDesc: 'A Software Engineering student in the International Program at Prince of Songkla University (PSU). Dedicated to crafting full-stack web applications with clean, intuitive user interfaces and solid, dependable backend architectures.',
       ctaProjects: 'View Projects',
       ctaResume: 'Download CV / Resume',
       ctaContact: 'Contact Me',
       stats: [
-        { label: 'Education', value: 'B.Eng. Software Engineering' },
-        { label: 'Institution', value: 'PSU Phuket Campus' },
+        { label: 'Education', value: 'B.Eng. Software Engineering (International Program)' },
+        { label: 'Institution', value: 'Prince of Songkla University (PSU)' },
         { label: 'Core Stack', value: 'React • Flask • MySQL • Python' },
         { label: 'Focus Area', value: 'Full-Stack & HealthTech' },
       ],
@@ -38,23 +38,23 @@ export const translations = {
       badge: 'FEATURED HIGHLIGHTS // WIPAPORN WIKORNMETKUL',
       scrollIndicator: 'SCROLL TO EXPLORE',
       footerLeft: 'WIPAPORN WIKORNMETKUL',
-      footerCenter: 'B.ENG SOFTWARE ENGINEERING • PSU PHUKET',
+      footerCenter: 'B.ENG SOFTWARE ENGINEERING (INTERNATIONAL PROGRAM) • PSU',
       footerRight: 'FEATURED HIGHLIGHTS & ARCHITECTURE',
       slides: [
         {
           step: '01',
           category: 'SOFTWARE ENGINEERING // CORE IDENTITY',
           titlePrimary: 'WIPAPORN WIKORNMETKUL',
-          titleSecondary: 'STUDENT AT PRINCE OF SONGKLA UNIVERSITY, PHUKET CAMPUS.',
-          description: 'A dedicated Software Engineering undergraduate focusing on full-stack web technologies, clean architectural patterns, and real-world software solutions.',
-          tags: ['B.Eng. Software Engineering', 'Full-Stack Developer', 'PSU Phuket'],
+          titleSecondary: 'STUDENT AT PRINCE OF SONGKLA UNIVERSITY (PSU).',
+          description: 'A dedicated Software Engineering undergraduate in the International Program at Prince of Songkla University (PSU), focusing on full-stack web technologies, clean architectural patterns, and real-world software solutions.',
+          tags: ['B.Eng. Software Engineering', 'International Program', 'Full-Stack Developer', 'PSU'],
           metrics: [
-            { label: 'Degree', value: 'B.Eng. (SE)' },
+            { label: 'Degree', value: 'B.Eng. (SE) International Program' },
             { label: 'Core Skills', value: 'Python, Java, React' }
           ],
           floatingBadge: {
             title: 'Software Engineer',
-            subtitle: 'PSU Phuket Campus'
+            subtitle: 'PSU (International Program)'
           }
         },
         {
@@ -250,8 +250,8 @@ export const translations = {
       printBtn: 'Print / Save as PDF',
       name: 'Wipaporn Wikornmetkul',
       subTitle: 'Software Engineer & Full-Stack Developer',
-      bio: 'Software Engineering student at Prince of Songkla University, Phuket Campus (PSU Phuket). Passionate about building robust full-stack web applications, healthcare digital systems (PIL), and practical software solutions.',
-      location: 'Phuket / Bangkok, Thailand',
+      bio: 'Software Engineering student in the International Program at Prince of Songkla University (PSU). Passionate about building robust full-stack web applications, healthcare digital systems (PIL), and practical software solutions.',
+      location: 'Thailand',
       caseStudyTitle: 'Featured Engineering Project',
       partnerLabel: 'Partner: Clinical Hospital Pharmacists',
       flagshipSubtitle: 'Patient Information Leaflet (PIL) Management System',
@@ -259,15 +259,15 @@ export const translations = {
       experienceTitle: 'Education & Academic Experience',
       skillsTitle: 'Technical Competencies',
       educationTitle: 'Education',
-      degree: 'Bachelor of Engineering in Software Engineering (B.Eng.)',
+      degree: 'Bachelor of Engineering in Software Engineering (B.Eng. International Program)',
       degreeFocus: 'Focus on Full-Stack Web Systems, Object-Oriented Design, and Software Verification',
-      degreeLocation: 'Prince of Songkla University, Phuket Campus (PSU Phuket)',
+      degreeLocation: 'Prince of Songkla University (PSU)',
       experienceList: [
         {
-          role: 'Software Engineering Undergraduate & Project Lead',
-          company: 'Prince of Songkla University, Phuket Campus',
+          role: 'Software Engineering Undergraduate (International Program) & Project Lead',
+          company: 'Prince of Songkla University (PSU)',
           period: '2022 - Present',
-          location: 'Phuket, Thailand',
+          location: 'Thailand',
           achievements: [
             'Led the full-stack development of the PIL Management System, collaborating closely with clinical pharmacists to create verified digital medication leaflets.',
             'Engineered full-stack web applications using React, Python (Flask), MySQL, SQLite, and RESTful APIs.',
@@ -279,7 +279,7 @@ export const translations = {
           role: 'Freelance Web Developer & Digital Wedding Card Creator',
           company: 'Self-Employed / Commercial Service',
           period: '2023 - Present',
-          location: 'Phuket / Remote',
+          location: 'Remote',
           achievements: [
             'Delivered tailored responsive web solutions and interactive digital wedding invitations with RSVP management, countdowns, and maps.',
             'Handled client consultations, UI design, rapid prototyping, and deployment on modern cloud platforms.'
@@ -289,7 +289,7 @@ export const translations = {
           role: 'Freelance Event Photographer',
           company: 'Freelance Photography Service',
           period: '2023 - Present',
-          location: 'Phuket, Thailand',
+          location: 'Thailand',
           achievements: [
             'Provided professional event photography services for ceremonies, university activities, and special community gatherings.',
             'Managed lighting composition, fast-paced candid shots, and color grading in Adobe Lightroom.'
@@ -349,7 +349,7 @@ export const translations = {
 
   th: {
     systemBar: {
-      branding: 'วิภาพร วิกรเมธกุล',
+      branding: 'วิภาพร วิกรเมศกุล',
       role: 'SOFTWARE ENGINEER',
       activeWindows: 'หน้าต่างเปิดอยู่',
       activeWindowsPlural: 'หน้าต่างเปิดอยู่',
@@ -370,39 +370,39 @@ export const translations = {
       headlinePrefix: 'พัฒนาเว็บแอปพลิเคชันและระบบซอฟต์แวร์ที่',
       headlineHighlight: 'ตอบโจทย์ผู้ใช้งานจริง',
       introPrefix: 'สวัสดีค่ะ วิภาพร',
-      introName: 'วิภาพร วิกรเมธกุล',
-      introDesc: 'นักศึกษา Software Engineering ม.อ. ภูเก็ต ที่มุ่งมั่นพัฒนาเว็บแอปพลิเคชันแบบครบวงจร (Full-Stack) ทั้งหน้าบ้านที่ใช้งานง่ายและหลังบ้านที่เสถียร',
+      introName: 'วิภาพร วิกรเมศกุล',
+      introDesc: 'นักศึกษา Software Engineering หลักสูตรนานาชาติ ม.อ. ที่มุ่งมั่นพัฒนาเว็บแอปพลิเคชันแบบครบวงจร (Full-Stack) ทั้งหน้าบ้านที่ใช้งานง่ายและหลังบ้านที่เสถียร',
       ctaProjects: 'ดูผลงานเด่น',
       ctaResume: 'ดาวน์โหลดเรซูเม (CV)',
       ctaContact: 'ติดต่อร่วมงาน',
       stats: [
-        { label: 'หลักสูตร', value: 'วิศวกรรมซอฟต์แวร์ (วศ.บ.)' },
-        { label: 'สถาบัน', value: 'ม.อ. ภูเก็ต (PSU Phuket)' },
+        { label: 'หลักสูตร', value: 'วิศวกรรมซอฟต์แวร์ (วศ.บ. หลักสูตรนานาชาติ)' },
+        { label: 'สถาบัน', value: 'ม.อ. (PSU)' },
         { label: 'ทักษะหลัก', value: 'React • Flask • MySQL • Python' },
         { label: 'จุดเน้น', value: 'Full-Stack & HealthTech' },
       ],
     },
     showcase: {
-      badge: 'ไฮไลต์ผลงานและเส้นทางวิศวกรรม // วิภาพร วิกรเมธกุล',
+      badge: 'ไฮไลต์ผลงานและเส้นทางวิศวกรรม // วิภาพร วิกรเมศกุล',
       scrollIndicator: 'เลื่อนลงเพื่อสำรวจ',
-      footerLeft: 'วิภาพร วิกรเมธกุล',
-      footerCenter: 'วศ.บ. วิศวกรรมซอฟต์แวร์ • ม.อ. ภูเก็ต',
+      footerLeft: 'วิภาพร วิกรเมศกุล',
+      footerCenter: 'วศ.บ. วิศวกรรมซอฟต์แวร์ (หลักสูตรนานาชาติ) • ม.อ.',
       footerRight: 'ระบบหมุน 3D & ไฮไลต์ผลงานจริง',
       slides: [
         {
           step: '01',
           category: 'SOFTWARE ENGINEERING // ประวัติและตัวตน',
-          titlePrimary: 'วิภาพร วิกรเมธกุล',
-          titleSecondary: 'นักศึกษาหลักสูตรวิศวกรรมซอฟต์แวร์ มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต',
+          titlePrimary: 'วิภาพร วิกรเมศกุล',
+          titleSecondary: 'นักศึกษาหลักสูตรวิศวกรรมซอฟต์แวร์ (หลักสูตรนานาชาติ) ม.อ.',
           description: 'มุ่งเน้นการพัฒนาเว็บแอปพลิเคชันแบบครบวงจร (Full-Stack) สถาปัตยกรรมระบบที่สะอาด และการแก้ปัญหาจริงผ่านซอฟต์แวร์',
-          tags: ['วศ.บ. วิศวกรรมซอฟต์แวร์', 'Full-Stack Developer', 'ม.อ. ภูเก็ต'],
+          tags: ['วศ.บ. วิศวกรรมซอฟต์แวร์', 'หลักสูตรนานาชาติ', 'Full-Stack Developer', 'ม.อ.'],
           metrics: [
-            { label: 'ระดับการศึกษา', value: 'วศ.บ. (วิศวกรรมซอฟต์แวร์)' },
+            { label: 'ระดับการศึกษา', value: 'วศ.บ. (วิศวกรรมซอฟต์แวร์) หลักสูตรนานาชาติ' },
             { label: 'ภาษาหลัก', value: 'Python, Java, React' }
           ],
           floatingBadge: {
             title: 'Software Engineer',
-            subtitle: 'ม.อ. ภูเก็ต (PSU Phuket)'
+            subtitle: 'ม.อ. (หลักสูตรนานาชาติ)'
           }
         },
         {
@@ -596,10 +596,10 @@ export const translations = {
     resumeWindow: {
       subBadge: 'Curriculum Vitae • รูปแบบมาตรฐานสำหรับ Recruiter',
       printBtn: 'พิมพ์ / บันทึกเป็น PDF',
-      name: 'วิภาพร วิกรเมธกุล',
+      name: 'วิภาพร วิกรเมศกุล',
       subTitle: 'Software Engineer & Full-Stack Developer',
-      bio: 'นักศึกษาหลักสูตรวิศวกรรมซอฟต์แวร์ มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต (ม.อ. ภูเก็ต) มุ่งมั่นพัฒนาเว็บแอปพลิเคชันแบบครบวงจร (Full-Stack) ระบบสาธารณสุขดิจิทัล (PIL) และซอฟต์แวร์ที่ตอบโจทย์ผู้ใช้งานจริง',
-      location: 'ภูเก็ต / กรุงเทพฯ, ประเทศไทย',
+      bio: 'นักศึกษาหลักสูตรวิศวกรรมซอฟต์แวร์ (หลักสูตรนานาชาติ) ม.อ. มุ่งมั่นพัฒนาเว็บแอปพลิเคชันแบบครบวงจร (Full-Stack) ระบบสาธารณสุขดิจิทัล (PIL) และซอฟต์แวร์ที่ตอบโจทย์ผู้ใช้งานจริง',
+      location: 'ประเทศไทย',
       caseStudyTitle: 'ผลงานวิศวกรรมเด่น (Featured Project)',
       partnerLabel: 'พันธมิตร: เภสัชกรโรงพยาบาล',
       flagshipSubtitle: 'ระบบบริหารจัดการเอกสารกำกับยาฉบับประชาชน (PIL Management System)',
@@ -607,15 +607,15 @@ export const translations = {
       experienceTitle: 'การศึกษาและประสบการณ์ทางวิชาการ',
       skillsTitle: 'ทักษะและความสามารถทางเทคนิค',
       educationTitle: 'ประวัติการศึกษา',
-      degree: 'วิศวกรรมศาสตรบัณฑิต (วศ.บ.) สาขาวิชาวิศวกรรมซอฟต์แวร์ (B.Eng. in Software Engineering)',
+      degree: 'วิศวกรรมศาสตรบัณฑิต (วศ.บ.) สาขาวิชาวิศวกรรมซอฟต์แวร์ (หลักสูตรนานาชาติ)',
       degreeFocus: 'เน้นด้านการพัฒนาเว็บแอปพลิเคชัน Full-Stack, การออกแบบเชิงวัตถุ (OOP) และการพิสูจน์ความถูกต้องของระบบ',
-      degreeLocation: 'มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต (Prince of Songkla University, Phuket Campus)',
+      degreeLocation: 'มหาวิทยาลัยสงขลานครินทร์ (ม.อ.)',
       experienceList: [
         {
-          role: 'นักศึกษาปริญญาตรีวิศวกรรมซอฟต์แวร์ & หัวหน้าโปรเจกต์',
-          company: 'มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต',
+          role: 'นักศึกษาปริญญาตรีวิศวกรรมซอฟต์แวร์ (หลักสูตรนานาชาติ) & หัวหน้าโปรเจกต์',
+          company: 'มหาวิทยาลัยสงขลานครินทร์ (ม.อ.)',
           period: '2565 - ปัจจุบัน (2022 - Present)',
-          location: 'ภูเก็ต, ประเทศไทย',
+          location: 'ประเทศไทย',
           achievements: [
             'นำการพัฒนาโปรเจกต์ระบบบริหารจัดการ PIL ร่วมกับเภสัชกรโรงพยาบาลเพื่อสร้างเอกสารกำกับยาฉบับประชาชนแบบดิจิทัล',
             'พัฒนาเว็บแอปพลิเคชันด้วย React, Python (Flask), MySQL, SQLite และออกแบบ RESTful APIs',
@@ -627,7 +627,7 @@ export const translations = {
           role: 'นักพัฒนาเว็บอิสระ & ผู้จัดทำการ์ดแต่งงานดิจิทัล',
           company: 'งานบริการส่วนบุคคล / ฟรีแลนซ์',
           period: '2566 - ปัจจุบัน (2023 - Present)',
-          location: 'ภูเก็ต / ทำงานระยะไกล',
+          location: 'ทำงานระยะไกล',
           achievements: [
             'พัฒนาเว็บไซต์การ์ดแต่งงานออนไลน์แบบอินเตอร์แอคทีฟ (Digital Wedding Invitations) พร้อมระบบตอบรับเข้าร่วมงาน (RSVP) นับถอยหลัง และแผนที่',
             'ดูแลกระบวนการตั้งแต่การพูดคุยความต้องการของลูกค้า ออกแบบหน้าจอ พัฒนา และนำขึ้นใช้งานจริงบนระบบคลาวด์'
@@ -637,7 +637,7 @@ export const translations = {
           role: 'ช่างภาพอิสระสำหรับงานอีเวนต์และกิจกรรม',
           company: 'บริการถ่ายภาพฟรีแลนซ์ (Side Job)',
           period: '2566 - ปัจจุบัน (2023 - Present)',
-          location: 'ภูเก็ต, ประเทศไทย',
+          location: 'ประเทศไทย',
           achievements: [
             'รับงานถ่ายภาพอีเวนต์ กิจกรรมของมหาวิทยาลัย งานพิธีการ และโอกาสพิเศษ',
             'บริหารจัดการการจัดองค์ประกอบภาพ แสง และการปรับแต่งโทนสีด้วย Adobe Lightroom'

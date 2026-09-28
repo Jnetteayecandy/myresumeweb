@@ -109,3 +109,4 @@ export const SkillsDiagnostics: React.FC = () => {
     </section>
   );
 };
+

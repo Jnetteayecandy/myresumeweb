@@ -171,3 +171,4 @@ export const FeaturedPilCard: React.FC<FeaturedPilCardProps> = ({ onOpenPilWindo
     </section>
   );
 };
+

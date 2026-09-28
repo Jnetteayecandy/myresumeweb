@@ -130,3 +130,4 @@ export const SideJobsAndHobbies: React.FC = () => {
     </section>
   );
 };
+

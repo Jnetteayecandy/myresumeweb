@@ -7,11 +7,11 @@ export const personalInfo = {
   education: {
     degree: "Bachelor of Engineering in Software Engineering (B.Eng.)",
     degreeTh: "วิศวกรรมศาสตรบัณฑิต (วศ.บ.) สาขาวิชาวิศวกรรมซอฟต์แวร์",
-    institution: "Prince of Songkla University, Phuket Campus",
-    institutionTh: "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต",
+    institution: "Prince of Songkla University",
+    institutionTh: "มหาวิทยาลัยสงขลานครินทร์",
     period: "2022 - Present",
     status: "Undergraduate Software Engineering Student",
-    statusTh: "นักศึกษาปริญญาตรี สาขาวิศวกรรมซอฟต์แวร์ ม.อ. ภูเก็ต"
+    statusTh: "นักศึกษาปริญญาตรี สาขาวิศวกรรมซอฟต์แวร์ ม.อ."
   },
   headline: "Building Reliable, Scalable & Practical Web Applications",
   headlineTh: "พัฒนาเว็บแอปพลิเคชันและระบบซอฟต์แวร์ที่ตอบโจทย์ผู้ใช้งานจริง",
@@ -66,8 +66,11 @@ export const bentoProjects: Project[] = [
   {
     id: "wedding-card-web",
     title: "Digital Wedding Card & Web Development Service",
+    titleTh: "บริการทำการ์ดแต่งงานดิจิทัลและพัฒนาเว็บไซต์",
     subtitle: "Custom Web Solutions & Interactive Invitations (งานบริการ/ธุรกิจส่วนตัว)",
+    subtitleTh: "Custom Web Solutions & Interactive Invitations (งานบริการ/ธุรกิจส่วนตัว)",
     description: "A commercial custom web design and development service offering bespoke interactive digital wedding invitations and specialized event landing pages. Features interactive RSVPs, countdowns, map integrations, and mobile-first animations tailored to real client needs.",
+    descriptionTh: "บริการออกแบบและพัฒนาเว็บไซต์การ์ดแต่งงานออนไลน์แบบอินเตอร์แอคทีฟ ตอบรับเข้าร่วมงาน (RSVP) นับถอยหลัง แผนที่ และแอนิเมชันที่ปรับแต่งตามใจลูกค้า",
     tags: ["React", "JavaScript", "Tailwind CSS", "Mobile-First UX", "Client Service"],
     metrics: [
       { label: "Clients Served", value: "Commercial" },
@@ -79,13 +82,21 @@ export const bentoProjects: Project[] = [
       "Custom UI/UX themed for individual wedding couples",
       "Interactive RSVP and calendar reminders",
       "Zero loading friction optimized for LINE and mobile browsers"
+    ],
+    highlightsTh: [
+      "ออกแบบ UI/UX สวยงามตอบโจทย์คู่บ่าวสาวแต่ละคู่",
+      "ระบบตอบรับเข้าร่วมงาน (RSVP) และแจ้งเตือนปฏิทิน",
+      "โหลดไวและแสดงผลได้ดีเยี่ยมบน LINE และมือถือทุกรุ่น"
     ]
   },
   {
     id: "event-b-formal-methods",
     title: "Formal Methods & System Specification (Event-B)",
+    titleTh: "การพิสูจน์ความถูกต้องของระบบด้วยวิธีเชิงรูปนัย (Event-B)",
     subtitle: "Safety-Critical Software Verification & Mathematical Modeling",
+    subtitleTh: "แบบจำลองทางคณิตศาสตร์และการตรวจสอบระบบความปลอดภัยขั้นสูง",
     description: "Academic and engineering research project employing the Event-B formal method and Rodin platform to mathematically model, refine, and prove correctness of safety-critical concurrent systems, ensuring zero state invariants violation under all operational conditions.",
+    descriptionTh: "โปรเจกต์วิจัยเชิงวิศวกรรมที่ใช้โมเดล Event-B และแพลตฟอร์ม Rodin เพื่อพิสูจน์ความถูกต้องและปลอดภัยของระบบแบบคู่ขนาน (Concurrent Systems) โดยไม่ให้เกิดข้อผิดพลาดในการทำงาน",
     tags: ["Event-B", "Rodin Tool", "Formal Proofs", "Safety Invariants", "Mathematical Logic"],
     metrics: [
       { label: "Proof Obligations", value: "100% Discharged" },
@@ -96,13 +107,21 @@ export const bentoProjects: Project[] = [
       "Stepwise machine refinement from abstract specifications to concrete guards",
       "Invariant preservation proofs for concurrent resource access",
       "Formal mathematical rigor meeting mission-critical safety standards"
+    ],
+    highlightsTh: [
+      "การขัดเกลาโมเดลจากระดับนามธรรมสู่ระดับปฏิบัติการจริง",
+      "การพิสูจน์ความคงตัว (Invariant Proofs) ของระบบคู่ขนาน",
+      "ความแม่นยำทางคณิตศาสตร์ระดับมาตรฐานความปลอดภัยขั้นสูง"
     ]
   },
   {
     id: "web-mini-games",
     title: "Web Mini-Games for Friends",
+    titleTh: "มินิเกมบนเว็บสำหรับเพื่อนๆ (Web Mini-Games)",
     subtitle: "Interactive In-Browser Games (Community Projects)",
+    subtitleTh: "เกมออนไลน์แบบอินเตอร์แอคทีฟเล่นฟรีบนเบราว์เซอร์ (Community Project)",
     description: "A collection of fast, engaging web mini-games developed for friends and student peers to play directly in their browsers without any installation. Features responsive keyboard/touch controls, real-time score tracking, and smooth web animations.",
+    descriptionTh: "รวมมินิเกมบนเว็บที่พัฒนาขึ้นเพื่อให้เพื่อนๆ เข้ามาเล่นได้ทันทีผ่านเบราว์เซอร์ ไม่ต้องติดตั้ง รองรับทั้งเมาส์และหน้าจอสัมผัส มีระบบบันทึกคะแนนแบบเรียลไทม์",
     tags: ["JavaScript", "HTML5 Canvas", "CSS3 Animations", "Game Logic", "Web Audio"],
     metrics: [
       { label: "Platform", value: "Web Browser" },
@@ -114,13 +133,21 @@ export const bentoProjects: Project[] = [
       "Playable immediately in any browser with zero installation",
       "Smooth frame rate physics and local high-score persistence",
       "Built for community enjoyment and interactive frontend practice"
+    ],
+    highlightsTh: [
+      "เล่นได้ทันทีผ่านเบราว์เซอร์โดยไม่ต้องติดตั้งโปรแกรม",
+      "เฟรมเรตลื่นไหล ฟิสิกส์สมูท และบันทึกคะแนนสูงสุด",
+      "พัฒนาเพื่อความสนุกในคอมมูนิตี้และฝึกฝนฝีมือฟรอนต์เอนด์"
     ]
   },
   {
     id: "university-event-booking",
     title: "University Event Booking Platform",
+    titleTh: "ระบบจองพื้นที่และกิจกรรมมหาวิทยาลัย",
     subtitle: "Campus Venue & Activity Reservation System",
+    subtitleTh: "Campus Venue & Activity Reservation System",
     description: "Full-stack university management portal facilitating venue reservations, club activity scheduling, and administrative approvals with automated conflict resolution and notification dispatch.",
+    descriptionTh: "พอร์ทัลจัดการของมหาวิทยาลัยสำหรับจองสถานที่และจัดกิจกรรมชมรม พร้อมระบบตรวจสอบการชนกันของเวลาอัตโนมัติ",
     tags: ["Python", "Flask", "MySQL", "Bootstrap / Tailwind", "REST API"],
     metrics: [
       { label: "Role Hierarchy", value: "Student / Staff / Admin" },
@@ -130,13 +157,20 @@ export const bentoProjects: Project[] = [
     highlights: [
       "Role-based access control (RBAC) for student organizers and faculty approvers",
       "Time-slot overlap prevention algorithms in relational SQL"
+    ],
+    highlightsTh: [
+      "ระบบกำหนดสิทธิ์การใช้งาน (RBAC) สำหรับนักศึกษาและอาจารย์",
+      "อัลกอริทึมป้องกันการจองเวลาซ้ำซ้อนในฐานข้อมูลเชิงสัมพันธ์"
     ]
   },
   {
     id: "student-record-oop",
     title: "Student Record & GPA Calculator",
+    titleTh: "ระบบบันทึกข้อมูลและคำนวณเกรดนักศึกษา (Java OOP)",
     subtitle: "Object-Oriented Programming (OOP) Architecture",
+    subtitleTh: "การออกแบบสถาปัตยกรรมเชิงวัตถุเต็มรูปแบบ (OOP)",
     description: "Robust academic record management system built in Java using core Object-Oriented principles (Encapsulation, Inheritance, Polymorphism, Abstraction) for transcript computation, prerequisites checking, and file persistence.",
+    descriptionTh: "ระบบจัดการประวัติการเรียนที่สร้างด้วยหลักการ OOP ภาษา Java สำหรับคำนวณเกรดเฉลี่ย ตรวจสอบเงื่อนไขวิชาเรียน และบันทึกข้อมูลลงฐานข้อมูล",
     tags: ["Java", "OOP Design Patterns", "SQLite", "Unit Testing"],
     metrics: [
       { label: "Paradigms", value: "Pure OOP" },
@@ -146,13 +180,20 @@ export const bentoProjects: Project[] = [
     highlights: [
       "Clean separation of Model-View-Controller architecture",
       "Comprehensive test suites for grading formula boundary conditions"
+    ],
+    highlightsTh: [
+      "สถาปัตยกรรมแบบ Model-View-Controller ที่ชัดเจน",
+      "ชุดทดสอบ Unit Test ครอบคลุมการคำนวณเกรดทุกเงื่อนไข"
     ]
   },
   {
     id: "physics-certification",
     title: "General Physics Certification (BITS Pilani)",
+    titleTh: "ใบรับรองวิชาฟิสิกส์ทั่วไป (BITS Pilani via Coursera)",
     subtitle: "Online Course Certification via Coursera",
+    subtitleTh: "การรับรองหลักสูตรออนไลน์ที่ได้รับอนุมัติจาก BITS Pilani",
     description: "Completed rigorous foundational physics curriculum authorized by Birla Institute of Technology & Science (BITS Pilani) covering mechanics, electromagnetism, and physical modeling principles.",
+    descriptionTh: "สำเร็จหลักสูตรฟิสิกส์พื้นฐานระดับมหาวิทยาลัยที่ได้รับอนุมัติจาก Birla Institute of Technology & Science (BITS Pilani) ครอบคลุมกลศาสตร์และแบบจำลองทางกายภาพ",
     tags: ["Coursera", "BITS Pilani", "General Physics", "Certificate ID: 5JFGCCY2U9MI"],
     metrics: [
       { label: "Issue Date", value: "June 2026" },
@@ -162,6 +203,10 @@ export const bentoProjects: Project[] = [
     highlights: [
       "Authorized by BITS Pilani (Chief Executive Officer, Strategic Initiatives)",
       "Public verification credential link available"
+    ],
+    highlightsTh: [
+      "ได้รับอนุมัติจาก BITS Pilani (Chief Executive Officer, Strategic Initiatives)",
+      "มีลิงก์ตรวจสอบสิทธิ์ทางการบน Coursera"
     ]
   }
 ];
@@ -293,3 +338,4 @@ export const experienceData: Experience[] = [
     techStack: ["Photography", "Adobe Lightroom", "Composition", "Client Relations"]
   }
 ];
+

@@ -125,3 +125,4 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
     </AnimatePresence>
   );
 };
+

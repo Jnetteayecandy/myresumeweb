@@ -76,7 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       >
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
           <span>{t.headlinePrefix}</span>{' '}
-          <span className="text-blue-700 underline decoration-blue-300 decoration-wavy decoration-2 underline-offset-8">
+          <span className="text-blue-700 font-extrabold">
             {t.headlineHighlight}
           </span>
         </h1>
@@ -165,3 +165,4 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     </section>
   );
 };
+

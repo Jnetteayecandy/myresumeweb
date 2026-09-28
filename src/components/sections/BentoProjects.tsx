@@ -66,6 +66,11 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
           const isLarge = index === 0 || index === 1;
           const isGame = project.id === 'web-mini-games';
           const isCert = project.id === 'physics-certification';
+          const isTh = lang === 'th';
+          const title = isTh && project.titleTh ? project.titleTh : project.title;
+          const subtitle = isTh && project.subtitleTh ? project.subtitleTh : project.subtitle;
+          const description = isTh && project.descriptionTh ? project.descriptionTh : project.description;
+          const highlightsList = isTh && project.highlightsTh ? project.highlightsTh : project.highlights;
 
           return (
             <motion.div
@@ -97,21 +102,21 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
 
                 {/* Title & Subtitle */}
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                  {project.title}
+                  {title}
                 </h3>
                 <p className="text-xs font-medium text-blue-600 mt-1">
-                  {project.subtitle}
+                  {subtitle}
                 </p>
 
                 {/* Description */}
                 <p className="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
-                  {project.description}
+                  {description}
                 </p>
 
                 {/* Highlights List if available */}
-                {project.highlights && (
+                {highlightsList && (
                   <ul className="mt-3 space-y-1.5 pt-2 border-t border-slate-100">
-                    {project.highlights.slice(0, 2).map((hl, i) => (
+                    {highlightsList.slice(0, 3).map((hl, i) => (
                       <li key={i} className="text-xs text-slate-500 flex items-center space-x-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                         <span>{hl}</span>
@@ -157,7 +162,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                       className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
                     >
                       <Award size={15} />
-                      <span>Verify Certificate (Coursera)</span>
+                      <span>{isTh ? 'ตรวจสอบใบรับรอง (Coursera)' : 'Verify Certificate (Coursera)'}</span>
                       <ExternalLink size={13} />
                     </a>
                   ) : project.liveUrl ? (
@@ -181,7 +186,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                       onClick={() => sound.playClick()}
                       className="inline-flex items-center space-x-1 text-xs text-slate-500 hover:text-slate-800 font-medium ml-auto"
                     >
-                      <span>GitHub</span>
+                      <span>{isTh ? 'ดูโค้ดบน GitHub' : 'GitHub'}</span>
                       <ExternalLink size={12} />
                     </a>
                   )}
@@ -194,3 +199,4 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
     </section>
   );
 };
+

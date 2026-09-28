@@ -12,16 +12,23 @@ export interface WindowState {
 export interface Project {
   id: string;
   title: string;
+  titleTh?: string;
   subtitle: string;
+  subtitleTh?: string;
   description: string;
+  descriptionTh?: string;
   tags: string[];
+  tagsTh?: string[];
   metrics?: { label: string; value: string }[];
   featured?: boolean;
   githubUrl?: string;
   liveUrl?: string;
   collaboration?: string;
+  collaborationTh?: string;
   systemArchitecture?: string[];
+  systemArchitectureTh?: string[];
   highlights?: string[];
+  highlightsTh?: string[];
 }
 
 export interface SkillCategory {

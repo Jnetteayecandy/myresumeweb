@@ -120,3 +120,4 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) 
     </section>
   );
 };
+

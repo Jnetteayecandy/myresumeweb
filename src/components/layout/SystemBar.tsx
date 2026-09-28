@@ -149,3 +149,4 @@ export const SystemBar: React.FC<SystemBarProps> = ({
     </header>
   );
 };
+
