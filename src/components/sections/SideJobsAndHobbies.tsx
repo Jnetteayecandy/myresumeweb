@@ -13,9 +13,6 @@ import {
   Globe2,
   ExternalLink,
   Quote,
-  Rocket,
-  Music2,
-  Building2,
   MapPin,
   Calendar
 } from 'lucide-react';
@@ -24,37 +21,25 @@ import { sound } from '../../utils/sound';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
-// Image component with graceful fallback if the image file is not yet uploaded
-const ImageWithFallback: React.FC<{
+// Image component that displays real uploaded photo with clean styling and fallback handling
+const CardImage: React.FC<{
   src: string;
   alt: string;
-  fallbackIcon: React.ReactNode;
-  fallbackTitle: string;
-  fallbackSubtitle?: string;
-}> = ({ src, alt, fallbackIcon, fallbackTitle, fallbackSubtitle }) => {
-  const [hasError, setHasError] = useState(false);
-
+  backupSrc?: string;
+}> = ({ src, alt, backupSrc }) => {
   return (
-    <div className="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden rounded-xl border border-slate-200/80 mb-4 group/img">
-      {!hasError ? (
-        <img
-          src={src}
-          alt={alt}
-          onError={() => setHasError(true)}
-          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-      ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-slate-50 to-slate-100/90 text-slate-500">
-          <div className="p-3 rounded-full bg-white shadow-2xs border border-slate-200/80 mb-2">
-            {fallbackIcon}
-          </div>
-          <span className="text-xs font-semibold text-slate-700">{fallbackTitle}</span>
-          {fallbackSubtitle && (
-            <span className="text-[11px] text-slate-400 mt-0.5">{fallbackSubtitle}</span>
-          )}
-        </div>
-      )}
+    <div className="relative w-full h-52 mb-4 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/img">
+      <img
+        src={src}
+        alt={alt}
+        onError={(e) => {
+          if (backupSrc && !e.currentTarget.src.includes(backupSrc)) {
+            e.currentTarget.src = backupSrc;
+          }
+        }}
+        className="w-full h-52 object-cover rounded-xl group-hover/img:scale-105 transition-transform duration-500"
+        loading="eager"
+      />
     </div>
   );
 };
@@ -87,8 +72,22 @@ export const SideJobsAndHobbies: React.FC = () => {
         );
       case 'water-sports':
         return (
-          <div className="space-y-3 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
-            <div className="flex items-center gap-1.5 font-bold text-slate-800">
+          <div className="space-y-3.5 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
+            {/* Real Surfing Preview Photo */}
+            <div className="relative w-full h-48 sm:h-52 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/surf">
+              <img
+                src="/images/surfing.jpeg"
+                alt="Surfing & Water Sports in Phuket"
+                className="w-full h-48 sm:h-52 object-cover rounded-xl group-hover/surf:scale-105 transition-transform duration-500"
+                loading="eager"
+              />
+              <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-xs text-xs font-semibold text-white flex items-center gap-1.5 shadow-xs">
+                <Waves size={13} className="text-cyan-300" />
+                <span>{isTh ? 'กีฬาทางน้ำและการโต้คลื่น • ชายหาดภูเก็ต' : 'Surfing & Marine Sports • Phuket'}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 font-bold text-slate-800 pt-1">
               <Waves size={13} className="text-cyan-600" />
               <span>{isTh ? 'ทักษะและจุดเน้นด้านกีฬาทางน้ำ:' : 'Marine Disciplines & Outdoor Agility:'}</span>
             </div>
@@ -107,11 +106,12 @@ export const SideJobsAndHobbies: React.FC = () => {
                 </span>
                 <span className="font-mono text-[10px] text-slate-400">/videos/watersports.mp4</span>
               </div>
-              <div className="relative rounded-lg overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs">
+              <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs">
                 <video 
                   controls 
                   playsInline 
-                  className="w-full h-full aspect-video rounded-lg object-cover"
+                  poster="/images/surfing.jpeg"
+                  className="w-full h-full aspect-video rounded-xl object-cover"
                 >
                   <source src="/videos/watersports.mp4" type="video/mp4" />
                   <p className="p-4 text-xs text-slate-300 text-center">
@@ -165,23 +165,24 @@ export const SideJobsAndHobbies: React.FC = () => {
         {/* 3 Experience Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {internationalExperiences.map((exp) => {
-            const getFallbackIcon = () => {
-              if (exp.id === 'edc-thailand') return <Music2 size={24} className="text-indigo-600" />;
-              if (exp.id === 'starlight-education') return <Rocket size={24} className="text-blue-600" />;
-              return <Building2 size={24} className="text-teal-600" />;
-            };
-
-            const getFallbackTitle = () => {
-              if (exp.id === 'edc-thailand') return isTh ? 'EDC SkyDeck Operations' : 'EDC SkyDeck Operations';
-              if (exp.id === 'starlight-education') return isTh ? 'Starlight STEM Workshop' : 'Starlight STEM Workshop';
-              return isTh ? 'Malaysia Operations' : 'Malaysia Operations';
-            };
-
             const role = isTh ? exp.roleTh : exp.role;
             const company = isTh ? exp.companyTh : exp.company;
             const location = isTh ? exp.locationTh : exp.location;
             const description = isTh ? exp.descriptionTh : exp.description;
             const tags = isTh && exp.tagsTh ? exp.tagsTh : exp.tags;
+
+            // Direct mapping of uploaded images
+            const imageSrc = exp.imageUrl || (
+              exp.id === 'starlight-education' 
+                ? '/images/starlight_mentor 2.jpeg' 
+                : exp.id === 'edc-thailand' 
+                ? '/images/edc_skydeck.jpeg' 
+                : '/images/malaysia_work.jpeg'
+            );
+
+            const backupSrc = exp.id === 'starlight-education' 
+              ? '/images/starlight_mentor.jpeg' 
+              : undefined;
 
             return (
               <div
@@ -189,13 +190,11 @@ export const SideJobsAndHobbies: React.FC = () => {
                 className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between"
               >
                 <div>
-                  {/* Image Slot with Fallback */}
-                  <ImageWithFallback
-                    src={exp.imageUrl || ''}
+                  {/* Real Photo Container: w-full h-52 object-cover rounded-xl border border-slate-200 shadow-sm */}
+                  <CardImage
+                    src={imageSrc}
                     alt={role}
-                    fallbackIcon={getFallbackIcon()}
-                    fallbackTitle={getFallbackTitle()}
-                    fallbackSubtitle={isTh ? 'พร้อมแสดงรูปภาพทันที' : 'Image slot ready'}
+                    backupSrc={backupSrc}
                   />
 
                   {/* Company & Meta */}
@@ -483,7 +482,7 @@ export const SideJobsAndHobbies: React.FC = () => {
                               : (hobby.id === 'photography' 
                                   ? (isTh ? 'ดูรายละเอียดบริการถ่ายภาพ' : 'View Photography Scope')
                                   : hobby.id === 'water-sports'
-                                  ? (isTh ? 'ชมคลิปวิดีโอ & รายละเอียด' : 'Watch Video & Details')
+                                  ? (isTh ? 'ชมรูปพรีวิว & คลิปวิดีโอ' : 'View Photos & Action Clips')
                                   : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
                                 )}
                           </span>
@@ -522,4 +521,3 @@ export const SideJobsAndHobbies: React.FC = () => {
     </section>
   );
 };
-

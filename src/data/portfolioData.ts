@@ -278,6 +278,7 @@ export const sideJobsAndHobbies = {
       icon: "🏄‍♀️",
       tag: "Endurance & Agility",
       tagTh: "ความอดทนและความคล่องตัว",
+      imageUrl: "/images/surfing.jpeg",
       description: "Passionate about marine sports, swimming, and ocean surfing around Phuket's coastal spots. Builds stamina, mindfulness, and quick decision-making in dynamic conditions.",
       descriptionTh: "ชื่นชอบกีฬาทางน้ำ ว่ายน้ำ และการโต้คลื่นตามชายหาดในภูเก็ต ช่วยเสริมสร้างความแข็งแกร่ง สมาธิ และการตัดสินใจที่รวดเร็วในทุกสถานการณ์"
     },
@@ -344,10 +345,10 @@ export const internationalExperiences: InternationalExperience[] = [
     roleTh: "ผู้ช่วยสอนและเมนทอร์นักเรียนนานาชาติ (STEM Mentor & Lab Assistant)",
     company: "Starlight Education",
     companyTh: "Starlight Education",
-    location: "Bangkok, Thailand",
-    locationTh: "กรุงเทพฯ, ประเทศไทย",
+    location: "Phuket, Thailand",
+    locationTh: "ภูเก็ต, ประเทศไทย",
     period: "2023 - 2024",
-    imageUrl: "/images/starlight_mentor.jpg",
+    imageUrl: "/images/starlight_mentor 2.jpeg",
     tags: [
       "International STEM",
       "Astronaut Collaboration",
@@ -373,7 +374,7 @@ export const internationalExperiences: InternationalExperience[] = [
     location: "Phuket, Thailand",
     locationTh: "ภูเก็ต, ประเทศไทย",
     period: "2024 - 2025",
-    imageUrl: "/images/edc_skydeck.jpg",
+    imageUrl: "/images/edc_skydeck.jpeg",
     tags: [
       "World-Class Music Festival",
       "VVIP Hospitality",
@@ -398,7 +399,7 @@ export const internationalExperiences: InternationalExperience[] = [
     location: "Malaysia",
     locationTh: "มาเลเซีย",
     period: "2024",
-    imageUrl: "/images/malaysia_work.jpg",
+    imageUrl: "/images/malaysia_work.jpeg",
     tags: [
       "Multinational Team",
       "Cross-Cultural Management",
