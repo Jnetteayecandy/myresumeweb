@@ -339,31 +339,6 @@ export const experienceData: Experience[] = [
 
 export const internationalExperiences: InternationalExperience[] = [
   {
-    id: "edc-thailand",
-    role: "VVIP SkyDeck Operations Staff — EDC Thailand (Electric Daisy Carnival)",
-    roleTh: "VVIP SkyDeck Operations Staff — งานเทศกาลดนตรีระดับโลก EDC Thailand",
-    company: "EDC Thailand (Electric Daisy Carnival)",
-    companyTh: "EDC Thailand (Electric Daisy Carnival)",
-    location: "Phuket, Thailand",
-    locationTh: "ภูเก็ต, ประเทศไทย",
-    period: "2024 - 2025",
-    imageUrl: "/images/edc_skydeck.jpg",
-    tags: [
-      "World-Class Music Festival",
-      "VVIP Hospitality",
-      "High-Pressure Coordination",
-      "100% International Audience"
-    ],
-    tagsTh: [
-      "เทศกาลดนตรีระดับโลก",
-      "การบริการระดับ VVIP",
-      "การประสานงานความกดดันสูง",
-      "ลูกค้าต่างชาติ 100%"
-    ],
-    description: "Managed guest hospitality and fast-paced live operations at the exclusive VVIP SkyDeck during EDC (Electric Daisy Carnival) Thailand across consecutive editions. Worked in a purely international environment catering to global attendees, delivering high-standard communication, crowd management, and real-time problem-solving under energetic festival conditions.",
-    descriptionTh: "ปฏิบัติงานในฐานะทีมงานฝ่ายดูแลและประสานงานโซน VVIP SkyDeck ในเทศกาลดนตรีระดับโลก Electric Daisy Carnival (EDC) ซึ่งได้เข้าร่วมทำงานต่อเนื่องทุกปี รับผิดชอบการบริการระดับพรีเมียมและการแก้ไขปัญหาเฉพาะหน้าในสภาพแวดล้อมที่เป็นสากลล้วน โดยผู้เข้าร่วมงานส่วนใหญ่เป็นชาวต่างชาติ 100% ต้องใช้การสื่อสารภาษาอังกฤษและการจัดการความปลอดภัยภายใต้บรรยากาศสดที่มีไดนามิกสูงตลอดเวลา"
-  },
-  {
     id: "starlight-education",
     role: "STEM Mentor & Laboratory Assistant — Starlight Education",
     roleTh: "ผู้ช่วยสอนและเมนทอร์นักเรียนนานาชาติ (STEM Mentor & Lab Assistant)",
@@ -388,6 +363,31 @@ export const internationalExperiences: InternationalExperience[] = [
     verificationUrl: "https://en.wikipedia.org/wiki/Charles_D._Gemar",
     verificationLabel: "🔗 View Sam's Profile (Wikipedia)",
     verificationLabelTh: "🔗 ตรวจสอบประวัติ Sam (Charles D. Gemar - Wikipedia)"
+  },
+  {
+    id: "edc-thailand",
+    role: "VVIP SkyDeck Operations Staff — EDC Thailand (Electric Daisy Carnival)",
+    roleTh: "VVIP SkyDeck Operations Staff — งานเทศกาลดนตรีระดับโลก EDC Thailand",
+    company: "EDC Thailand (Electric Daisy Carnival)",
+    companyTh: "EDC Thailand (Electric Daisy Carnival)",
+    location: "Phuket, Thailand",
+    locationTh: "ภูเก็ต, ประเทศไทย",
+    period: "2024 - 2025",
+    imageUrl: "/images/edc_skydeck.jpg",
+    tags: [
+      "World-Class Music Festival",
+      "VVIP Hospitality",
+      "High-Pressure Coordination",
+      "100% International Audience"
+    ],
+    tagsTh: [
+      "เทศกาลดนตรีระดับโลก",
+      "การบริการระดับ VVIP",
+      "การประสานงานความกดดันสูง",
+      "ลูกค้าต่างชาติ 100%"
+    ],
+    description: "Managed guest hospitality and fast-paced live operations at the exclusive VVIP SkyDeck during EDC (Electric Daisy Carnival) Thailand across consecutive editions. Worked in a purely international environment catering to global attendees, delivering high-standard communication, crowd management, and real-time problem-solving under energetic festival conditions.",
+    descriptionTh: "ปฏิบัติงานในฐานะทีมงานฝ่ายดูแลและประสานงานโซน VVIP SkyDeck ในเทศกาลดนตรีระดับโลก Electric Daisy Carnival (EDC) ซึ่งได้เข้าร่วมทำงานต่อเนื่องทุกปี รับผิดชอบการบริการระดับพรีเมียมและการแก้ไขปัญหาเฉพาะหน้าในสภาพแวดล้อมที่เป็นสากลล้วน โดยผู้เข้าร่วมงานส่วนใหญ่เป็นชาวต่างชาติ 100% ต้องใช้การสื่อสารภาษาอังกฤษและการจัดการความปลอดภัยภายใต้บรรยากาศสดที่มีไดนามิกสูงตลอดเวลา"
   },
   {
     id: "malaysia-work",

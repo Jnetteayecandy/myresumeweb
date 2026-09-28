@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Copy, Check, ExternalLink, Github, Linkedin, FileText, CheckCircle2 } from 'lucide-react';
+import { Mail, Copy, Check, ExternalLink, Github, Linkedin, FileText, CheckCircle2, Sparkles } from 'lucide-react';
 import { personalInfo } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
 import { WindowId } from '../../types';
@@ -12,6 +12,7 @@ interface ContactSectionProps {
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) => {
   const { lang } = useLanguage();
+  const isTh = lang === 'th';
   const t = translations[lang].contact;
   const [copied, setCopied] = useState(false);
 
@@ -24,7 +25,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) 
 
   return (
     <section id="contact-section" className="py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center space-y-10">
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div className="inline-flex items-center space-x-2 text-blue-700 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider">
           <Mail size={14} className="text-blue-600" />
           <span>{t.badge}</span>
@@ -32,9 +33,30 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) 
         <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
           {t.title}
         </h2>
-        <p className="text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-          {t.subtitle}
-        </p>
+
+        {/* Secret Character Feature Card */}
+        <div className="max-w-2xl mx-auto pt-2">
+          <div className="relative p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-indigo-50/70 via-white to-blue-50/40 border border-indigo-100/90 shadow-xs text-center space-y-3">
+            {/* Small Secret Character Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-100/90 text-indigo-900 text-xs font-bold border border-indigo-200/80 shadow-2xs">
+              <Sparkles size={13} className="text-indigo-600" />
+              <span>{isTh ? '🎮 ปลดล็อกตัวละครลับ (Secret Character)' : '🎮 Secret Character Unlocked'}</span>
+            </div>
+
+            {/* Formatted Message */}
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+              {isTh ? (
+                <>
+                  ใครๆ ก็เป็นโปรแกรมเมอร์ได้ แต่โปรแกรมเมอร์ที่ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">คุยภาษาคนทั่วไปรู้เรื่อง</span> และสามารถ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">อธิบายงานเกี่ยวกับโค้ดให้คนธรรมดาเข้าใจได้ง่าย</span> อยู่ที่นี่แล้ว... คุณเจอ <span className="font-extrabold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200/80 inline-block mt-1 sm:mt-0">ตัวละครลับ (Secret Character)</span> แล้วค่ะ!
+                </>
+              ) : (
+                <>
+                  Anyone can write code, but a software engineer who <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">speaks fluent human</span> and translates complex tech into <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">clear, meaningful solutions</span> is rare. Congratulations, you just found your <span className="font-extrabold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200/80 inline-block mt-1 sm:mt-0">secret unlock</span>!
+                </>
+              )}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Main Clean Light Connect Card */}

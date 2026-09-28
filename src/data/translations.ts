@@ -181,7 +181,8 @@ export const translations = {
     contact: {
       badge: 'Get in Touch',
       title: 'Let’s Build Something Great Together',
-      subtitle: 'Open for full-time Full-Stack Developer and Software Engineer opportunities, collaborative projects, or freelance web inquiries.',
+      subtitle: 'Anyone can write code, but a software engineer who speaks fluent human and translates complex tech into clear, meaningful solutions is rare. Congratulations, you just found your secret unlock!',
+      secretBadge: 'Secret Character Unlocked',
       copyBtn: 'Copy Email',
       copiedBtn: 'Email Copied!',
       githubBtn: 'GitHub Profile',
@@ -548,7 +549,8 @@ export const translations = {
     contact: {
       badge: 'เริ่มต้นการติดต่อ',
       title: 'มาร่วมสร้างสิ่งยอดเยี่ยมไปด้วยกัน',
-      subtitle: 'พร้อมรับงาน Full-Stack Developer & Software Engineer ทั้งงานประจำ โปรเจกต์ร่วมพัฒนา หรือบริการพัฒนาเว็บไซต์',
+      subtitle: 'ใครๆ ก็เป็นโปรแกรมเมอร์ได้ แต่โปรแกรมเมอร์ที่คุยภาษาคนทั่วไปรู้เรื่อง และสามารถอธิบายงานเกี่ยวกับโค้ดให้คนธรรมดาเข้าใจได้ง่าย อยู่ที่นี่แล้ว... คุณเจอตัวละครลับ (Secret Character) แล้วค่ะ!',
+      secretBadge: 'ปลดล็อกตัวละครลับ (Secret Character)',
       copyBtn: 'คัดลอกอีเมล',
       copiedBtn: 'คัดลอกอีเมลแล้ว!',
       githubBtn: 'โปรไฟล์ GitHub',
