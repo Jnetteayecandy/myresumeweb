@@ -114,16 +114,23 @@ export const translations = {
       badge: 'Flagship Case Study',
       title: 'PIL Management System (Patient Information Leaflet)',
       subtitle: 'A digital medication leaflet system co-designed with hospital pharmacists to ensure patient safety and accessible dosage guidelines.',
+      description: 'A centralized digital platform co-designed with hospital pharmacists to replace hard-to-read paper medication inserts with structured digital leaflets. Patients and caregivers scan physical medicine packages via QR code to view clear, verified usage instructions, critical contraindications, and emergency warnings.',
       openWindowBtn: 'Open System Details',
       categoryBadge: 'Healthcare Technology',
       verifiedBadge: 'Co-Designed with Hospital Pharmacists',
       quoteTitle: 'Collaboration with Clinical Pharmacists:',
       quoteText: 'Worked hand-in-hand with hospital pharmacists to translate pharmacological rules into a structured schema, ensuring verified contraindications, dosage instructions, and FDA-compliant guidance.',
       ctaVisitLive: 'Click to Visit Live Website',
-      guestAccessNotice: 'You can continue as guest',
+      guestAccessNotice: 'You can continue as guest without login',
       ctaDetails: 'Read Case Study & Architecture',
       cardTitle: 'System Highlights & Impact',
       auditStatus: 'VERIFIED & LIVE',
+      metrics: [
+        { label: 'Search Latency', value: '< 85ms' },
+        { label: 'Elderly Accessibility', value: 'WCAG AAA' },
+        { label: 'Access Model', value: 'Guest Access' },
+        { label: 'Verification', value: '100% Pharmacist Approved' }
+      ],
       workflowTitle: 'Core Workflow & Features',
       workflows: [
         'Structured Medication Monograph Schema (Dosage, Warnings, Contraindications)',
@@ -157,7 +164,9 @@ export const translations = {
       sideJobDesc: 'Performing rhythmic fire spinning and flow arts at festivals and community events. Demands strict safety protocols, intense concentration, physical coordination, and real-time composure under pressure.',
       skillsLabel: 'Performance & Safety Disciplines',
       hobbiesTitle: 'Other Creative Work & Activities',
-      hobbiesSubtitle: 'Diverse disciplines that inspire creativity and active resilience:'
+      hobbiesSubtitle: 'Diverse disciplines that inspire creativity and active resilience:',
+      viewVideoBtn: 'View Video & Performance Clips',
+      collapseBtn: 'Collapse'
     },
     contact: {
       badge: 'Get in Touch',
@@ -462,16 +471,23 @@ export const translations = {
       badge: 'ผลงานวิศวกรรมเด่น (Flagship Project)',
       title: 'PIL Management System (เอกสารกำกับยาฉบับประชาชน)',
       subtitle: 'ระบบบริหารจัดการเอกสารกำกับยาฉบับประชาชนแบบดิจิทัล ออกแบบและพัฒนาร่วมกับเภสัชกรโรงพยาบาล เพื่อให้คนไข้และผู้สูงอายุสแกน QR Code บนซองยาเพื่ออ่านวิธีใช้ยา คำเตือน และขนาดยาที่ถูกต้องได้อย่างปลอดภัย',
+      description: 'แพลตฟอร์มดิจิทัลที่ออกแบบและพัฒนาร่วมกับเภสัชกรโรงพยาบาล เพื่อเปลี่ยนเอกสารกำกับยาแบบกระดาษที่อ่านยาก ให้เป็นเอกสารกำกับยาฉบับประชาชนแบบดิจิทัลที่มีโครงสร้างชัดเจน คนไข้และผู้ดูแลสามารถสแกน QR Code บนซองยาเพื่อดูวิธีรับประทานยา ข้อควรระวังพิเศษ และข้อห้ามใช้เด็ดขาดได้อย่างถูกต้องและปลอดภัย',
       openWindowBtn: 'เปิดดูรายละเอียดระบบ',
       categoryBadge: 'เทคโนโลยีสุขภาพ (HealthTech)',
       verifiedBadge: 'ออกแบบร่วมกับเภสัชกรโรงพยาบาล',
       quoteTitle: 'การทำงานร่วมกับเภสัชกรโรงพยาบาล:',
       quoteText: 'พัฒนาอย่างใกล้ชิดร่วมกับเภสัชกรผู้มีใบประกอบวิชาชีพ เพื่อการันตีความถูกต้องของสูตรยา กฎขนาดยา ข้อห้ามใช้เด็ดขาด และมาตรฐานของ อย.',
       ctaVisitLive: 'กดเพื่อเยี่ยมชมเว็บไซต์',
-      guestAccessNotice: 'You can continue as guest',
+      guestAccessNotice: 'สามารถเข้าใช้งานแบบ Guest ได้ทันทีโดยไม่ต้องล็อกอิน',
       ctaDetails: 'อ่านเคสสตัดีและสถาปัตยกรรม',
       cardTitle: 'จุดเด่นของระบบและผลลัพธ์',
       auditStatus: 'ใช้งานจริง • VERIFIED',
+      metrics: [
+        { label: 'ค้นหาข้อมูลยาใน', value: '< 85ms' },
+        { label: 'โหมดผู้สูงอายุ', value: 'WCAG AAA' },
+        { label: 'การเข้าใช้งาน', value: 'เข้าใช้แบบ Guest ได้ทันที' },
+        { label: 'การตรวจสอบความถูกต้อง', value: 'ผ่านการรับรองโดยเภสัชกร 100%' }
+      ],
       workflowTitle: 'ฟังก์ชันและกระบวนการทำงานหลัก',
       workflows: [
         'โครงสร้างข้อมูลยาแบบเป็นระบบ (ขนาดยา, ข้อควรระวัง, และข้อห้ามใช้เด็ดขาด)',
@@ -505,7 +521,9 @@ export const translations = {
       sideJobDesc: 'ทำการแสดงควงกระบองไฟในงานเทศกาลและกิจกรรมชุมชน ช่วยฝึกฝนวินัย การมีสมาธิขั้นสูง การประเมินความปลอดภัย และการแก้ปัญหาเฉพาะหน้าภายใต้สภาวะกดดัน',
       skillsLabel: 'ทักษะการแสดงและวินัยความปลอดภัย',
       hobbiesTitle: 'งานเสริมและกิจกรรมยามว่างอื่นๆ',
-      hobbiesSubtitle: 'กิจกรรมที่ช่วยสร้างสมาธิ วินัย และพลังความคิดสร้างสรรค์:'
+      hobbiesSubtitle: 'กิจกรรมที่ช่วยสร้างสมาธิ วินัย และพลังความคิดสร้างสรรค์:',
+      viewVideoBtn: 'ดูคลิปการแสดงและวิดีโอเพิ่มเติม',
+      collapseBtn: 'ย่อเนื้อหา'
     },
     contact: {
       badge: 'เริ่มต้นการติดต่อ',

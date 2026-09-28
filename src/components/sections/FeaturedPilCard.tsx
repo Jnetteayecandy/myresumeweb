@@ -67,7 +67,7 @@ export const FeaturedPilCard: React.FC<FeaturedPilCardProps> = ({ onOpenPilWindo
             </div>
 
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              {flagshipProject.description}
+              {t.description || flagshipProject.description}
             </p>
 
             {/* Pharmacist Collaboration Quote Box */}
@@ -139,7 +139,7 @@ export const FeaturedPilCard: React.FC<FeaturedPilCardProps> = ({ onOpenPilWindo
 
             {/* 4 Key Metrics */}
             <div className="grid grid-cols-2 gap-3">
-              {flagshipProject.metrics?.map((m, idx) => (
+              {(t.metrics || flagshipProject.metrics)?.map((m: any, idx: number) => (
                 <div key={idx} className="p-3.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
                   <div className="text-[11px] font-medium text-slate-500 truncate">
                     {m.label}

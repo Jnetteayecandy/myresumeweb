@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { bentoProjects } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
-import { WindowId } from '../../types';
+import { Project, WindowId } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
@@ -25,19 +25,19 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
   const { lang } = useLanguage();
   const t = translations[lang].bento;
   const isTh = lang === 'th';
-  const [activeCertificateModal, setActiveCertificateModal] = useState<boolean>(false);
+  const [activeCert, setActiveCert] = useState<Project | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setActiveCertificateModal(false);
+        setActiveCert(null);
       }
     };
-    if (activeCertificateModal) {
+    if (activeCert) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeCertificateModal]);
+  }, [activeCert]);
 
   const getProjectIcon = (id: string) => {
     switch (id) {
@@ -49,6 +49,8 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
         return <Gamepad2 size={18} className="text-emerald-600" />;
       case 'physics-certification':
         return <Award size={18} className="text-teal-600" />;
+      case 'ibm-data-science-certification':
+        return <Award size={18} className="text-blue-600" />;
       default:
         return <FolderKanban size={18} className="text-blue-600" />;
     }
@@ -70,11 +72,12 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
         </p>
       </div>
 
-      {/* Clean Light 2x2 Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Balanced Bento Grid (Card 1 spans 2 cols, remainder fit symmetrically) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {bentoProjects.map((project, index) => {
+          const isWedding = project.id === 'wedding-card-web';
           const isGame = project.id === 'web-mini-games';
-          const isCert = project.id === 'physics-certification';
+          const isCert = project.id.includes('certification') || !!project.imageUrl;
           const title = isTh && project.titleTh ? project.titleTh : project.title;
           const subtitle = isTh && project.subtitleTh ? project.subtitleTh : project.subtitle;
           const description = isTh && project.descriptionTh ? project.descriptionTh : project.description;
@@ -85,7 +88,9 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
               key={project.id}
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden group"
+              className={`rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden group ${
+                isWedding ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
+              }`}
             >
               <div>
                 {/* Card Top Pill */}
@@ -95,7 +100,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                       {getProjectIcon(project.id)}
                     </div>
                     <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">
-                      {isCert ? 'CERT-01' : `PROJ-0${index + 1}`}
+                      {project.badge || `PROJ-0${index + 1}`}
                     </span>
                   </div>
 
@@ -111,9 +116,9 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                   <div 
                     onClick={() => {
                       sound.playClick();
-                      setActiveCertificateModal(true);
+                      setActiveCert(project);
                     }}
-                    className="mb-4 relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group/cert transition-all hover:border-teal-500 hover:shadow-sm"
+                    className="mb-4 relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group/cert transition-all hover:border-blue-400 hover:shadow-sm"
                     title={isTh ? "คลิกเพื่อดูภาพขยายใบประกาศนียบัตร" : "Click to view enlarged certificate preview"}
                   >
                     <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100 flex items-center justify-center">
@@ -125,7 +130,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                     </div>
                     <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover/cert:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
                       <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 text-xs font-semibold shadow-md">
-                        <Maximize2 size={13} className="text-teal-600" />
+                        <Maximize2 size={13} className="text-blue-600" />
                         <span>{isTh ? 'คลิกเพื่อดูภาพขยาย' : 'Click to enlarge'}</span>
                       </span>
                     </div>
@@ -229,14 +234,14 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
         })}
       </div>
 
-      {/* Certificate Lightbox Modal */}
+      {/* Dynamic Certificate Lightbox Modal */}
       <AnimatePresence>
-        {activeCertificateModal && (
+        {activeCert && (
           <div 
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/70 backdrop-blur-sm animate-in fade-in"
             onClick={() => {
               sound.playClick(900);
-              setActiveCertificateModal(false);
+              setActiveCert(null);
             }}
           >
             <motion.div
@@ -255,10 +260,10 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                   </div>
                   <div>
                     <h3 className="text-sm sm:text-base font-bold text-slate-900">
-                      {isTh ? 'ใบรับรองวิชาฟิสิกส์ทั่วไป (BITS Pilani via Coursera)' : 'General Physics Certification (BITS Pilani via Coursera)'}
+                      {isTh && activeCert.titleTh ? activeCert.titleTh : activeCert.title}
                     </h3>
                     <p className="text-xs text-slate-500 font-mono">
-                      Credential ID: 5JFGCCY2U9MI • BITS Pilani
+                      {activeCert.tags.find(tag => tag.startsWith('Certificate ID:')) || 'Verified Credential'} • Coursera
                     </p>
                   </div>
                 </div>
@@ -266,7 +271,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                 <button
                   onClick={() => {
                     sound.playClick(900);
-                    setActiveCertificateModal(false);
+                    setActiveCert(null);
                   }}
                   className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
                   title={isTh ? "ปิด" : "Close"}
@@ -278,8 +283,8 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
               {/* Modal Image Body */}
               <div className="flex-1 overflow-auto p-4 sm:p-6 bg-slate-100/60 flex items-center justify-center">
                 <img
-                  src="/certificate_preview.png"
-                  alt="Coursera Certificate - Wipaporn Wikornmetkul"
+                  src={activeCert.imageUrl}
+                  alt={activeCert.title}
                   className="max-h-[65vh] w-auto object-contain rounded-xl shadow-md border border-slate-200"
                 />
               </div>
@@ -287,29 +292,31 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
               {/* Modal Footer */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-slate-200/90 bg-white">
                 <div className="text-xs text-slate-500">
-                  {isTh ? 'ออกโดย Birla Institute of Technology & Science, Pilani ผ่าน Coursera' : 'Issued by BITS Pilani & Coursera'}
+                  {isTh && activeCert.subtitleTh ? activeCert.subtitleTh : activeCert.subtitle}
                 </div>
                 <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
                   <button
                     onClick={() => {
                       sound.playClick(900);
-                      setActiveCertificateModal(false);
+                      setActiveCert(null);
                     }}
                     className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-colors"
                   >
                     {isTh ? 'ปิดหน้าต่าง' : 'Close'}
                   </button>
-                  <a
-                    href="https://coursera.org/verify/5JFGCCY2U9MI"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => sound.playClick()}
-                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
-                  >
-                    <Award size={14} />
-                    <span>{isTh ? 'ตรวจสอบสิทธิ์บน Coursera' : 'Verify on Coursera'}</span>
-                    <ExternalLink size={13} />
-                  </a>
+                  {activeCert.liveUrl && (
+                    <a
+                      href={activeCert.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playClick()}
+                      className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
+                    >
+                      <Award size={14} />
+                      <span>{isTh ? 'ตรวจสอบสิทธิ์บน Coursera' : 'Verify on Coursera'}</span>
+                      <ExternalLink size={13} />
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

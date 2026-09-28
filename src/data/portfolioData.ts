@@ -142,6 +142,7 @@ export const bentoProjects: Project[] = [
   },
   {
     id: "physics-certification",
+    badge: "PROJ-06",
     title: "General Physics Certification (BITS Pilani)",
     titleTh: "ใบรับรองวิชาฟิสิกส์ทั่วไป (BITS Pilani via Coursera)",
     subtitle: "Online Course Certification via Coursera",
@@ -162,6 +163,31 @@ export const bentoProjects: Project[] = [
     highlightsTh: [
       "ได้รับอนุมัติจาก BITS Pilani (Chief Executive Officer, Strategic Initiatives)",
       "มีลิงก์ตรวจสอบสิทธิ์ทางการบน Coursera"
+    ]
+  },
+  {
+    id: "ibm-data-science-certification",
+    badge: "PROJ-07",
+    title: "What is Data Science? Certificate (IBM via Coursera)",
+    titleTh: "ใบรับรองวิชาความรู้เบื้องต้นด้านวิทยาการข้อมูล (IBM via Coursera)",
+    subtitle: "Online Course Authorized by IBM Offered Through Coursera",
+    subtitleTh: "การรับรองหลักสูตรออนไลน์ที่ได้รับอนุมัติจาก IBM",
+    description: "Successfully completed the foundational Data Science course authorized by IBM, covering core data science concepts, analytics methodologies, and real-world practitioner workflows.",
+    descriptionTh: "สำเร็จหลักสูตรด้าน Data Science จาก IBM ครอบคลุมพื้นฐานการวิเคราะห์ข้อมูล บทบาทของ Data Scientist และกระบวนการทำงานด้านวิทยาการข้อมูลในภาคปฏิบัติ",
+    imageUrl: "/ibm_certificate_preview.png",
+    tags: ["Coursera", "IBM", "Data Science", "Certificate ID: YTYUF0EKSU7T"],
+    metrics: [
+      { label: "Issue Date", value: "July 2026" },
+      { label: "Status", value: "Verified Credential" }
+    ],
+    liveUrl: "https://coursera.org/verify/YTYUF0EKSU7T",
+    highlights: [
+      "Authorized by IBM (Rav Ahuja - Global Program Director, Alex Aklson - Data Scientist)",
+      "Officially verified on Coursera"
+    ],
+    highlightsTh: [
+      "ได้รับอนุมัติจาก IBM (Rav Ahuja - Global Program Director, Alex Aklson - Data Scientist)",
+      "มีลิงก์และรหัสยืนยันสิทธิ์ทางการบน Coursera"
     ]
   }
 ];

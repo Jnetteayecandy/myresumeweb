@@ -30,6 +30,7 @@ export interface Project {
   highlights?: string[];
   highlightsTh?: string[];
   imageUrl?: string;
+  badge?: string;
 }
 
 export interface SkillCategory {
