@@ -53,3 +53,24 @@ export interface Experience {
   techStack: string[];
 }
 
+export interface InternationalExperience {
+  id: string;
+  role: string;
+  roleTh: string;
+  company: string;
+  companyTh: string;
+  location: string;
+  locationTh: string;
+  period?: string;
+  tags: string[];
+  tagsTh?: string[];
+  description: string;
+  descriptionTh: string;
+  quote?: string;
+  quoteTh?: string;
+  verificationUrl?: string;
+  verificationLabel?: string;
+  verificationLabelTh?: string;
+  imageUrl?: string;
+}
+

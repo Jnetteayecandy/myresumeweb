@@ -155,8 +155,16 @@ export const translations = {
       telemetryStatus: 'Proficiency Level: Strong foundation in OOP, Web Engineering & Database Management',
       ciText: 'Clean Code • Type Safety • Version Control with Git'
     },
+    internationalExperiences: {
+      badge: 'Global Perspective',
+      title: 'International Work Experiences',
+      subtitle: 'Hands-on experience collaborating with global professionals across STEM education, international management, and world-class live events.',
+      imageFallbackHint: 'Visual documentation slot',
+      viewProfileBtn: "View Sam's Profile (Wikipedia)",
+      quoteLabel: 'Key Takeaway:'
+    },
     sideJobs: {
-      badge: 'Side Jobs & Hobbies',
+      badge: 'Extracurricular & Hobbies',
       title: 'Creative Side Jobs, Student Income & Hobbies',
       subtitle: 'Real-world pursuits that build extreme discipline, safety-first awareness, situational composure, and creative energy.',
       sideJobTitle: 'Fire Show Performer',
@@ -166,7 +174,9 @@ export const translations = {
       hobbiesTitle: 'Other Creative Work & Activities',
       hobbiesSubtitle: 'Diverse disciplines that inspire creativity and active resilience:',
       viewVideoBtn: 'View Video & Performance Clips',
-      collapseBtn: 'Collapse'
+      collapseBtn: 'Collapse',
+      waterSportsVideoBtn: 'Watch Surfing & Marine Action Video',
+      waterSportsVideoLabel: 'Surfing & Marine Action Clip'
     },
     contact: {
       badge: 'Get in Touch',
@@ -512,8 +522,16 @@ export const translations = {
       telemetryStatus: 'ระดับความชำนาญ: พื้นฐานแน่นด้าน OOP, พัฒนาเว็บแบบ Full-Stack และการจัดการฐานข้อมูล',
       ciText: 'Clean Code • Type Safety • Version Control ด้วย Git & GitHub'
     },
+    internationalExperiences: {
+      badge: 'ประสบการณ์ระดับสากล',
+      title: 'ประสบการณ์การทำงานระดับนานาชาติ (International Work Experiences)',
+      subtitle: 'ประสบการณ์การทำงานจริงร่วมกับทีมงานและผู้เชี่ยวชาญระดับโลก ทั้งในบทบาทการศึกษา การบริหารจัดการ และเทศกาลดนตรีระดับสากล',
+      imageFallbackHint: 'ช่องภาพบันทึกการทำงาน',
+      viewProfileBtn: 'ตรวจสอบประวัติ Sam (Charles D. Gemar - Wikipedia)',
+      quoteLabel: 'บทเรียนและความประทับใจ:'
+    },
     sideJobs: {
-      badge: 'งานเสริม & กิจกรรมยามว่าง',
+      badge: 'กิจกรรมเสริม & งานอดิเรก',
       title: 'งานเสริมสร้างสรรค์ การหารายได้เสริมระหว่างเรียน และกิจกรรมยามว่าง',
       subtitle: 'ประสบการณ์นอกห้องเรียนที่สร้างวินัย สมาธิขั้นสูง การประเมินความปลอดภัย และความคิดสร้างสรรค์ที่นำมาปรับใช้กับการพัฒนาซอฟต์แวร์',
       sideJobTitle: 'นักแสดงโชว์ควงกระบองไฟ (Fire Show Performer)',
@@ -523,7 +541,9 @@ export const translations = {
       hobbiesTitle: 'งานเสริมและกิจกรรมยามว่างอื่นๆ',
       hobbiesSubtitle: 'กิจกรรมที่ช่วยสร้างสมาธิ วินัย และพลังความคิดสร้างสรรค์:',
       viewVideoBtn: 'ดูคลิปการแสดงและวิดีโอเพิ่มเติม',
-      collapseBtn: 'ย่อเนื้อหา'
+      collapseBtn: 'ย่อเนื้อหา',
+      waterSportsVideoBtn: 'ชมคลิปวิดีโอกีฬาทางน้ำและการโต้คลื่น',
+      waterSportsVideoLabel: 'คลิปการโต้คลื่นและกิจกรรมทางน้ำ'
     },
     contact: {
       badge: 'เริ่มต้นการติดต่อ',

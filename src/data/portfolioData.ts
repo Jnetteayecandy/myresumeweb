@@ -1,4 +1,4 @@
-import { Project, SkillCategory, Experience } from '../types';
+import { Project, SkillCategory, Experience, InternationalExperience } from '../types';
 
 export const personalInfo = {
   name: "Wipaporn Wikornmetkul",
@@ -336,4 +336,84 @@ export const experienceData: Experience[] = [
     techStack: ["Stage Awareness", "Safety Protocols", "Photography", "Adobe Lightroom"]
   }
 ];
+
+export const internationalExperiences: InternationalExperience[] = [
+  {
+    id: "edc-thailand",
+    role: "VVIP SkyDeck Operations Staff — EDC Thailand (Electric Daisy Carnival)",
+    roleTh: "VVIP SkyDeck Operations Staff — งานเทศกาลดนตรีระดับโลก EDC Thailand",
+    company: "EDC Thailand (Electric Daisy Carnival)",
+    companyTh: "EDC Thailand (Electric Daisy Carnival)",
+    location: "Phuket, Thailand",
+    locationTh: "ภูเก็ต, ประเทศไทย",
+    period: "2024 - 2025",
+    imageUrl: "/images/edc_skydeck.jpg",
+    tags: [
+      "World-Class Music Festival",
+      "VVIP Hospitality",
+      "High-Pressure Coordination",
+      "100% International Audience"
+    ],
+    tagsTh: [
+      "เทศกาลดนตรีระดับโลก",
+      "การบริการระดับ VVIP",
+      "การประสานงานความกดดันสูง",
+      "ลูกค้าต่างชาติ 100%"
+    ],
+    description: "Managed guest hospitality and fast-paced live operations at the exclusive VVIP SkyDeck during EDC (Electric Daisy Carnival) Thailand across consecutive editions. Worked in a purely international environment catering to global attendees, delivering high-standard communication, crowd management, and real-time problem-solving under energetic festival conditions.",
+    descriptionTh: "ปฏิบัติงานในฐานะทีมงานฝ่ายดูแลและประสานงานโซน VVIP SkyDeck ในเทศกาลดนตรีระดับโลก Electric Daisy Carnival (EDC) ซึ่งได้เข้าร่วมทำงานต่อเนื่องทุกปี รับผิดชอบการบริการระดับพรีเมียมและการแก้ไขปัญหาเฉพาะหน้าในสภาพแวดล้อมที่เป็นสากลล้วน โดยผู้เข้าร่วมงานส่วนใหญ่เป็นชาวต่างชาติ 100% ต้องใช้การสื่อสารภาษาอังกฤษและการจัดการความปลอดภัยภายใต้บรรยากาศสดที่มีไดนามิกสูงตลอดเวลา"
+  },
+  {
+    id: "starlight-education",
+    role: "STEM Mentor & Laboratory Assistant — Starlight Education",
+    roleTh: "ผู้ช่วยสอนและเมนทอร์นักเรียนนานาชาติ (STEM Mentor & Lab Assistant)",
+    company: "Starlight Education",
+    companyTh: "Starlight Education",
+    location: "Bangkok, Thailand",
+    locationTh: "กรุงเทพฯ, ประเทศไทย",
+    period: "2023 - 2024",
+    imageUrl: "/images/starlight_mentor.jpg",
+    tags: [
+      "International STEM",
+      "Astronaut Collaboration",
+      "Science Laboratory"
+    ],
+    tagsTh: [
+      "STEM หลักสูตรนานาชาติ",
+      "ร่วมงานกับนักบินอวกาศ NASA",
+      "ห้องปฏิบัติการวิทยาศาสตร์"
+    ],
+    description: "Guided international students in hands-on laboratory sessions, co-facilitating science experiments directly alongside former NASA astronaut and scientist 'Sam' (Charles D. Gemar).",
+    descriptionTh: "ร่วมดูแลและให้คำแนะนำแก่นักเรียนหลักสูตรนานาชาติในห้องปฏิบัติการวิทยาศาสตร์ (Science Lab) โดยได้ทำงานเคียงข้างกับอดีตนักบินอวกาศ NASA และนักวิทยาศาสตร์ตัวจริงอย่าง 'Sam' (Charles D. Gemar)",
+    verificationUrl: "https://en.wikipedia.org/wiki/Charles_D._Gemar",
+    verificationLabel: "🔗 View Sam's Profile (Wikipedia)",
+    verificationLabelTh: "🔗 ตรวจสอบประวัติ Sam (Charles D. Gemar - Wikipedia)"
+  },
+  {
+    id: "malaysia-work",
+    role: "Assistant Manager & Cross-Cultural Operations (Malaysia)",
+    roleTh: "ผู้ช่วยผู้จัดการและการแลกเปลี่ยนวัฒนธรรมการทำงาน (Assistant Manager, Malaysia)",
+    company: "Cross-Border Operations (Malaysia)",
+    companyTh: "การปฏิบัติงานและบริการ ณ ประเทศมาเลเซีย",
+    location: "Malaysia",
+    locationTh: "มาเลเซีย",
+    period: "2024",
+    imageUrl: "/images/malaysia_work.jpg",
+    tags: [
+      "Multinational Team",
+      "Cross-Cultural Management",
+      "Multilingual Adaptation"
+    ],
+    tagsTh: [
+      "ทีมงานพหุวัฒนธรรม",
+      "การบริหารข้ามวัฒนธรรม",
+      "การปรับตัวหลายภาษา"
+    ],
+    description: "Served as an Assistant Manager in Malaysia within a diverse multinational team of Thai, Chinese, Malaysian, and Myanmar colleagues, strengthening cross-cultural collaboration and adaptive operational communication.",
+    descriptionTh: "ปฏิบัติงานในตำแหน่งผู้ช่วยผู้จัดการ ณ ประเทศมาเลเซีย เรียนรู้ระบบการบริหารและการทำงานร่วมกับทีมงานที่มีความหลากหลายทางวัฒนธรรม ทั้งคนไทย คนจีน คนมาเลเซีย และคนพม่า พัฒนาทักษะการปรับตัวและความยืดหยุ่นในการสื่อสาร",
+    quote: "“Everyone was exceptionally skilled and spoke multiple languages fluently!” — An eye-opening journey that highlighted the power of practical multilingual teamwork.",
+    quoteTh: "“พี่ๆ ทุกคนเก่งกันมาก เขาพูดได้หลายภาษามากกว่าเราที่เรียนมหาลัยอีก!” — ประสบการณ์ที่ทำให้เปิดโลกทัศน์และเข้าใจคุณค่าของการสื่อสารในโลกจริง"
+  }
+];
+
 

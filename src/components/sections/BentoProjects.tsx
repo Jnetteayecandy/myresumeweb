@@ -326,3 +326,4 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
     </section>
   );
 };
+

@@ -9,17 +9,61 @@ import {
   CheckCircle2, 
   ChevronDown, 
   Play, 
-  Image as ImageIcon 
+  Image as ImageIcon,
+  Globe2,
+  ExternalLink,
+  Quote,
+  Rocket,
+  Music2,
+  Building2,
+  MapPin,
+  Calendar
 } from 'lucide-react';
-import { sideJobsAndHobbies } from '../../data/portfolioData';
+import { sideJobsAndHobbies, internationalExperiences } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
+// Image component with graceful fallback if the image file is not yet uploaded
+const ImageWithFallback: React.FC<{
+  src: string;
+  alt: string;
+  fallbackIcon: React.ReactNode;
+  fallbackTitle: string;
+  fallbackSubtitle?: string;
+}> = ({ src, alt, fallbackIcon, fallbackTitle, fallbackSubtitle }) => {
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div className="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden rounded-xl border border-slate-200/80 mb-4 group/img">
+      {!hasError ? (
+        <img
+          src={src}
+          alt={alt}
+          onError={() => setHasError(true)}
+          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-slate-50 to-slate-100/90 text-slate-500">
+          <div className="p-3 rounded-full bg-white shadow-2xs border border-slate-200/80 mb-2">
+            {fallbackIcon}
+          </div>
+          <span className="text-xs font-semibold text-slate-700">{fallbackTitle}</span>
+          {fallbackSubtitle && (
+            <span className="text-[11px] text-slate-400 mt-0.5">{fallbackSubtitle}</span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const SideJobsAndHobbies: React.FC = () => {
   const { lang } = useLanguage();
-  const t = translations[lang].sideJobs;
   const isTh = lang === 'th';
+  const tInter = translations[lang].internationalExperiences;
+  const tSide = translations[lang].sideJobs;
   const { featuredJob, hobbies } = sideJobsAndHobbies;
 
   const [expandedFireShow, setExpandedFireShow] = useState<boolean>(false);
@@ -29,12 +73,12 @@ export const SideJobsAndHobbies: React.FC = () => {
     switch (id) {
       case 'photography':
         return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
             <div className="flex items-center gap-1.5 font-bold text-slate-800">
               <ImageIcon size={13} className="text-indigo-600" />
               <span>{isTh ? 'ขอบเขตบริการและผลงานภาพถ่าย:' : 'Service Scope & Photography Work:'}</span>
             </div>
-            <ul className="space-y-1 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
               <li>{isTh ? 'ถ่ายภาพอีเวนต์ของมหาวิทยาลัย งานพิธีการ และกิจกรรมชมรม' : 'University ceremonies, student clubs, and official campus events'}</li>
               <li>{isTh ? 'ภาพพอร์ตเทรตและแคนดิด (Candid) เน้นอารมณ์ธรรมชาติและจังหวะเวลา' : 'Portrait & candid shots focusing on genuine expressions'}</li>
               <li>{isTh ? 'แต่งโทนสีและควบคุมคุณภาพส่งมอบงานด้วย Adobe Lightroom' : 'Professional color grading and batch post-production via Adobe Lightroom'}</li>
@@ -43,26 +87,49 @@ export const SideJobsAndHobbies: React.FC = () => {
         );
       case 'water-sports':
         return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-3 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
             <div className="flex items-center gap-1.5 font-bold text-slate-800">
               <Waves size={13} className="text-cyan-600" />
               <span>{isTh ? 'ทักษะและจุดเน้นด้านกีฬาทางน้ำ:' : 'Marine Disciplines & Outdoor Agility:'}</span>
             </div>
-            <ul className="space-y-1 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
               <li>{isTh ? 'โต้คลื่น (Surfing) ตามชายหาดฝั่งตะวันตกของภูเก็ต (หาดกะตะ, กะตะน้อย)' : 'Ocean surfing at Phuket’s west-coast breaks (Kata Beach, Nai Harn)'}</li>
               <li>{isTh ? 'ว่ายน้ำทะเลเปิด ฝึกการอ่านกระแสน้ำและตัดสินใจรวดเร็ว' : 'Open water swimming: reading currents and dynamic condition adaptation'}</li>
               <li>{isTh ? 'เสริมสร้างความอดทน สมาธิ และความมั่นคงทางอารมณ์' : 'Nurtures physical endurance, mental stillness, and situational agility'}</li>
             </ul>
+
+            {/* Accordion Video Player for Water Sports */}
+            <div className="pt-2 border-t border-slate-200/60">
+              <div className="flex items-center justify-between text-[11px] font-bold text-cyan-900 mb-1.5">
+                <span className="flex items-center gap-1.5">
+                  <Play size={11} className="text-cyan-600 fill-cyan-600" />
+                  <span>{tSide.waterSportsVideoLabel || (isTh ? 'คลิปการโต้คลื่นและกิจกรรมทางน้ำ' : 'Surfing & Marine Action Clip')}</span>
+                </span>
+                <span className="font-mono text-[10px] text-slate-400">/videos/watersports.mp4</span>
+              </div>
+              <div className="relative rounded-lg overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs">
+                <video 
+                  controls 
+                  playsInline 
+                  className="w-full h-full aspect-video rounded-lg object-cover"
+                >
+                  <source src="/videos/watersports.mp4" type="video/mp4" />
+                  <p className="p-4 text-xs text-slate-300 text-center">
+                    {isTh ? 'พร้อมเล่นวิดีโอทันทีเมื่อมีไฟล์ /videos/watersports.mp4' : 'Video player ready for /videos/watersports.mp4'}
+                  </p>
+                </video>
+              </div>
+            </div>
           </div>
         );
       case 'travel':
         return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
             <div className="flex items-center gap-1.5 font-bold text-slate-800">
               <Compass size={13} className="text-blue-600" />
               <span>{isTh ? 'การเปิดโลกทัศน์และการปรับตัว:' : 'Cultural Discovery & Problem Solving:'}</span>
             </div>
-            <ul className="space-y-1 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
               <li>{isTh ? 'เดินทางสำรวจพื้นที่ใหม่ๆ และแลกเปลี่ยนกับผู้คนหลากหลายวัฒนธรรม' : 'Exploring varied geographies and engaging with diverse communities'}</li>
               <li>{isTh ? 'ฝึกทักษะการวางแผนเส้นทางและการแก้ไขปัญหาเฉพาะหน้า' : 'Cultivates itinerary logistics planning and independent problem solving'}</li>
               <li>{isTh ? 'นำมุมมองที่กว้างขึ้นมาประยุกต์ใช้กับการออกแบบ UX และการทำงานร่วมกัน' : 'Channels broader horizons into empathetic UX design and team teamwork'}</li>
@@ -76,228 +143,382 @@ export const SideJobsAndHobbies: React.FC = () => {
 
   return (
     <section id="hobbies-section" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Section Header */}
-      <div className="mb-12 text-center sm:text-left">
-        <div className="inline-flex items-center space-x-2 text-orange-700 bg-orange-50 border border-orange-200/80 px-3 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
-          <Flame size={14} className="text-orange-600" />
-          <span>{t.badge}</span>
-        </div>
-        <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          {t.title}
-        </h2>
-        <p className="text-base text-slate-600 mt-2 max-w-2xl leading-relaxed">
-          {t.subtitle}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: Fire Show Performer (Featured Main Card - Span 7) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow p-6 sm:p-8 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between gap-2 mb-4">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200/70">
-                <Flame size={13} className="text-orange-600" />
-                {isTh ? featuredJob.categoryTh : featuredJob.category}
-              </span>
-              <span className="text-xs font-mono text-slate-500">Phuket & Festivals</span>
-            </div>
-
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
-              {isTh ? featuredJob.titleTh : featuredJob.title}
-            </h3>
-
-            <p className="text-sm text-slate-600 leading-relaxed mb-6">
-              {isTh ? featuredJob.descriptionTh : featuredJob.description}
-            </p>
-
-            {/* Skills & Badges */}
-            <div className="space-y-3 mb-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                {t.skillsLabel}
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {(isTh ? featuredJob.skillsTh : featuredJob.skills).map((skill, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200"
-                  >
-                    <CheckCircle2 size={12} className="text-orange-600 mr-1.5" />
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+      
+      {/* ======================================================== */}
+      {/* PART 1 (TOP): International Work Experiences              */}
+      {/* ======================================================== */}
+      <div id="international-work-section" className="mb-16">
+        {/* Section Header */}
+        <div className="mb-10 text-center sm:text-left">
+          <div className="inline-flex items-center space-x-2 text-blue-800 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
+            <Globe2 size={14} className="text-blue-600" />
+            <span>{tInter.badge}</span>
           </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            {tInter.title}
+          </h2>
+          <p className="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+            {tInter.subtitle}
+          </p>
+        </div>
 
-          {/* Bottom Area: Stats Bar + Video Accordion */}
-          <div>
-            {/* Stats Bar */}
-            <div className="pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
-                <div className="text-xs text-slate-500 font-medium">
-                  {isTh ? 'จุดเน้นหลัก' : 'Core Discipline'}
-                </div>
-                <div className="text-sm font-bold text-slate-800 mt-0.5">
-                  {isTh ? 'วินัยเวที & ความปลอดภัย 100%' : 'Stage Awareness & Safety'}
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
-                <div className="text-xs text-slate-500 font-medium">
-                  {isTh ? 'สภาวะการทำงาน' : 'Key Strength'}
-                </div>
-                <div className="text-sm font-bold text-emerald-700 mt-0.5">
-                  {isTh ? 'สมาธิสูง & แก้ปัญหาเฉพาะหน้า' : 'Composure Under Pressure'}
-                </div>
-              </div>
-            </div>
+        {/* 3 Experience Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {internationalExperiences.map((exp) => {
+            const getFallbackIcon = () => {
+              if (exp.id === 'edc-thailand') return <Music2 size={24} className="text-indigo-600" />;
+              if (exp.id === 'starlight-education') return <Rocket size={24} className="text-blue-600" />;
+              return <Building2 size={24} className="text-teal-600" />;
+            };
 
-            {/* Accordion Toggle Button for Video Player */}
-            <button
-              onClick={() => {
-                sound.playClick();
-                setExpandedFireShow(prev => !prev);
-              }}
-              className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-orange-50/70 hover:bg-orange-100/70 border border-orange-200/80 text-xs font-bold text-orange-900 transition-all group/btn cursor-pointer shadow-2xs"
-            >
-              <span className="flex items-center gap-2">
-                <Play size={14} className="text-orange-600 fill-orange-600" />
-                <span>{expandedFireShow ? t.collapseBtn : t.viewVideoBtn}</span>
-              </span>
-              <ChevronDown 
-                size={16} 
-                className={`text-orange-600 transition-transform duration-300 ${
-                  expandedFireShow ? 'rotate-180' : ''
-                }`} 
-              />
-            </button>
+            const getFallbackTitle = () => {
+              if (exp.id === 'edc-thailand') return isTh ? 'EDC SkyDeck Operations' : 'EDC SkyDeck Operations';
+              if (exp.id === 'starlight-education') return isTh ? 'Starlight STEM Workshop' : 'Starlight STEM Workshop';
+              return isTh ? 'Malaysia Operations' : 'Malaysia Operations';
+            };
 
-            {/* Collapsible Video Player */}
-            <AnimatePresence>
-              {expandedFireShow && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35, ease: 'easeInOut' }}
-                  className="overflow-hidden mt-4 pt-4 border-t border-slate-100 space-y-3"
-                >
-                  <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-md">
-                    <video 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      controls 
-                      className="w-full h-full aspect-video rounded-xl object-cover"
-                    >
-                      <source src="/videos/fireshow.mov" type="video/quicktime" />
-                      <source src="/videos/fireshow.mov" type="video/mp4" />
-                      {isTh ? 'เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ' : 'Your browser does not support playing this video.'}
-                    </video>
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium px-1">
-                    <span className="flex items-center gap-1.5 text-orange-800">
-                      <Flame size={12} className="text-orange-600" />
-                      <span>{isTh ? 'คลิปการแสดงควงกระบองไฟสด (Live Performance Clip)' : 'Live Fire Performance Clip'}</span>
+            const role = isTh ? exp.roleTh : exp.role;
+            const company = isTh ? exp.companyTh : exp.company;
+            const location = isTh ? exp.locationTh : exp.location;
+            const description = isTh ? exp.descriptionTh : exp.description;
+            const tags = isTh && exp.tagsTh ? exp.tagsTh : exp.tags;
+
+            return (
+              <div
+                key={exp.id}
+                className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between"
+              >
+                <div>
+                  {/* Image Slot with Fallback */}
+                  <ImageWithFallback
+                    src={exp.imageUrl || ''}
+                    alt={role}
+                    fallbackIcon={getFallbackIcon()}
+                    fallbackTitle={getFallbackTitle()}
+                    fallbackSubtitle={isTh ? 'พร้อมแสดงรูปภาพทันที' : 'Image slot ready'}
+                  />
+
+                  {/* Company & Meta */}
+                  <div className="flex flex-wrap items-center gap-y-1 gap-x-2 text-xs text-slate-500 mb-2">
+                    <span className="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200/60">
+                      {company}
                     </span>
-                    <span className="font-mono text-[10px] text-slate-400">/videos/fireshow.mov</span>
+                    <span className="flex items-center gap-1">
+                      <MapPin size={11} className="text-slate-400" />
+                      {location}
+                    </span>
+                    {exp.period && (
+                      <span className="flex items-center gap-1 font-mono text-[11px] text-slate-400">
+                        <Calendar size={11} className="text-slate-400" />
+                        {exp.period}
+                      </span>
+                    )}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
 
-        {/* Right: Freelance Photography, Water Sports & Travel (Span 5) */}
-        <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
-          <div className="px-2">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-              <Sparkles size={16} className="text-blue-600" />
-              {t.hobbiesTitle}
-            </h4>
-            <p className="text-xs text-slate-500 mt-1">
-              {t.hobbiesSubtitle}
-            </p>
-          </div>
+                  {/* Title / Role */}
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-3">
+                    {role}
+                  </h3>
 
-          <div className="space-y-3 flex-1 flex flex-col justify-between">
-            {hobbies.map((hobby) => {
-              const getIcon = () => {
-                if (hobby.id === 'photography') return <Camera size={18} className="text-indigo-600" />;
-                if (hobby.id === 'water-sports') return <Waves size={18} className="text-cyan-600" />;
-                return <Compass size={18} className="text-blue-600" />;
-              };
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                    {description}
+                  </p>
 
-              const isExpanded = expandedHobbyId === hobby.id;
-
-              return (
-                <div
-                  key={hobby.id}
-                  className="bg-white rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md p-4 transition-all"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 shrink-0">
-                      {getIcon()}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <h5 className="text-sm font-bold text-slate-900">
-                          {isTh ? hobby.titleTh : hobby.title}
-                        </h5>
-                        <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-                          {isTh ? hobby.tagTh : hobby.tag}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
-                        {isTh ? hobby.descriptionTh : hobby.description}
-                      </p>
-
-                      {/* Accordion Toggle for Hobby Cards */}
-                      <button
-                        onClick={() => {
-                          sound.playClick();
-                          setExpandedHobbyId(prev => prev === hobby.id ? null : hobby.id);
-                        }}
-                        className="mt-3 flex items-center justify-between w-full pt-2 border-t border-slate-100 text-[11px] font-semibold text-slate-500 hover:text-blue-700 transition-colors group/hb cursor-pointer"
+                  {/* Starlight Astronaut Verification Link */}
+                  {exp.verificationUrl && (
+                    <div className="mb-4">
+                      <a
+                        href={exp.verificationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => sound.playClick()}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition-colors shadow-2xs"
                       >
-                        <span>
-                          {isExpanded 
-                            ? t.collapseBtn 
-                            : (hobby.id === 'photography' 
-                                ? (isTh ? 'ดูรายละเอียดบริการถ่ายภาพ' : 'View Photography Scope')
-                                : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
-                              )}
-                        </span>
-                        <ChevronDown 
-                          size={14} 
-                          className={`text-slate-400 group-hover/hb:text-blue-600 transition-transform duration-300 ${
-                            isExpanded ? 'rotate-180' : ''
-                          }`} 
-                        />
-                      </button>
-
-                      {/* Collapsible Content */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="overflow-hidden"
-                          >
-                            {getHobbyExpandedContent(hobby.id)}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                        <ExternalLink size={12} className="text-blue-600" />
+                        <span>{isTh ? exp.verificationLabelTh : exp.verificationLabel}</span>
+                      </a>
                     </div>
+                  )}
+
+                  {/* Malaysia Quote Callout */}
+                  {(exp.quote || exp.quoteTh) && (
+                    <div className="mb-4 p-3 rounded-xl bg-slate-50 border-l-4 border-indigo-500 text-xs text-slate-700 leading-relaxed">
+                      <div className="flex items-center gap-1.5 text-indigo-700 font-bold mb-1 text-[11px]">
+                        <Quote size={12} className="text-indigo-600" />
+                        <span>{tInter.quoteLabel || (isTh ? 'บทเรียนและความประทับใจ:' : 'Key Takeaway:')}</span>
+                      </div>
+                      <p className="italic text-[11px] text-slate-600">
+                        {isTh ? exp.quoteTh : exp.quote}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Tags */}
+                <div className="pt-4 border-t border-slate-100 mt-2">
+                  <div className="flex flex-wrap gap-1.5">
+                    {tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/80"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ======================================================== */}
+      {/* SECTION DIVIDER                                          */}
+      {/* ======================================================== */}
+      <div className="relative my-16 sm:my-20">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <div className="w-full border-t border-slate-200" />
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-slate-50/90 backdrop-blur-xs px-4 py-1.5 rounded-full text-xs font-semibold text-slate-500 border border-slate-200 shadow-2xs uppercase tracking-wider flex items-center gap-1.5">
+            <Flame size={13} className="text-orange-500" />
+            {isTh ? 'กิจกรรมนอกเวลาเรียน & งานเสริมสร้างสรรค์' : 'Extracurricular & Creative Ventures'}
+          </span>
+        </div>
+      </div>
+
+      {/* ======================================================== */}
+      {/* PART 2 (BOTTOM): Creative Side Jobs, Income & Hobbies     */}
+      {/* ======================================================== */}
+      <div>
+        {/* Section Header */}
+        <div className="mb-10 text-center sm:text-left">
+          <div className="inline-flex items-center space-x-2 text-orange-800 bg-orange-50 border border-orange-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
+            <Flame size={14} className="text-orange-600" />
+            <span>{tSide.badge}</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            {tSide.title}
+          </h2>
+          <p className="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+            {tSide.subtitle}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left: Fire Show Performer (Featured Main Card - Span 7) */}
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-4">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200/70">
+                  <Flame size={13} className="text-orange-600" />
+                  {isTh ? featuredJob.categoryTh : featuredJob.category}
+                </span>
+                <span className="text-xs font-mono text-slate-500">Phuket & Festivals</span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+                {isTh ? featuredJob.titleTh : featuredJob.title}
+              </h3>
+
+              <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                {isTh ? featuredJob.descriptionTh : featuredJob.description}
+              </p>
+
+              {/* Skills & Badges */}
+              <div className="space-y-3 mb-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  {tSide.skillsLabel}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(isTh ? featuredJob.skillsTh : featuredJob.skills).map((skill, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200"
+                    >
+                      <CheckCircle2 size={12} className="text-orange-600 mr-1.5" />
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Area: Stats Bar + Video Accordion */}
+            <div>
+              {/* Stats Bar */}
+              <div className="pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div className="text-xs text-slate-500 font-medium">
+                    {isTh ? 'จุดเน้นหลัก' : 'Core Discipline'}
+                  </div>
+                  <div className="text-sm font-bold text-slate-800 mt-0.5">
+                    {isTh ? 'วินัยเวที & ความปลอดภัย 100%' : 'Stage Awareness & Safety'}
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div className="text-xs text-slate-500 font-medium">
+                    {isTh ? 'สภาวะการทำงาน' : 'Key Strength'}
+                  </div>
+                  <div className="text-sm font-bold text-emerald-700 mt-0.5">
+                    {isTh ? 'สมาธิสูง & แก้ปัญหาเฉพาะหน้า' : 'Composure Under Pressure'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Accordion Toggle Button for Fire Show Video */}
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setExpandedFireShow(prev => !prev);
+                }}
+                className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-orange-50/80 hover:bg-orange-100/80 border border-orange-200/80 text-xs font-bold text-orange-900 transition-all group/btn cursor-pointer shadow-2xs"
+              >
+                <span className="flex items-center gap-2">
+                  <Play size={14} className="text-orange-600 fill-orange-600" />
+                  <span>{expandedFireShow ? tSide.collapseBtn : tSide.viewVideoBtn}</span>
+                </span>
+                <ChevronDown 
+                  size={16} 
+                  className={`text-orange-600 transition-transform duration-300 ${
+                    expandedFireShow ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+
+              {/* Collapsible Video Player */}
+              <AnimatePresence>
+                {expandedFireShow && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeInOut' }}
+                    className="overflow-hidden mt-4 pt-4 border-t border-slate-100 space-y-3"
+                  >
+                    <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-md">
+                      <video 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        controls 
+                        className="w-full h-full aspect-video rounded-xl object-cover"
+                      >
+                        <source src="/videos/fireshow.mov" type="video/quicktime" />
+                        <source src="/videos/fireshow.mov" type="video/mp4" />
+                        {isTh ? 'เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ' : 'Your browser does not support playing this video.'}
+                      </video>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium px-1">
+                      <span className="flex items-center gap-1.5 text-orange-800">
+                        <Flame size={12} className="text-orange-600" />
+                        <span>{isTh ? 'คลิปการแสดงควงกระบองไฟสด (Live Performance Clip)' : 'Live Fire Performance Clip'}</span>
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-400">/videos/fireshow.mov</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Right: Freelance Photography, Water Sports & Travel (Span 5) */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+            <div className="px-2">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <Sparkles size={16} className="text-blue-600" />
+                {tSide.hobbiesTitle}
+              </h4>
+              <p className="text-xs text-slate-500 mt-1">
+                {tSide.hobbiesSubtitle}
+              </p>
+            </div>
+
+            <div className="space-y-3.5 flex-1 flex flex-col justify-between">
+              {hobbies.map((hobby) => {
+                const getIcon = () => {
+                  if (hobby.id === 'photography') return <Camera size={18} className="text-indigo-600" />;
+                  if (hobby.id === 'water-sports') return <Waves size={18} className="text-cyan-600" />;
+                  return <Compass size={18} className="text-blue-600" />;
+                };
+
+                const isExpanded = expandedHobbyId === hobby.id;
+
+                return (
+                  <div
+                    key={hobby.id}
+                    className="bg-white rounded-xl border border-slate-200/90 shadow-xs hover:shadow-md p-4 transition-all"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 shrink-0">
+                        {getIcon()}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <h5 className="text-sm font-bold text-slate-900">
+                            {isTh ? hobby.titleTh : hobby.title}
+                          </h5>
+                          <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+                            {isTh ? hobby.tagTh : hobby.tag}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                          {isTh ? hobby.descriptionTh : hobby.description}
+                        </p>
+
+                        {/* Accordion Toggle for Hobby Cards */}
+                        <button
+                          onClick={() => {
+                            sound.playClick();
+                            setExpandedHobbyId(prev => prev === hobby.id ? null : hobby.id);
+                          }}
+                          className="mt-3 flex items-center justify-between w-full pt-2 border-t border-slate-100 text-[11px] font-semibold text-slate-500 hover:text-blue-700 transition-colors group/hb cursor-pointer"
+                        >
+                          <span>
+                            {isExpanded 
+                              ? tSide.collapseBtn 
+                              : (hobby.id === 'photography' 
+                                  ? (isTh ? 'ดูรายละเอียดบริการถ่ายภาพ' : 'View Photography Scope')
+                                  : hobby.id === 'water-sports'
+                                  ? (isTh ? 'ชมคลิปวิดีโอ & รายละเอียด' : 'Watch Video & Details')
+                                  : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
+                                )}
+                          </span>
+                          <ChevronDown 
+                            size={14} 
+                            className={`text-slate-400 group-hover/hb:text-blue-600 transition-transform duration-300 ${
+                              isExpanded ? 'rotate-180' : ''
+                            }`} 
+                          />
+                        </button>
+
+                        {/* Collapsible Content */}
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.25 }}
+                              className="overflow-hidden"
+                            >
+                              {getHobbyExpandedContent(hobby.id)}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
+
     </section>
   );
 };
