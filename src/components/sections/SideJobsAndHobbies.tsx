@@ -11,7 +11,6 @@ import {
   Play, 
   Image as ImageIcon,
   Globe2,
-  ExternalLink,
   Quote,
   MapPin,
   Calendar
@@ -21,14 +20,14 @@ import { sound } from '../../utils/sound';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
-// Image component that displays real uploaded photo with clean styling and fallback handling
+// Responsive image component that displays real uploaded photo with clean styling and fallback handling
 const CardImage: React.FC<{
   src: string;
   alt: string;
   backupSrc?: string;
 }> = ({ src, alt, backupSrc }) => {
   return (
-    <div className="relative w-full h-52 mb-4 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/img">
+    <div className="relative w-full h-44 sm:h-52 mb-3.5 sm:mb-4 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/img">
       <img
         src={src}
         alt={alt}
@@ -37,7 +36,7 @@ const CardImage: React.FC<{
             e.currentTarget.src = backupSrc;
           }
         }}
-        className="w-full h-52 object-cover rounded-xl group-hover/img:scale-105 transition-transform duration-500"
+        className="w-full h-44 sm:h-52 object-cover rounded-xl group-hover/img:scale-105 transition-transform duration-500"
         loading="eager"
       />
     </div>
@@ -58,12 +57,12 @@ export const SideJobsAndHobbies: React.FC = () => {
     switch (id) {
       case 'photography':
         return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
             <div className="flex items-center gap-1.5 font-bold text-slate-800">
               <ImageIcon size={13} className="text-indigo-600" />
               <span>{isTh ? 'ขอบเขตบริการและผลงานภาพถ่าย:' : 'Service Scope & Photography Work:'}</span>
             </div>
-            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
               <li>{isTh ? 'ถ่ายภาพอีเวนต์ของมหาวิทยาลัย งานพิธีการ และกิจกรรมชมรม' : 'University ceremonies, student clubs, and official campus events'}</li>
               <li>{isTh ? 'ภาพพอร์ตเทรตและแคนดิด (Candid) เน้นอารมณ์ธรรมชาติและจังหวะเวลา' : 'Portrait & candid shots focusing on genuine expressions'}</li>
               <li>{isTh ? 'แต่งโทนสีและควบคุมคุณภาพส่งมอบงานด้วย Adobe Lightroom' : 'Professional color grading and batch post-production via Adobe Lightroom'}</li>
@@ -72,16 +71,16 @@ export const SideJobsAndHobbies: React.FC = () => {
         );
       case 'water-sports':
         return (
-          <div className="space-y-3.5 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-3 sm:space-y-3.5 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
             {/* Real Surfing Preview Photo */}
-            <div className="relative w-full h-48 sm:h-52 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/surf">
+            <div className="relative w-full h-40 sm:h-48 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/surf">
               <img
                 src="/images/surfing.jpeg"
                 alt="Surfing & Water Sports in Phuket"
-                className="w-full h-48 sm:h-52 object-cover rounded-xl group-hover/surf:scale-105 transition-transform duration-500"
+                className="w-full h-40 sm:h-48 object-cover rounded-xl group-hover/surf:scale-105 transition-transform duration-500"
                 loading="eager"
               />
-              <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-xs text-xs font-semibold text-white flex items-center gap-1.5 shadow-xs">
+              <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-2.5 px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-xs text-[11px] sm:text-xs font-semibold text-white flex items-center gap-1.5 shadow-xs">
                 <Waves size={13} className="text-cyan-300" />
                 <span>{isTh ? 'กีฬาทางน้ำและการโต้คลื่น • ชายหาดภูเก็ต' : 'Surfing & Marine Sports • Phuket'}</span>
               </div>
@@ -91,7 +90,7 @@ export const SideJobsAndHobbies: React.FC = () => {
               <Waves size={13} className="text-cyan-600" />
               <span>{isTh ? 'ทักษะและจุดเน้นด้านกีฬาทางน้ำ:' : 'Marine Disciplines & Outdoor Agility:'}</span>
             </div>
-            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
               <li>{isTh ? 'โต้คลื่น (Surfing) ตามชายหาดฝั่งตะวันตกของภูเก็ต (หาดกะตะ, กะตะน้อย)' : 'Ocean surfing at Phuket’s west-coast breaks (Kata Beach, Nai Harn)'}</li>
               <li>{isTh ? 'ว่ายน้ำทะเลเปิด ฝึกการอ่านกระแสน้ำและตัดสินใจรวดเร็ว' : 'Open water swimming: reading currents and dynamic condition adaptation'}</li>
               <li>{isTh ? 'เสริมสร้างความอดทน สมาธิ และความมั่นคงทางอารมณ์' : 'Nurtures physical endurance, mental stillness, and situational agility'}</li>
@@ -106,12 +105,12 @@ export const SideJobsAndHobbies: React.FC = () => {
                 </span>
                 <span className="font-mono text-[10px] text-slate-400">/videos/watersports.mp4</span>
               </div>
-              <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs">
+              <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs w-full">
                 <video 
                   controls 
                   playsInline 
                   poster="/images/surfing.jpeg"
-                  className="w-full h-full aspect-video rounded-xl object-cover"
+                  className="w-full aspect-video rounded-xl object-cover"
                 >
                   <source src="/videos/watersports.mp4" type="video/mp4" />
                   <p className="p-4 text-xs text-slate-300 text-center">
@@ -124,12 +123,12 @@ export const SideJobsAndHobbies: React.FC = () => {
         );
       case 'travel':
         return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3.5 rounded-lg border border-slate-200/70 mt-3">
+          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
             <div className="flex items-center gap-1.5 font-bold text-slate-800">
               <Compass size={13} className="text-blue-600" />
               <span>{isTh ? 'การเปิดโลกทัศน์และการปรับตัว:' : 'Cultural Discovery & Problem Solving:'}</span>
             </div>
-            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px]">
+            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
               <li>{isTh ? 'เดินทางสำรวจพื้นที่ใหม่ๆ และแลกเปลี่ยนกับผู้คนหลากหลายวัฒนธรรม' : 'Exploring varied geographies and engaging with diverse communities'}</li>
               <li>{isTh ? 'ฝึกทักษะการวางแผนเส้นทางและการแก้ไขปัญหาเฉพาะหน้า' : 'Cultivates itinerary logistics planning and independent problem solving'}</li>
               <li>{isTh ? 'นำมุมมองที่กว้างขึ้นมาประยุกต์ใช้กับการออกแบบ UX และการทำงานร่วมกัน' : 'Channels broader horizons into empathetic UX design and team teamwork'}</li>
@@ -142,28 +141,28 @@ export const SideJobsAndHobbies: React.FC = () => {
   };
 
   return (
-    <section id="hobbies-section" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <section id="hobbies-section" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* ======================================================== */}
       {/* PART 1 (TOP): International Work Experiences              */}
       {/* ======================================================== */}
-      <div id="international-work-section" className="mb-16">
+      <div id="international-work-section" className="mb-14 sm:mb-16">
         {/* Section Header */}
-        <div className="mb-10 text-center sm:text-left">
+        <div className="mb-8 sm:mb-10 text-center sm:text-left">
           <div className="inline-flex items-center space-x-2 text-blue-800 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
             <Globe2 size={14} className="text-blue-600" />
             <span>{tInter.badge}</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
             {tInter.title}
           </h2>
-          <p className="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
             {tInter.subtitle}
           </p>
         </div>
 
-        {/* 3 Experience Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* 3 Experience Cards Grid: 1 col on mobile, 2 on tablet, 3 on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {internationalExperiences.map((exp) => {
             const role = isTh ? exp.roleTh : exp.role;
             const company = isTh ? exp.companyTh : exp.company;
@@ -187,10 +186,10 @@ export const SideJobsAndHobbies: React.FC = () => {
             return (
               <div
                 key={exp.id}
-                className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-300 p-4 sm:p-6 flex flex-col justify-between"
               >
                 <div>
-                  {/* Real Photo Container: w-full h-52 object-cover rounded-xl border border-slate-200 shadow-sm */}
+                  {/* Real Photo Container: w-full h-44 sm:h-52 object-cover rounded-xl border border-slate-200 shadow-sm */}
                   <CardImage
                     src={imageSrc}
                     alt={role}
@@ -215,30 +214,44 @@ export const SideJobsAndHobbies: React.FC = () => {
                   </div>
 
                   {/* Title / Role */}
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-3">
+                  <h3 className="text-lg sm:text-xl font-semibold text-slate-900 leading-snug mb-2 sm:mb-3">
                     {role}
                   </h3>
 
-                  {/* Description */}
+                  {/* Description with Sam Inline Hyperlink */}
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                    {description}
+                    {exp.id === 'starlight-education' ? (
+                      isTh ? (
+                        <>
+                          ร่วมดูแลและให้คำแนะนำแก่นักเรียนหลักสูตรนานาชาติในห้องปฏิบัติการวิทยาศาสตร์ (Science Lab) โดยได้ทำงานเคียงข้างกับอดีตนักบินอวกาศ NASA และนักวิทยาศาสตร์ตัวจริงอย่าง{' '}
+                          <a
+                            href="https://en.wikipedia.org/wiki/Charles_D._Gemar"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => sound.playClick()}
+                            className="text-blue-600 hover:text-blue-800 underline underline-offset-2 font-medium inline-flex items-center gap-1 transition-colors"
+                          >
+                            ‘Sam’ (Charles D. Gemar) ↗
+                          </a>
+                        </>
+                      ) : (
+                        <>
+                          Guided international students in hands-on science laboratory sessions, co-facilitating experiments directly alongside former NASA astronaut and scientist{' '}
+                          <a
+                            href="https://en.wikipedia.org/wiki/Charles_D._Gemar"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => sound.playClick()}
+                            className="text-blue-600 hover:text-blue-800 underline underline-offset-2 font-medium inline-flex items-center gap-1 transition-colors"
+                          >
+                            ‘Sam’ (Charles D. Gemar) ↗
+                          </a>
+                        </>
+                      )
+                    ) : (
+                      description
+                    )}
                   </p>
-
-                  {/* Starlight Astronaut Verification Link */}
-                  {exp.verificationUrl && (
-                    <div className="mb-4">
-                      <a
-                        href={exp.verificationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => sound.playClick()}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition-colors shadow-2xs"
-                      >
-                        <ExternalLink size={12} className="text-blue-600" />
-                        <span>{isTh ? exp.verificationLabelTh : exp.verificationLabel}</span>
-                      </a>
-                    </div>
-                  )}
 
                   {/* Malaysia Quote Callout */}
                   {(exp.quote || exp.quoteTh) && (
@@ -254,13 +267,13 @@ export const SideJobsAndHobbies: React.FC = () => {
                   )}
                 </div>
 
-                {/* Tags */}
-                <div className="pt-4 border-t border-slate-100 mt-2">
-                  <div className="flex flex-wrap gap-1.5">
+                {/* Tags Badge Pills */}
+                <div className="pt-3.5 sm:pt-4 border-t border-slate-100 mt-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/80"
+                        className="text-[11px] sm:text-xs font-medium px-2 sm:px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/80"
                       >
                         {tag}
                       </span>
@@ -276,14 +289,14 @@ export const SideJobsAndHobbies: React.FC = () => {
       {/* ======================================================== */}
       {/* SECTION DIVIDER                                          */}
       {/* ======================================================== */}
-      <div className="relative my-16 sm:my-20">
+      <div className="relative my-14 sm:my-20">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-slate-200" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-slate-50/90 backdrop-blur-xs px-4 py-1.5 rounded-full text-xs font-semibold text-slate-500 border border-slate-200 shadow-2xs uppercase tracking-wider flex items-center gap-1.5">
+          <span className="bg-slate-50/90 backdrop-blur-xs px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold text-slate-500 border border-slate-200 shadow-2xs uppercase tracking-wider flex items-center gap-1.5">
             <Flame size={13} className="text-orange-500" />
-            {isTh ? 'กิจกรรมนอกเวลาเรียน & งานเสริมสร้างสรรค์' : 'Extracurricular & Creative Ventures'}
+            <span>{isTh ? 'กิจกรรมนอกเวลาเรียน & งานเสริมสร้างสรรค์' : 'Extracurricular & Creative Ventures'}</span>
           </span>
         </div>
       </div>
@@ -293,24 +306,25 @@ export const SideJobsAndHobbies: React.FC = () => {
       {/* ======================================================== */}
       <div>
         {/* Section Header */}
-        <div className="mb-10 text-center sm:text-left">
+        <div className="mb-8 sm:mb-10 text-center sm:text-left">
           <div className="inline-flex items-center space-x-2 text-orange-800 bg-orange-50 border border-orange-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
             <Flame size={14} className="text-orange-600" />
             <span>{tSide.badge}</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
             {tSide.title}
           </h2>
-          <p className="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
             {tSide.subtitle}
           </p>
         </div>
 
+        {/* Side Jobs & Hobbies Grid: Stacked 1-col on mobile, 12-col on lg */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: Fire Show Performer (Featured Main Card - Span 7) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow p-6 sm:p-8 flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow p-5 sm:p-8 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between gap-2 mb-4">
+              <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200/70">
                   <Flame size={13} className="text-orange-600" />
                   {isTh ? featuredJob.categoryTh : featuredJob.category}
@@ -318,26 +332,26 @@ export const SideJobsAndHobbies: React.FC = () => {
                 <span className="text-xs font-mono text-slate-500">Phuket & Festivals</span>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">
                 {isTh ? featuredJob.titleTh : featuredJob.title}
               </h3>
 
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5 sm:mb-6">
                 {isTh ? featuredJob.descriptionTh : featuredJob.description}
               </p>
 
               {/* Skills & Badges */}
-              <div className="space-y-3 mb-6">
+              <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-6">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   {tSide.skillsLabel}
                 </span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {(isTh ? featuredJob.skillsTh : featuredJob.skills).map((skill, idx) => (
                     <span
                       key={idx}
                       className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200"
                     >
-                      <CheckCircle2 size={12} className="text-orange-600 mr-1.5" />
+                      <CheckCircle2 size={12} className="text-orange-600 mr-1.5 shrink-0" />
                       {skill}
                     </span>
                   ))}
@@ -348,7 +362,7 @@ export const SideJobsAndHobbies: React.FC = () => {
             {/* Bottom Area: Stats Bar + Video Accordion */}
             <div>
               {/* Stats Bar */}
-              <div className="pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
+              <div className="pt-5 sm:pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
                   <div className="text-xs text-slate-500 font-medium">
                     {isTh ? 'จุดเน้นหลัก' : 'Core Discipline'}
@@ -373,7 +387,7 @@ export const SideJobsAndHobbies: React.FC = () => {
                   sound.playClick();
                   setExpandedFireShow(prev => !prev);
                 }}
-                className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-orange-50/80 hover:bg-orange-100/80 border border-orange-200/80 text-xs font-bold text-orange-900 transition-all group/btn cursor-pointer shadow-2xs"
+                className="mt-4 sm:mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-orange-50/80 hover:bg-orange-100/80 border border-orange-200/80 text-xs font-bold text-orange-900 transition-all group/btn cursor-pointer shadow-2xs"
               >
                 <span className="flex items-center gap-2">
                   <Play size={14} className="text-orange-600 fill-orange-600" />
@@ -397,21 +411,21 @@ export const SideJobsAndHobbies: React.FC = () => {
                     transition={{ duration: 0.35, ease: 'easeInOut' }}
                     className="overflow-hidden mt-4 pt-4 border-t border-slate-100 space-y-3"
                   >
-                    <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-md">
+                    <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-md w-full">
                       <video 
                         autoPlay 
                         loop 
                         muted 
                         playsInline 
                         controls 
-                        className="w-full h-full aspect-video rounded-xl object-cover"
+                        className="w-full aspect-video rounded-xl object-cover"
                       >
                         <source src="/videos/fireshow.mov" type="video/quicktime" />
                         <source src="/videos/fireshow.mov" type="video/mp4" />
                         {isTh ? 'เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ' : 'Your browser does not support playing this video.'}
                       </video>
                     </div>
-                    <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium px-1">
+                    <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 font-medium px-1 gap-1">
                       <span className="flex items-center gap-1.5 text-orange-800">
                         <Flame size={12} className="text-orange-600" />
                         <span>{isTh ? 'คลิปการแสดงควงกระบองไฟสด (Live Performance Clip)' : 'Live Fire Performance Clip'}</span>
@@ -426,8 +440,8 @@ export const SideJobsAndHobbies: React.FC = () => {
 
           {/* Right: Freelance Photography, Water Sports & Travel (Span 5) */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
-            <div className="px-2">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+            <div className="px-1 sm:px-2">
+              <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
                 <Sparkles size={16} className="text-blue-600" />
                 {tSide.hobbiesTitle}
               </h4>
@@ -449,15 +463,15 @@ export const SideJobsAndHobbies: React.FC = () => {
                 return (
                   <div
                     key={hobby.id}
-                    className="bg-white rounded-xl border border-slate-200/90 shadow-xs hover:shadow-md p-4 transition-all"
+                    className="bg-white rounded-xl border border-slate-200/90 shadow-xs hover:shadow-md p-4 sm:p-5 transition-all"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 shrink-0">
+                      <div className="p-2 sm:p-2.5 rounded-lg bg-slate-50 border border-slate-200 shrink-0">
                         {getIcon()}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <h5 className="text-sm font-bold text-slate-900">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+                          <h5 className="text-sm sm:text-base font-bold text-slate-900">
                             {isTh ? hobby.titleTh : hobby.title}
                           </h5>
                           <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
