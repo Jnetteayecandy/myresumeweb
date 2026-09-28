@@ -21,9 +21,9 @@ export const personalInfo = {
   locationTh: "ภูเก็ต / กรุงเทพฯ, ประเทศไทย",
   status: "Available for Full-Stack Developer & Software Engineer roles",
   statusTh: "พร้อมรับงาน Full-Stack Developer & Software Engineer",
-  email: "wipaporn.wikorn@gmail.com",
-  github: "https://github.com/wipaporn",
-  linkedin: "https://linkedin.com/in/wipaporn-wikornmetkul",
+  email: "wipaporn.wikornmetkul@gmail.com",
+  github: "https://github.com/Jnetteayecandy",
+  linkedin: "https://www.linkedin.com/in/wipaporn-wikornmetkul-022843287",
   stats: [
     { label: "Degree Focus", labelTh: "หลักสูตร", value: "B.Eng. Software Engineering" },
     { label: "Campus", labelTh: "สถาบัน", value: "PSU Phuket Campus" },
@@ -76,8 +76,8 @@ export const bentoProjects: Project[] = [
       { label: "Clients Served", value: "Commercial" },
       { label: "Device Support", value: "100% Responsive" }
     ],
-    githubUrl: "https://github.com/wipaporn",
-    liveUrl: "https://github.com/wipaporn",
+    githubUrl: "https://github.com/Jnetteayecandy",
+    liveUrl: "https://github.com/Jnetteayecandy",
     highlights: [
       "Custom UI/UX themed for individual wedding couples",
       "Interactive RSVP and calendar reminders",
@@ -102,7 +102,7 @@ export const bentoProjects: Project[] = [
       { label: "Proof Obligations", value: "100% Discharged" },
       { label: "Domain", value: "Safety-Critical" }
     ],
-    githubUrl: "https://github.com/wipaporn",
+    githubUrl: "https://github.com/Jnetteayecandy",
     highlights: [
       "Stepwise machine refinement from abstract specifications to concrete guards",
       "Invariant preservation proofs for concurrent resource access",
@@ -127,8 +127,8 @@ export const bentoProjects: Project[] = [
       { label: "Platform", value: "Web Browser" },
       { label: "Install Required", value: "0 MB (Play Now)" }
     ],
-    githubUrl: "https://github.com/wipaporn",
-    liveUrl: "https://github.com/wipaporn",
+    githubUrl: "https://github.com/Jnetteayecandy",
+    liveUrl: "https://github.com/Jnetteayecandy",
     highlights: [
       "Playable immediately in any browser with zero installation",
       "Smooth frame rate physics and local high-score persistence",
@@ -141,52 +141,6 @@ export const bentoProjects: Project[] = [
     ]
   },
   {
-    id: "university-event-booking",
-    title: "University Event Booking Platform",
-    titleTh: "ระบบจองพื้นที่และกิจกรรมมหาวิทยาลัย",
-    subtitle: "Campus Venue & Activity Reservation System",
-    subtitleTh: "Campus Venue & Activity Reservation System",
-    description: "Full-stack university management portal facilitating venue reservations, club activity scheduling, and administrative approvals with automated conflict resolution and notification dispatch.",
-    descriptionTh: "พอร์ทัลจัดการของมหาวิทยาลัยสำหรับจองสถานที่และจัดกิจกรรมชมรม พร้อมระบบตรวจสอบการชนกันของเวลาอัตโนมัติ",
-    tags: ["Python", "Flask", "MySQL", "Bootstrap / Tailwind", "REST API"],
-    metrics: [
-      { label: "Role Hierarchy", value: "Student / Staff / Admin" },
-      { label: "Conflict Checks", value: "Automated" }
-    ],
-    githubUrl: "https://github.com/wipaporn",
-    highlights: [
-      "Role-based access control (RBAC) for student organizers and faculty approvers",
-      "Time-slot overlap prevention algorithms in relational SQL"
-    ],
-    highlightsTh: [
-      "ระบบกำหนดสิทธิ์การใช้งาน (RBAC) สำหรับนักศึกษาและอาจารย์",
-      "อัลกอริทึมป้องกันการจองเวลาซ้ำซ้อนในฐานข้อมูลเชิงสัมพันธ์"
-    ]
-  },
-  {
-    id: "student-record-oop",
-    title: "Student Record & GPA Calculator",
-    titleTh: "ระบบบันทึกข้อมูลและคำนวณเกรดนักศึกษา (Java OOP)",
-    subtitle: "Object-Oriented Programming (OOP) Architecture",
-    subtitleTh: "การออกแบบสถาปัตยกรรมเชิงวัตถุเต็มรูปแบบ (OOP)",
-    description: "Robust academic record management system built in Java using core Object-Oriented principles (Encapsulation, Inheritance, Polymorphism, Abstraction) for transcript computation, prerequisites checking, and file persistence.",
-    descriptionTh: "ระบบจัดการประวัติการเรียนที่สร้างด้วยหลักการ OOP ภาษา Java สำหรับคำนวณเกรดเฉลี่ย ตรวจสอบเงื่อนไขวิชาเรียน และบันทึกข้อมูลลงฐานข้อมูล",
-    tags: ["Java", "OOP Design Patterns", "SQLite", "Unit Testing"],
-    metrics: [
-      { label: "Paradigms", value: "Pure OOP" },
-      { label: "Data Engine", value: "SQLite / File I/O" }
-    ],
-    githubUrl: "https://github.com/wipaporn",
-    highlights: [
-      "Clean separation of Model-View-Controller architecture",
-      "Comprehensive test suites for grading formula boundary conditions"
-    ],
-    highlightsTh: [
-      "สถาปัตยกรรมแบบ Model-View-Controller ที่ชัดเจน",
-      "ชุดทดสอบ Unit Test ครอบคลุมการคำนวณเกรดทุกเงื่อนไข"
-    ]
-  },
-  {
     id: "physics-certification",
     title: "General Physics Certification (BITS Pilani)",
     titleTh: "ใบรับรองวิชาฟิสิกส์ทั่วไป (BITS Pilani via Coursera)",
@@ -194,6 +148,7 @@ export const bentoProjects: Project[] = [
     subtitleTh: "การรับรองหลักสูตรออนไลน์ที่ได้รับอนุมัติจาก BITS Pilani",
     description: "Completed rigorous foundational physics curriculum authorized by Birla Institute of Technology & Science (BITS Pilani) covering mechanics, electromagnetism, and physical modeling principles.",
     descriptionTh: "สำเร็จหลักสูตรฟิสิกส์พื้นฐานระดับมหาวิทยาลัยที่ได้รับอนุมัติจาก Birla Institute of Technology & Science (BITS Pilani) ครอบคลุมกลศาสตร์และแบบจำลองทางกายภาพ",
+    imageUrl: "/certificate_preview.png",
     tags: ["Coursera", "BITS Pilani", "General Physics", "Certificate ID: 5JFGCCY2U9MI"],
     metrics: [
       { label: "Issue Date", value: "June 2026" },
@@ -251,28 +206,44 @@ export const skillCategories: SkillCategory[] = [
 ];
 
 export const sideJobsAndHobbies = {
-  sideJob: {
-    title: "Freelance Event Photography",
-    titleTh: "รับงานถ่ายภาพอีเวนต์และกิจกรรม (Freelance Event Photography)",
-    category: "Creative Side Job (งานเสริม)",
-    description: "Providing professional photography services for university events, ceremonies, sports activities, and special occasions. Skilled in DSLR/mirrorless operation, lighting composition, quick candid capture, and Adobe Lightroom color grading.",
-    descriptionTh: "รับงานถ่ายภาพอีเวนต์ กิจกรรมของมหาวิทยาลัย งานพิธีการ และโอกาสพิเศษต่างๆ เชี่ยวชาญการจัดองค์ประกอบภาพ แสงและเงา การเก็บบรรยากาศภาพแคนดิด (Candid) และการปรับแต่งโทนสีด้วยโปรแกรมระดับมืออาชีพ",
-    skills: ["Event Photography", "Lighting & Composition", "Adobe Lightroom", "Client Communication", "Visual Storytelling"],
+  featuredJob: {
+    title: "Fire Show Performer",
+    titleTh: "นักแสดงโชว์ควงกระบองไฟ (Fire Show Performer)",
+    category: "Side Job & Live Performance",
+    categoryTh: "งานเสริมและการแสดง (Side Job & Performance)",
+    description: "Performing rhythmic fire spinning and flow arts at festivals and community events. Demands strict safety protocols, intense concentration, physical coordination, and real-time composure under pressure.",
+    descriptionTh: "ทำการแสดงควงกระบองไฟในงานเทศกาลและกิจกรรมชุมชน ช่วยฝึกฝนวินัย การมีสมาธิขั้นสูง การประเมินความปลอดภัย และการแก้ปัญหาเฉพาะหน้าภายใต้สภาวะกดดัน",
+    skills: ["Stage Awareness", "Safety-First Protocols", "Live Performance", "High Composure Under Pressure"],
+    skillsTh: ["ทักษะการแสดงและวินัยความปลอดภัย", "Stage Awareness", "Safety-First", "Live Performance"],
     stats: [
-      { label: "Focus", value: "Events & Candids" },
-      { label: "Service", value: "Freelance Available" }
+      { label: "Discipline", labelTh: "วินัยและความปลอดภัย", value: "Safety-First & Strict Focus" },
+      { label: "Performance", labelTh: "การแสดง", value: "Festivals & Events" }
+    ]
+  },
+  sideJob: {
+    title: "Fire Show Performer",
+    titleTh: "นักแสดงโชว์ควงกระบองไฟ (Fire Show Performer)",
+    category: "Side Job & Live Performance",
+    categoryTh: "งานเสริมและการแสดง (Side Job & Performance)",
+    description: "Performing rhythmic fire spinning and flow arts at festivals and community events. Demands strict safety protocols, intense concentration, physical coordination, and real-time composure under pressure.",
+    descriptionTh: "ทำการแสดงควงกระบองไฟในงานเทศกาลและกิจกรรมชุมชน ช่วยฝึกฝนวินัย การมีสมาธิขั้นสูง การประเมินความปลอดภัย และการแก้ปัญหาเฉพาะหน้าภายใต้สภาวะกดดัน",
+    skills: ["Stage Awareness", "Safety-First Protocols", "Live Performance", "High Composure Under Pressure"],
+    skillsTh: ["ทักษะการแสดงและวินัยความปลอดภัย", "Stage Awareness", "Safety-First", "Live Performance"],
+    stats: [
+      { label: "Discipline", labelTh: "วินัยและความปลอดภัย", value: "Safety-First & Strict Focus" },
+      { label: "Performance", labelTh: "การแสดง", value: "Festivals & Events" }
     ]
   },
   hobbies: [
     {
-      id: "fire-show",
-      title: "Fire Show Performer",
-      titleTh: "กิจกรรมการแสดงไฟ (Fire Show)",
-      icon: "🔥",
-      tag: "Stage Performance & Discipline",
-      tagTh: "ทักษะการแสดงและวินัยความปลอดภัย",
-      description: "Trained in rhythmic fire spinning arts (poi/staff), demanding extreme spatial awareness, strict fire-safety protocols, physical coordination, and composure under pressure.",
-      descriptionTh: "ฝึกฝนศิลปะการควงไฟและการแสดงไฟที่ต้องอาศัยวินัย สมาธิ ความแม่นยำสูง และการปฏิบัติตามมาตรฐานความปลอดภัยอย่างเคร่งครัด"
+      id: "photography",
+      title: "Freelance Event Photography",
+      titleTh: "รับงานถ่ายภาพอีเวนต์และกิจกรรม (Freelance Photography)",
+      icon: "📷",
+      tag: "Creative Side Job",
+      tagTh: "งานเสริม & ภาพแคนดิด",
+      description: "Providing photography services for university events, ceremonies, and special occasions. Skilled in DSLR/mirrorless operation, lighting composition, quick candid capture, and Adobe Lightroom color grading.",
+      descriptionTh: "รับงานถ่ายภาพอีเวนต์ กิจกรรมของมหาวิทยาลัย งานพิธีการ และภาพแคนดิด (Candid) พร้อมทักษะการจัดแสงและแต่งโทนสีด้วยโปรแกรมระดับมืออาชีพ"
     },
     {
       id: "water-sports",
@@ -326,16 +297,17 @@ export const experienceData: Experience[] = [
     techStack: ["React", "JavaScript", "Tailwind CSS", "HTML5", "Vercel"]
   },
   {
-    role: "Freelance Event Photographer",
-    company: "Freelance",
+    role: "Fire Show Performer & Freelance Event Photographer",
+    company: "Freelance & Performance",
     period: "2023 - Present",
     location: "Phuket, Thailand",
     type: "Side Job",
     achievements: [
+      "Performed rhythmic fire show arts at community events and festivals, adhering strictly to fire safety protocols.",
       "Photographed university events, student community gatherings, and outdoor activities.",
       "Managed client scheduling, photo delivery timelines, and post-processing quality control."
     ],
-    techStack: ["Photography", "Adobe Lightroom", "Composition", "Client Relations"]
+    techStack: ["Stage Awareness", "Safety Protocols", "Photography", "Adobe Lightroom"]
   }
 ];
 

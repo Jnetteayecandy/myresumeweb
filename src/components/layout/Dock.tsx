@@ -8,7 +8,7 @@ import {
   Mail, 
   Pill,
   ArrowUp,
-  Camera
+  Flame
 } from 'lucide-react';
 import { WindowId } from '../../types';
 import { sound } from '../../utils/sound';
@@ -80,7 +80,7 @@ export const Dock: React.FC<DockProps> = ({
     {
       id: 'hobbies',
       label: t.hobbies,
-      icon: <Camera size={18} className="text-amber-600" />,
+      icon: <Flame size={18} className="text-orange-500" />,
       action: () => {
         sound.playClick(1050);
         onScrollTo('hobbies-section');

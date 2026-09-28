@@ -94,18 +94,18 @@ export const translations = {
         {
           step: '04',
           category: 'CREATIVE BALANCE & PERSONALITY',
-          titlePrimary: 'PHOTOGRAPHY & HOBBIES.',
-          titleSecondary: 'EVENT PHOTOGRAPHY, FIRE SHOWS & WATER SPORTS.',
-          description: 'Balancing technical precision with freelance event photography and dynamic activities like fire performance, water sports, and travel.',
-          tags: ['Freelance Photography', 'Fire Show Performer', 'Water Sports'],
+          titlePrimary: 'FIRE PERFORMANCE & CREATIVE PURSUITS.',
+          titleSecondary: 'FIRE PERFORMER, EVENT PHOTOGRAPHY & WATER SPORTS.',
+          description: 'Demonstrating extreme discipline, focus, and safety awareness through fire spinning performances, paired with freelance event photography and active ocean sports.',
+          tags: ['Fire Show Performer', 'Event Photography', 'Water Sports', 'Discipline & Safety'],
           ctaLabel: 'View Creative Side & Hobbies',
           metrics: [
-            { label: 'Side Job', value: 'Event Photographer' },
-            { label: 'Discipline', value: 'Fire Show Performer' }
+            { label: 'Featured Side Job', value: 'Fire Show Performer' },
+            { label: 'Creative Work', value: 'Event Photographer' }
           ],
           floatingBadge: {
-            title: 'Side Job & Hobbies',
-            subtitle: 'Photography & Active Lifestyle'
+            title: 'Side Jobs & Hobbies',
+            subtitle: 'Performance & Creative Work'
           }
         }
       ]
@@ -135,7 +135,7 @@ export const translations = {
     bento: {
       badge: 'Engineering Portfolio',
       title: 'Selected Projects & Software Works',
-      subtitle: 'A showcase of web applications, commercial digital services, formal verification models, and interactive community projects.',
+      subtitle: 'A curated showcase of full-stack web applications, commercial digital services, formal verification models, and course certifications.',
       visitProjectBtn: 'Visit Website',
       playGameBtn: 'Play Game Now',
       viewCodeBtn: 'Source Code',
@@ -149,14 +149,14 @@ export const translations = {
       ciText: 'Clean Code • Type Safety • Version Control with Git'
     },
     sideJobs: {
-      badge: 'Side Job & Hobbies',
-      title: 'Creative Side Job & Personal Hobbies',
-      subtitle: 'Beyond software engineering: professional event photography and active hobbies that nurture focus, precision, and endurance.',
-      sideJobTitle: 'Freelance Event Photography',
-      sideJobBadge: 'Commercial Side Job',
-      sideJobDesc: 'Providing event, portrait, and ceremony photography services. Focused on capturing genuine candid emotions, balanced lighting composition, and polished post-production color grading.',
-      skillsLabel: 'Photography Competencies',
-      hobbiesTitle: 'Personal Hobbies & Activities',
+      badge: 'Side Jobs & Hobbies',
+      title: 'Creative Side Jobs, Student Income & Hobbies',
+      subtitle: 'Real-world pursuits that build extreme discipline, safety-first awareness, situational composure, and creative energy.',
+      sideJobTitle: 'Fire Show Performer',
+      sideJobBadge: 'Side Job & Performance',
+      sideJobDesc: 'Performing rhythmic fire spinning and flow arts at festivals and community events. Demands strict safety protocols, intense concentration, physical coordination, and real-time composure under pressure.',
+      skillsLabel: 'Performance & Safety Disciplines',
+      hobbiesTitle: 'Other Creative Work & Activities',
       hobbiesSubtitle: 'Diverse disciplines that inspire creativity and active resilience:'
     },
     contact: {
@@ -442,18 +442,18 @@ export const translations = {
         {
           step: '04',
           category: 'งานเสริมและกิจกรรมยามว่าง',
-          titlePrimary: 'งานถ่ายภาพอีเวนต์และกิจกรรม.',
-          titleSecondary: 'ช่างภาพอิสระ การแสดงไฟ และกีฬาทางน้ำ.',
-          description: 'สร้างสมดุลให้ชีวิตด้วยการรับงานถ่ายภาพอีเวนต์/กิจกรรมเป็นงานเสริม ควบคู่กับทักษะการแสดงไฟที่ฝึกสมาธิและความแม่นยำ และกีฬาทางน้ำเพื่อความแข็งแกร่ง',
-          tags: ['ช่างภาพอีเวนต์', 'การแสดงไฟ (Fire Show)', 'กีฬาทางน้ำ'],
+          titlePrimary: 'การแสดงโชว์ไฟ & งานสร้างสรรค์.',
+          titleSecondary: 'นักแสดงควงกระบองไฟ ช่างภาพอีเวนต์ และกีฬาทางน้ำ.',
+          description: 'ฝึกฝนวินัย สมาธิขั้นสูง และมาตรฐานความปลอดภัยจากการแสดงโชว์ควงกระบองไฟ ควบคู่กับการรับงานถ่ายภาพอีเวนต์ และกีฬาทางน้ำเพื่อความแข็งแกร่ง',
+          tags: ['นักแสดงโชว์ไฟ', 'ช่างภาพอีเวนต์', 'กีฬาทางน้ำ', 'วินัยและความปลอดภัย'],
           ctaLabel: 'ดูงานเสริมและกิจกรรมยามว่าง',
           metrics: [
-            { label: 'งานเสริม', value: 'ช่างภาพอีเวนต์' },
-            { label: 'ทักษะพิเศษ', value: 'นักแสดงไฟ (Fire Show)' }
+            { label: 'งานเสริมเด่น', value: 'นักแสดงโชว์ไฟ' },
+            { label: 'งานบริการภาพ', value: 'ช่างภาพอีเวนต์' }
           ],
           floatingBadge: {
             title: 'งานเสริม & งานอดิเรก',
-            subtitle: 'ช่างภาพ & กิจกรรมกลางแจ้ง'
+            subtitle: 'นักแสดงไฟ & ช่างภาพ'
           }
         }
       ]
@@ -483,7 +483,7 @@ export const translations = {
     bento: {
       badge: 'ผลงานโปรเจกต์',
       title: 'ผลงานทางวิศวกรรมและโปรเจกต์ที่คัดสรร',
-      subtitle: 'รวมเว็บแอปพลิเคชัน บริการพัฒนาเว็บเชิงพาณิชย์ การพิสูจน์ระบบด้วยวิธีทฤษฎีขั้นสูง และมินิเกมบนเว็บสำหรับเพื่อนๆ',
+      subtitle: 'รวมเว็บแอปพลิเคชัน บริการพัฒนาเว็บเชิงพาณิชย์ การพิสูจน์ความถูกต้องของระบบ และใบรับรองหลักสูตรที่ผ่านการตรวจสอบ',
       visitProjectBtn: 'เข้าชมเว็บไซต์',
       playGameBtn: 'คลิกเพื่อเล่นเกมทันที',
       viewCodeBtn: 'ดูโค้ดบน GitHub',
@@ -497,14 +497,14 @@ export const translations = {
       ciText: 'Clean Code • Type Safety • Version Control ด้วย Git & GitHub'
     },
     sideJobs: {
-      badge: 'งานเสริมและงานอดิเรก',
-      title: 'งานเสริมสร้างสรรค์และกิจกรรมยามว่าง',
-      subtitle: 'นอกเหนือจากงานวิศวกรรมซอฟต์แวร์: รับงานถ่ายภาพอีเวนต์และกิจกรรม พร้อมด้วยกิจกรรมที่ฝึกสมาธิ วินัย และความแข็งแกร่ง',
-      sideJobTitle: 'รับงานถ่ายภาพอีเวนต์และกิจกรรม (Freelance Photography)',
-      sideJobBadge: 'งานเสริม (Side Job)',
-      sideJobDesc: 'รับงานถ่ายภาพอีเวนต์ กิจกรรมของมหาวิทยาลัย งานพิธีการ และโอกาสพิเศษต่างๆ เชี่ยวชาญการจัดองค์ประกอบภาพ แสงและเงา การเก็บบรรยากาศภาพแคนดิด (Candid) และการปรับแต่งโทนสีด้วย Adobe Lightroom',
-      skillsLabel: 'ทักษะด้านการถ่ายภาพ',
-      hobbiesTitle: 'งานอดิเรกและกิจกรรมยามว่าง',
+      badge: 'งานเสริม & กิจกรรมยามว่าง',
+      title: 'งานเสริมสร้างสรรค์ การหารายได้เสริมระหว่างเรียน และกิจกรรมยามว่าง',
+      subtitle: 'ประสบการณ์นอกห้องเรียนที่สร้างวินัย สมาธิขั้นสูง การประเมินความปลอดภัย และความคิดสร้างสรรค์ที่นำมาปรับใช้กับการพัฒนาซอฟต์แวร์',
+      sideJobTitle: 'นักแสดงโชว์ควงกระบองไฟ (Fire Show Performer)',
+      sideJobBadge: 'งานเสริมและการแสดง (Side Job & Performance)',
+      sideJobDesc: 'ทำการแสดงควงกระบองไฟในงานเทศกาลและกิจกรรมชุมชน ช่วยฝึกฝนวินัย การมีสมาธิขั้นสูง การประเมินความปลอดภัย และการแก้ปัญหาเฉพาะหน้าภายใต้สภาวะกดดัน',
+      skillsLabel: 'ทักษะการแสดงและวินัยความปลอดภัย',
+      hobbiesTitle: 'งานเสริมและกิจกรรมยามว่างอื่นๆ',
       hobbiesSubtitle: 'กิจกรรมที่ช่วยสร้างสมาธิ วินัย และพลังความคิดสร้างสรรค์:'
     },
     contact: {

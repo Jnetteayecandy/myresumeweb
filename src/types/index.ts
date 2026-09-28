@@ -29,6 +29,7 @@ export interface Project {
   systemArchitectureTh?: string[];
   highlights?: string[];
   highlightsTh?: string[];
+  imageUrl?: string;
 }
 
 export interface SkillCategory {

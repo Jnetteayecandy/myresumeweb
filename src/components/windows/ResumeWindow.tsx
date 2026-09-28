@@ -1,5 +1,5 @@
 import React from 'react';
-import { Printer, Mail, Github, MapPin, Award, Briefcase, GraduationCap, Sparkles } from 'lucide-react';
+import { Printer, Mail, Github, Linkedin, MapPin, Award, Briefcase, GraduationCap, Sparkles } from 'lucide-react';
 import { personalInfo, flagshipProject, skillCategories } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
 import { useLanguage } from '../../context/LanguageContext';
@@ -60,16 +60,26 @@ export const ResumeWindow: React.FC = () => {
 
             <div className="text-xs text-slate-600 space-y-1 font-mono">
               <div className="flex items-center gap-1.5">
-                <Mail size={13} className="text-blue-600" />
-                <span>{personalInfo.email}</span>
+                <Mail size={13} className="text-blue-600 shrink-0" />
+                <a href={`mailto:${personalInfo.email}`} className="hover:text-blue-700 hover:underline">
+                  {personalInfo.email}
+                </a>
               </div>
               <div className="flex items-center gap-1.5">
-                <MapPin size={13} className="text-blue-600" />
+                <MapPin size={13} className="text-blue-600 shrink-0" />
                 <span>{t.location}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Github size={13} className="text-blue-600" />
-                <span>github.com/wipaporn</span>
+                <Github size={13} className="text-blue-600 shrink-0" />
+                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="hover:text-blue-700 hover:underline">
+                  github.com/Jnetteayecandy
+                </a>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Linkedin size={13} className="text-blue-600 shrink-0" />
+                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-700 hover:underline truncate max-w-[200px]">
+                  linkedin.com/in/wipaporn-wikornmetkul
+                </a>
               </div>
             </div>
           </div>
