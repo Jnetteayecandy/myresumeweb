@@ -8,44 +8,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#090a0f',
+        background: '#F8FAFC',
         surface: {
-          DEFAULT: '#11131a',
-          lighter: '#171a24',
-          border: '#232836',
+          DEFAULT: '#FFFFFF',
+          muted: '#F1F5F9',
+          border: '#E2E8F0',
         },
-        brand: {
-          cyan: '#00F0FF',
-          purple: '#8B5CF6',
-          emerald: '#10B981',
-          blue: '#3B82F6',
+        navy: {
+          50: '#EFF6FF',
+          100: '#DBEAFE',
+          600: '#2563EB',
+          700: '#1D4ED8',
+          800: '#1E40AF',
+          900: '#1E3A8A',
+          950: '#0F172A',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', '"IBM Plex Sans Thai"', 'system-ui', 'sans-serif'],
+        thai: ['"IBM Plex Sans Thai"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Menlo', 'monospace'],
       },
       boxShadow: {
-        'glow-cyan': '0 0 25px -5px rgba(0, 240, 255, 0.25)',
-        'glow-purple': '0 0 25px -5px rgba(139, 92, 246, 0.25)',
-        'glow-subtle': '0 0 40px -10px rgba(255, 255, 255, 0.05)',
-      },
-      keyframes: {
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '0.8' },
-        },
-      },
-      animation: {
-        shimmer: 'shimmer 8s linear infinite',
-        pulseGlow: 'pulseGlow 4s ease-in-out infinite',
+        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+        'card-hover': '0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04)',
+        'dropdown': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
       }
     },
   },
   plugins: [],
 }
-

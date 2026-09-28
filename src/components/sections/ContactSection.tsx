@@ -1,119 +1,121 @@
 import React, { useState } from 'react';
-import { Mail, Copy, Check, ExternalLink, Github, Linkedin, Sparkles } from 'lucide-react';
+import { Mail, Copy, Check, ExternalLink, Github, Linkedin, FileText, CheckCircle2 } from 'lucide-react';
 import { personalInfo } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
-import { fireConfetti } from '../../utils/confetti';
 import { WindowId } from '../../types';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../data/translations';
 
 interface ContactSectionProps {
   onOpenWindow?: (id: WindowId) => void;
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = () => {
+export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) => {
+  const { lang } = useLanguage();
+  const t = translations[lang].contact;
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
     setCopied(true);
     sound.playChime();
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleHireMe = () => {
-    fireConfetti();
-    sound.playChime();
+    setTimeout(() => setCopied(false), 2200);
   };
 
   return (
     <section id="contact-section" className="py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center space-y-10">
       <div className="space-y-3">
-        <div className="inline-flex items-center space-x-2 text-rose-400 font-mono text-xs uppercase tracking-widest">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_6px_#FB7185]" />
-          <span>Initiate Transmission</span>
+        <div className="inline-flex items-center space-x-2 text-blue-700 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full font-mono text-xs uppercase tracking-wider">
+          <Mail size={14} className="text-blue-600" />
+          <span>{t.badge}</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-          Let’s Build Something Exceptional
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+          {t.title}
         </h2>
-        <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Open to software engineering opportunities, healthtech systems, or high-impact technical initiatives.
+        <p className="text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
+          {t.subtitle}
         </p>
       </div>
 
-      {/* Main Connect Card */}
-      <div className="rounded-3xl border border-white/[0.1] bg-gradient-to-b from-[#11131c] to-[#0a0c12] p-6 sm:p-10 shadow-2xl space-y-6">
+      {/* Main Clean Light Connect Card */}
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-sm hover:shadow-md transition-shadow space-y-6">
         {/* Email Copy Pill */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <div className="px-5 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] font-mono text-sm text-slate-200 flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
-            <Mail size={16} className="text-cyan-400" />
-            <span>{personalInfo.email}</span>
+          <div className="px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/80 font-mono text-sm text-slate-800 flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
+            <Mail size={16} className="text-blue-600" />
+            <span className="font-semibold">{personalInfo.email}</span>
           </div>
 
           <button
             onClick={handleCopyEmail}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] text-slate-200 hover:text-white font-mono text-xs font-semibold flex items-center justify-center space-x-2 transition-all"
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition-all shadow-xs"
           >
             {copied ? (
               <>
-                <Check size={16} className="text-emerald-400" />
-                <span className="text-emerald-400">Email Copied to Clipboard!</span>
+                <Check size={14} />
+                <span>{t.copiedBtn}</span>
               </>
             ) : (
               <>
-                <Copy size={16} className="text-slate-400" />
-                <span>Copy Email</span>
+                <Copy size={14} />
+                <span>{t.copyBtn}</span>
               </>
             )}
           </button>
         </div>
 
-        {/* Social and Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        {/* Channels Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          {/* GitHub */}
           <a
             href={personalInfo.github}
             target="_blank"
-            rel="noreferrer"
-            className="px-4 py-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] text-slate-300 hover:text-white text-xs font-mono flex items-center space-x-2 transition-colors"
+            rel="noopener noreferrer"
+            onClick={() => sound.playClick()}
+            className="flex items-center justify-center space-x-2 p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-slate-700 hover:text-slate-900 transition-colors text-xs font-semibold"
           >
-            <Github size={15} />
-            <span>GitHub Profile</span>
-            <ExternalLink size={12} className="text-slate-500" />
+            <Github size={16} />
+            <span>{t.githubBtn}</span>
+            <ExternalLink size={12} className="text-slate-400" />
           </a>
 
+          {/* LinkedIn */}
           <a
             href={personalInfo.linkedin}
             target="_blank"
-            rel="noreferrer"
-            className="px-4 py-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] text-slate-300 hover:text-white text-xs font-mono flex items-center space-x-2 transition-colors"
+            rel="noopener noreferrer"
+            onClick={() => sound.playClick()}
+            className="flex items-center justify-center space-x-2 p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-slate-700 hover:text-slate-900 transition-colors text-xs font-semibold"
           >
-            <Linkedin size={15} />
-            <span>LinkedIn Network</span>
-            <ExternalLink size={12} className="text-slate-500" />
+            <Linkedin size={16} className="text-blue-600" />
+            <span>{t.linkedinBtn}</span>
+            <ExternalLink size={12} className="text-slate-400" />
           </a>
 
+          {/* Download CV / Open Resume */}
           <button
-            onClick={handleHireMe}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 border border-purple-500/40 text-purple-200 text-xs font-mono flex items-center space-x-2 transition-all shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+            onClick={() => {
+              sound.playWindowOpen();
+              if (onOpenWindow) onOpenWindow('resume');
+            }}
+            className="flex items-center justify-center space-x-2 p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-slate-700 hover:text-slate-900 transition-colors text-xs font-semibold"
           >
-            <Sparkles size={14} className="text-purple-400" />
-            <span>Celebrate & Hire Protocol 🎉</span>
+            <FileText size={16} className="text-emerald-600" />
+            <span>{t.downloadCvBtn}</span>
           </button>
+        </div>
+
+        {/* Status Indicator */}
+        <div className="pt-4 border-t border-slate-100 flex items-center justify-center space-x-2 text-xs text-slate-500 font-medium">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>{t.footerStatus}</span>
         </div>
       </div>
 
-      {/* Footer System Info */}
-      <footer className="pt-8 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500 pb-20">
-        <div>
-          © {new Date().getFullYear()} {personalInfo.name}. All systems operational.
-        </div>
-        <div className="flex items-center space-x-4">
-          <span>React 18</span>
-          <span>•</span>
-          <span>TypeScript</span>
-          <span>•</span>
-          <span>Tailwind CSS</span>
-          <span>•</span>
-          <span>Framer Motion</span>
-        </div>
+      {/* Footer Info */}
+      <footer className="text-xs text-slate-400 space-y-1">
+        <p>© 2026 Wipaporn Wikornmetkul. Prince of Songkla University, Phuket Campus.</p>
+        <p>{t.footerTech}</p>
       </footer>
     </section>
   );

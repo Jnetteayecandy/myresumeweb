@@ -1,21 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from 'framer-motion';
 import { 
-  Pill, 
-  ShieldCheck, 
   Sparkles, 
   ArrowUpRight, 
-  Layers, 
-  Cpu, 
-  Eye, 
-  CheckCircle2, 
-  Activity,
-  QrCode,
+  Camera, 
+  ExternalLink,
   Users,
-  Code2
+  Code2,
+  GraduationCap
 } from 'lucide-react';
 import { sound } from '../../utils/sound';
 import { WindowId } from '../../types';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../data/translations';
 
 interface ScrollStoryShowcaseProps {
   onOpenWindow: (id: WindowId) => void;
@@ -44,6 +41,8 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const { lang } = useLanguage();
+  const t = translations[lang].showcase;
 
   // Mouse parallax position
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -63,127 +62,87 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
 
-  const slides: StorySlide[] = [
+  const slideIcons = [
+    <GraduationCap size={16} className="text-blue-600" />,
+    <Users size={16} className="text-emerald-600" />,
+    <Code2 size={16} className="text-indigo-600" />,
+    <Camera size={16} className="text-amber-600" />
+  ];
+
+  const slideColors = [
     {
-      step: '01',
-      category: 'SOFTWARE ENGINEER // CORE PROFILE',
-      titlePrimary: 'WIPAPORN WIKORNMETKUL',
-      titleSecondary: 'ARCHITECTING SCALABLE SYSTEMS WITH INTENT & IMPACT.',
-      description: 'Bridging complex clinical requirements with ultra-responsive frontend architectures and resilient distributed systems.',
-      tags: ['System Architecture', 'Full-Stack Engineering', 'Production Grade'],
-      metrics: [
-        { label: 'Latency Standard', value: '< 85ms' },
-        { label: 'Engineering Tier', value: 'Production Ready' }
-      ],
-      floatingBadge: {
-        icon: <Code2 size={16} className="text-cyan-400" />,
-        title: 'Software Engineer',
-        subtitle: 'Scalable Systems & HealthTech',
-        color: 'border-cyan-500/30 bg-cyan-950/40 text-cyan-300'
-      },
-      glowColor: 'from-cyan-500/25 via-blue-600/20 to-transparent'
+      badge: 'border-blue-200 bg-blue-50/90 text-blue-900',
+      glow: 'from-blue-200/40 via-indigo-100/30 to-transparent'
     },
     {
-      step: '02',
-      category: 'CROSS-DISCIPLINARY CO-DESIGN',
-      titlePrimary: 'PHARMACIST COLLABORATION.',
-      titleSecondary: 'PHARMACOLOGICAL LOGIC MEETS SOFTWARE ENGINEERING.',
-      description: 'Co-designing with clinical pharmacists to formalize medication safety rules, dosage verification algorithms, and multi-tier approval workflows.',
-      tags: ['Domain-Driven Design', 'Clinical Accuracy', 'Safety-First'],
-      metrics: [
-        { label: 'Audit Accuracy', value: '100% Certified' },
-        { label: 'Domain Partner', value: 'Clinical Pharmacists' }
-      ],
-      floatingBadge: {
-        icon: <Users size={16} className="text-emerald-400" />,
-        title: 'Pharmacist Co-Design',
-        subtitle: '100% Clinical Verification',
-        color: 'border-emerald-500/30 bg-emerald-950/40 text-emerald-300'
-      },
-      glowColor: 'from-emerald-500/25 via-teal-600/20 to-transparent'
+      badge: 'border-emerald-200 bg-emerald-50/90 text-emerald-900',
+      glow: 'from-emerald-200/40 via-teal-100/30 to-transparent'
     },
     {
-      step: '03',
-      category: 'FLAGSHIP PLATFORM // PIL SYSTEM',
-      titlePrimary: 'PATIENT INFORMATION LEAFLETS.',
-      titleSecondary: 'SUB-85ms SEARCH ACROSS 350+ CRITICAL MEDICATIONS.',
-      description: 'Replacing dense paper leaflets with structured digital leaflets. Patients scan physical medicine packages to view instant, verified instructions.',
-      tags: ['Sub-85ms Latency', 'Physical QR Router', 'Offline PWA Ready'],
-      ctaLabel: 'Open Interactive PIL Window',
-      ctaAction: () => onOpenWindow('pil'),
-      metrics: [
-        { label: 'Query Latency', value: '78ms' },
-        { label: 'Readability Gain', value: '+74% Clarity' }
-      ],
-      floatingBadge: {
-        icon: <QrCode size={16} className="text-cyan-400" />,
-        title: 'PIL Management System',
-        subtitle: '350+ Leaflets Indexed',
-        color: 'border-cyan-500/30 bg-cyan-950/40 text-cyan-300'
-      },
-      glowColor: 'from-cyan-500/25 via-indigo-600/20 to-transparent'
+      badge: 'border-indigo-200 bg-indigo-50/90 text-indigo-900',
+      glow: 'from-indigo-200/40 via-blue-100/30 to-transparent'
     },
     {
-      step: '04',
-      category: 'HUMAN ACCESSIBILITY & IMPACT',
-      titlePrimary: 'ENGINEERED FOR EVERY HUMAN.',
-      titleSecondary: 'WCAG AAA ACCESSIBILITY & ELDERLY-FIRST UX.',
-      description: 'High-contrast viewports, assistive speech instructions, and simplified dosage visualizers ensuring zero barrier for elderly patients.',
-      tags: ['WCAG 2.1 AAA', 'Assistive Tech', 'Elderly-First UX'],
-      ctaLabel: 'Test Live Leaflet Demo',
-      ctaAction: () => onOpenWindow('pil'),
-      metrics: [
-        { label: 'Accessibility Tier', value: 'WCAG 2.1 AAA' },
-        { label: 'Elderly Contrast Ratio', value: '7:1 High Legibility' }
-      ],
-      floatingBadge: {
-        icon: <Eye size={16} className="text-purple-400" />,
-        title: 'WCAG AAA Compliant',
-        subtitle: 'Accessible to All Patients',
-        color: 'border-purple-500/30 bg-purple-950/40 text-purple-300'
-      },
-      glowColor: 'from-purple-500/25 via-pink-600/20 to-transparent'
+      badge: 'border-amber-200 bg-amber-50/90 text-amber-900',
+      glow: 'from-amber-200/40 via-orange-100/30 to-transparent'
     }
   ];
 
-  // Sound and active step tracker
+  const slides: StorySlide[] = t.slides.map((s, idx) => ({
+    ...s,
+    ctaAction: idx === 1 
+      ? () => window.open('https://medication-project-tau.vercel.app', '_blank')
+      : idx === 2
+      ? () => {
+          const el = document.getElementById('projects-section');
+          el?.scrollIntoView({ behavior: 'smooth' });
+        }
+      : idx === 3
+      ? () => {
+          const el = document.getElementById('hobbies-section');
+          el?.scrollIntoView({ behavior: 'smooth' });
+        }
+      : undefined,
+    floatingBadge: {
+      ...s.floatingBadge,
+      icon: slideIcons[idx],
+      color: slideColors[idx].badge
+    },
+    glowColor: slideColors[idx].glow
+  }));
+
+  // Step change sound and indicator
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const total = slides.length;
     const step = Math.min(total - 1, Math.floor(latest * total));
     if (step !== activeStep) {
       setActiveStep(step);
-      sound.playClick(1000 + step * 100, 0.02);
+      sound.playClick(1000 + step * 80, 0.02);
     }
   });
 
-  // 3D rotation transforms across stages:
-  // Slide 0: 0 deg
-  // Slide 1: rotates to left (-18 deg)
-  // Slide 2: centers with slight upward tilt (+8 deg)
-  // Slide 3: rotates to right (+16 deg)
-  // Slide 4: returns to heroic frontal pose
   const photoRotateY = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [-8, 14, -10, 12, 0]
+    [-6, 12, -8, 10, 0]
   );
 
   const photoRotateX = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [4, -4, 6, -2, 0]
+    [3, -3, 4, -2, 0]
   );
 
   const photoScale = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [1, 1.05, 0.98, 1.06, 1]
+    [1, 1.04, 0.98, 1.05, 1]
   );
 
   const photoTranslateZ = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [0, 60, -30, 70, 0]
+    [0, 50, -20, 60, 0]
   );
 
   const scrollToStep = (index: number) => {
@@ -202,7 +161,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   return (
     <div 
       ref={containerRef} 
-      className="relative h-[450vh] bg-[#06070a] text-slate-100"
+      className="relative h-[420vh] bg-slate-100/50 text-slate-800"
       style={{ perspective: '1400px' }}
     >
       {/* Sticky Stage Frame */}
@@ -212,24 +171,24 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
         <div 
           ref={stageRef}
           onMouseMove={handleMouseMove}
-          className="relative w-full max-w-7xl h-[90vh] sm:h-[86vh] rounded-3xl border border-white/[0.12] bg-[#090b11] shadow-[0_30px_100px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none"
+          className="relative w-full max-w-7xl h-[90vh] sm:h-[86vh] rounded-3xl border border-slate-200/90 bg-white shadow-xl overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none"
         >
           {/* Dynamic Ambient Glow behind the photo */}
           <div 
-            className={`absolute top-1/2 right-1/4 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-tr ${currentSlide.glowColor} blur-[130px] pointer-events-none transition-all duration-700`}
+            className={`absolute top-1/2 right-1/4 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-tr ${currentSlide.glowColor} blur-[120px] pointer-events-none transition-all duration-700`}
           />
 
           {/* Top Stage Header */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 z-20">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4 z-20">
             <div className="flex items-center space-x-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_10px_#F43F5E] animate-pulse" />
-              <span className="font-mono text-xs tracking-widest text-slate-300 uppercase font-bold">
-                NOIR 3D STAGE // WIPAPORN WIKORNMETKUL
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-sm animate-pulse" />
+              <span className="font-mono text-xs tracking-wider text-slate-500 uppercase font-bold">
+                {t.badge}
               </span>
             </div>
 
-            <div className="flex items-center space-x-2 text-xs font-mono text-slate-400">
-              <span className="text-cyan-400 font-bold">{currentSlide.step}</span>
+            <div className="flex items-center space-x-2 text-xs font-mono text-slate-500">
+              <span className="text-blue-700 font-bold">{currentSlide.step}</span>
               <span>/</span>
               <span>0{slides.length}</span>
             </div>
@@ -241,33 +200,33 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
             {/* Left Narrative Column */}
             <motion.div 
               key={`text-${activeStep}`}
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -25 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
               className="lg:col-span-6 space-y-4 pl-0 sm:pl-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-mono text-cyan-300">
-                <Sparkles size={12} className="text-cyan-400" />
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-xs font-semibold text-blue-700">
+                <Sparkles size={12} className="text-blue-600" />
                 <span>{currentSlide.category}</span>
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-[1.05]">
+                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
                   {currentSlide.titlePrimary}
                 </h3>
-                <h4 className="text-lg sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-200 to-purple-400 tracking-tight leading-snug">
+                <h4 className="text-base sm:text-xl font-bold text-blue-700 tracking-tight leading-snug">
                   {currentSlide.titleSecondary}
                 </h4>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
+              <p className="text-sm text-slate-600 max-w-xl leading-relaxed">
                 {currentSlide.description}
               </p>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {currentSlide.tags.map((t, idx) => (
-                  <span key={idx} className="px-2.5 py-1 rounded-md text-xs font-mono bg-white/[0.04] border border-white/[0.08] text-slate-300">
+                  <span key={idx} className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 border border-slate-200 text-slate-700">
                     {t}
                   </span>
                 ))}
@@ -278,20 +237,25 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 <div className="pt-2">
                   <button
                     onClick={() => {
-                      sound.playWindowOpen();
+                      sound.playClick();
                       currentSlide.ctaAction!();
                     }}
-                    className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-all shadow-[0_0_25px_rgba(0,240,255,0.3)]"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center space-x-2 transition-all shadow-sm hover:shadow-md"
                   >
                     <span>{currentSlide.ctaLabel}</span>
                     <ArrowUpRight size={14} />
                   </button>
+                  {activeStep === 1 && (
+                    <div className="text-[11px] font-medium text-slate-500 mt-1.5 pl-1">
+                      You can continue as guest
+                    </div>
+                  )}
                 </div>
               )}
             </motion.div>
 
             {/* Right Column: 3D Rotating Person Cutout with Parallax */}
-            <div className="lg:col-span-6 relative flex justify-center items-center h-[52vh] sm:h-[60vh]">
+            <div className="lg:col-span-6 relative flex justify-center items-center h-[50vh] sm:h-[58vh]">
               
               {/* 3D Rotating Avatar Stage */}
               <motion.div
@@ -303,31 +267,28 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   transformStyle: 'preserve-3d',
                 }}
                 animate={{
-                  // Subtle mouse parallax addition
-                  x: mousePos.x * 24,
-                  y: mousePos.y * 20,
+                  x: mousePos.x * 20,
+                  y: mousePos.y * 16,
                 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                 className="relative flex items-center justify-center w-full h-full"
               >
-                {/* Halo Rim Light behind the person */}
-                <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-cyan-500/20 via-purple-500/20 to-rose-500/20 blur-3xl -z-10" />
+                {/* Subtle soft backdrop blur circle */}
+                <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-blue-100/60 via-indigo-50/40 to-slate-100 blur-2xl -z-10" />
 
                 {/* THE PERSON (User's Photo) */}
                 <div className="relative group max-h-full flex items-end justify-center">
                   <img
                     src="/profile.png"
                     alt="Wipaporn Wikornmetkul"
-                    className="max-h-[52vh] sm:max-h-[62vh] object-contain drop-shadow-[0_20px_50px_rgba(0,240,255,0.3)] drop-shadow-[0_0_90px_rgba(139,92,246,0.25)] transition-all duration-300"
+                    className="max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-300"
                     style={{
-                      // Smooth gradient mask at bottom so the lower part fades cleanly into the obsidian stage
-                      maskImage: 'linear-gradient(to bottom, black 72%, transparent 96%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 72%, transparent 96%)',
+                      maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
                     }}
                   />
-
-                  {/* Reflection / Ground Spotlight */}
-                  <div className="absolute -bottom-4 w-4/5 h-10 bg-cyan-400/25 rounded-full blur-2xl pointer-events-none" />
+                  {/* Soft floor shadow */}
+                  <div className="absolute -bottom-2 w-3/4 h-8 bg-slate-400/20 rounded-full blur-xl pointer-events-none" />
                 </div>
 
                 {/* Floating 3D Badge 1: Stage Role */}
@@ -336,35 +297,35 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   initial={{ opacity: 0, y: 15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35 }}
-                  className={`absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border backdrop-blur-xl shadow-2xl flex items-center space-x-3 ${currentSlide.floatingBadge.color}`}
+                  className={`absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border shadow-lg flex items-center space-x-3 ${currentSlide.floatingBadge.color}`}
                   style={{ transform: 'translateZ(40px)' }}
                 >
-                  <div className="p-2 rounded-xl bg-white/[0.08] shadow-inner">
+                  <div className="p-2 rounded-xl bg-white shadow-xs">
                     {currentSlide.floatingBadge.icon}
                   </div>
                   <div>
-                    <div className="text-xs font-bold font-mono text-white">
+                    <div className="text-xs font-bold text-slate-900">
                       {currentSlide.floatingBadge.title}
                     </div>
-                    <div className="text-[10px] text-slate-300 font-mono">
+                    <div className="text-[11px] text-slate-600 font-medium">
                       {currentSlide.floatingBadge.subtitle}
                     </div>
                   </div>
                 </motion.div>
 
-                {/* Floating 3D Badge 2: Telemetry Metric */}
+                {/* Floating 3D Badge 2: Key Metric */}
                 <motion.div
                   key={`metric-${activeStep}`}
                   initial={{ opacity: 0, y: -15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35, delay: 0.1 }}
-                  className="absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-white/[0.12] bg-[#0c0f18]/85 backdrop-blur-xl shadow-2xl text-right font-mono"
+                  className="absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md shadow-lg text-right font-mono"
                   style={{ transform: 'translateZ(50px)' }}
                 >
-                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">
+                  <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">
                     {currentSlide.metrics[0].label}
                   </div>
-                  <div className="text-sm font-bold text-cyan-400 mt-0.5">
+                  <div className="text-sm font-bold text-blue-700 mt-0.5">
                     {currentSlide.metrics[0].value}
                   </div>
                 </motion.div>
@@ -373,7 +334,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
             </div>
           </div>
 
-          {/* Left Vertical Stepper (Like Image Reference: 01, 02, 03, 04) */}
+          {/* Left Vertical Stepper (01, 02, 03, 04) */}
           <div className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-5 z-20">
             {slides.map((s, index) => {
               const isActive = activeStep === index;
@@ -387,20 +348,20 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <span 
                       className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                         isActive 
-                          ? 'bg-rose-500 shadow-[0_0_12px_#F43F5E] scale-125' 
-                          : 'bg-white/20 group-hover:bg-white/50'
+                          ? 'bg-blue-600 shadow-sm scale-125' 
+                          : 'bg-slate-300 group-hover:bg-slate-400'
                       }`} 
                     />
                     {isActive && (
-                      <span className="absolute w-4 h-4 rounded-full border border-rose-500/60 animate-ping" />
+                      <span className="absolute w-4 h-4 rounded-full border border-blue-500/50 animate-ping" />
                     )}
                   </div>
 
                   <span 
                     className={`font-mono text-xs transition-colors duration-200 hidden sm:inline ${
                       isActive 
-                        ? 'text-white font-bold' 
-                        : 'text-slate-500 group-hover:text-slate-300'
+                        ? 'text-blue-700 font-bold' 
+                        : 'text-slate-400 group-hover:text-slate-600'
                     }`}
                   >
                     {s.step}
@@ -410,32 +371,32 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
             })}
           </div>
 
-          {/* Right Vertical "SCROLL TO EXPLORE" Indicator (Like Image Reference) */}
+          {/* Right Vertical "SCROLL TO EXPLORE" Indicator */}
           <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-3 z-20 select-none">
             <span 
               className="text-[10px] font-mono tracking-[0.25em] text-slate-400 uppercase font-semibold rotate-90 origin-center whitespace-nowrap"
               style={{ writingMode: 'vertical-rl' }}
             >
-              SCROLL TO EXPLORE
+              {t.scrollIndicator}
             </span>
-            <div className="w-[2px] h-14 bg-white/10 rounded-full overflow-hidden relative">
+            <div className="w-[2px] h-14 bg-slate-200 rounded-full overflow-hidden relative">
               <motion.div 
                 style={{ scaleY: scrollYProgress, originY: 0 }}
-                className="w-full h-full bg-rose-500 shadow-[0_0_8px_#F43F5E]"
+                className="w-full h-full bg-blue-600"
               />
             </div>
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_6px_#F43F5E]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
           </div>
 
           {/* Bottom Stage Footer */}
-          <div className="flex items-center justify-between border-t border-white/[0.08] pt-3 text-[11px] font-mono text-slate-500 z-20">
+          <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-mono text-slate-500 z-20">
             <div className="flex items-center space-x-3">
-              <span>WIPAPORN WIKORNMETKUL</span>
+              <span>{t.footerLeft}</span>
               <span>•</span>
-              <span className="text-cyan-400">PIL MANAGEMENT SYSTEM</span>
+              <span className="text-blue-700 font-semibold">{t.footerCenter}</span>
             </div>
             <div className="hidden sm:inline">
-              3D PERSPECTIVE &amp; MOUSE PARALLAX ACTIVE
+              {t.footerRight}
             </div>
           </div>
 

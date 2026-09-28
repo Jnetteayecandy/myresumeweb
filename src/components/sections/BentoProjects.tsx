@@ -1,133 +1,190 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Github, 
-  Terminal as TerminalIcon
+  FolderKanban, 
+  ExternalLink, 
+  Gamepad2, 
+  Heart, 
+  Award, 
+  ShieldAlert, 
+  Calendar, 
+  GraduationCap, 
+  ArrowUpRight 
 } from 'lucide-react';
 import { bentoProjects } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
 import { WindowId } from '../../types';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../data/translations';
 
 interface BentoProjectsProps {
   onOpenWindow: (id: WindowId) => void;
 }
 
-export const BentoProjects: React.FC<BentoProjectsProps> = ({ onOpenWindow }) => {
+export const BentoProjects: React.FC<BentoProjectsProps> = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang].bento;
+
+  const getProjectIcon = (id: string) => {
+    switch (id) {
+      case 'wedding-card-web':
+        return <Heart size={18} className="text-rose-500" />;
+      case 'event-b-formal-methods':
+        return <ShieldAlert size={18} className="text-indigo-600" />;
+      case 'web-mini-games':
+        return <Gamepad2 size={18} className="text-emerald-600" />;
+      case 'university-event-booking':
+        return <Calendar size={18} className="text-blue-600" />;
+      case 'student-record-oop':
+        return <GraduationCap size={18} className="text-amber-600" />;
+      case 'physics-certification':
+        return <Award size={18} className="text-teal-600" />;
+      default:
+        return <FolderKanban size={18} className="text-blue-600" />;
+    }
+  };
+
   return (
-    <section id="projects-section" className="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <section id="projects-section" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="mb-10 text-center sm:text-left">
-        <div className="flex items-center justify-center sm:justify-start space-x-2 text-purple-400 font-mono text-xs uppercase tracking-widest mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_#8B5CF6]" />
-          <span>Distributed Systems & Interactive Applications</span>
+      <div className="mb-12 text-center sm:text-left">
+        <div className="inline-flex items-center space-x-2 text-blue-700 bg-blue-50 border border-blue-200/80 px-3 py-1 rounded-full font-mono text-xs uppercase tracking-wider mb-3">
+          <FolderKanban size={14} className="text-blue-600" />
+          <span>{t.badge}</span>
         </div>
-        <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Selected Engineering Works
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          {t.title}
         </h2>
-        <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-          A showcase of high-performance backend microservices, real-time telemetry dashboards, and component architectures.
+        <p className="text-base text-slate-600 mt-2 max-w-2xl leading-relaxed">
+          {t.subtitle}
         </p>
       </div>
 
-      {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Clean Light Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {bentoProjects.map((project, index) => {
-          const isLarge = index === 0 || index === 3;
+          const isLarge = index === 0 || index === 1;
+          const isGame = project.id === 'web-mini-games';
+          const isCert = project.id === 'physics-certification';
+
           return (
             <motion.div
               key={project.id}
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className={`rounded-3xl border border-white/[0.08] bg-[#0e111a]/80 backdrop-blur-xl p-6 sm:p-7 flex flex-col justify-between hover:border-white/[0.18] transition-all duration-300 shadow-xl relative overflow-hidden group ${
+              className={`rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden group ${
                 isLarge ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
               }`}
             >
-              {/* Subtle background spotlight */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none group-hover:bg-purple-500/10 transition-all duration-500" />
-
               <div>
-                {/* Card Top */}
+                {/* Card Top Pill */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider bg-white/[0.03] px-2 py-0.5 rounded border border-white/[0.05]">
-                    0{index + 1} // SYS-MODULE
-                  </span>
-
                   <div className="flex items-center space-x-2">
-                    {project.id === 'terminal-os-portfolio' ? (
-                      <button
-                        onClick={() => {
-                          sound.playWindowOpen();
-                          onOpenWindow('terminal');
-                        }}
-                        className="p-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-cyan-400 transition-colors"
-                        title="Open in Terminal"
-                      >
-                        <TerminalIcon size={15} />
-                      </button>
-                    ) : null}
-
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-white transition-colors"
-                        title="GitHub Repository"
-                      >
-                        <Github size={15} />
-                      </a>
-                    )}
+                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-200/80">
+                      {getProjectIcon(project.id)}
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">
+                      PROJ-0{index + 1}
+                    </span>
                   </div>
+
+                  {project.metrics && project.metrics.length > 0 && (
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                      {project.metrics[0].value}
+                    </span>
+                  )}
                 </div>
 
-                {/* Titles */}
-                <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                {/* Title & Subtitle */}
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-xs font-mono text-slate-400 mt-0.5">
+                <p className="text-xs font-medium text-blue-600 mt-1">
                   {project.subtitle}
                 </p>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
                   {project.description}
                 </p>
 
-                {/* Highlights */}
+                {/* Highlights List if available */}
                 {project.highlights && (
-                  <div className="mt-4 space-y-1.5 border-t border-white/[0.05] pt-3">
-                    {project.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center space-x-2 text-xs text-slate-400">
-                        <span className="w-1 h-1 rounded-full bg-cyan-400" />
-                        <span>{h}</span>
-                      </div>
+                  <ul className="mt-3 space-y-1.5 pt-2 border-t border-slate-100">
+                    {project.highlights.slice(0, 2).map((hl, i) => (
+                      <li key={i} className="text-xs text-slate-500 flex items-center space-x-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                        <span>{hl}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
               </div>
 
-              {/* Card Footer: Metrics & Tags */}
-              <div className="mt-6 pt-4 border-t border-white/[0.05] space-y-3">
-                {project.metrics && (
-                  <div className="grid grid-cols-2 gap-2">
-                    {project.metrics.map((m, i) => (
-                      <div key={i} className="bg-white/[0.02] p-2 rounded-lg border border-white/[0.04]">
-                        <div className="text-[10px] font-mono text-slate-500">{m.label}</div>
-                        <div className="text-xs font-bold font-mono text-slate-200 mt-0.5">{m.value}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
+              {/* Card Footer: Tags & Action Buttons */}
+              <div className="mt-6 pt-4 border-t border-slate-100 space-y-4">
+                {/* Tech Tags */}
                 <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag, i) => (
+                  {project.tags.map((tag, idx) => (
                     <span
-                      key={i}
-                      className="text-[10px] font-mono text-slate-400 px-2 py-0.5 bg-white/[0.03] rounded border border-white/[0.05]"
+                      key={idx}
+                      className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-50 text-slate-600 border border-slate-200/70"
                     >
                       {tag}
                     </span>
                   ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between pt-1">
+                  {isGame ? (
+                    <a
+                      href={project.liveUrl || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playClick()}
+                      className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs hover:shadow-sm transition-all"
+                    >
+                      <Gamepad2 size={15} />
+                      <span>{t.playGameBtn}</span>
+                    </a>
+                  ) : isCert ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playClick()}
+                      className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
+                    >
+                      <Award size={15} />
+                      <span>Verify Certificate (Coursera)</span>
+                      <ExternalLink size={13} />
+                    </a>
+                  ) : project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playClick()}
+                      className="inline-flex items-center space-x-1.5 text-xs font-semibold text-blue-700 hover:text-blue-800 transition-colors"
+                    >
+                      <span>{t.visitProjectBtn}</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  ) : null}
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playClick()}
+                      className="inline-flex items-center space-x-1 text-xs text-slate-500 hover:text-slate-800 font-medium ml-auto"
+                    >
+                      <span>GitHub</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

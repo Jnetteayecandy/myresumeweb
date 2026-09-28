@@ -1,4 +1,4 @@
-import { personalInfo, flagshipProject, bentoProjects, skillCategories } from './portfolioData';
+import { personalInfo, flagshipProject, bentoProjects, skillCategories, sideJobsAndHobbies } from './portfolioData';
 
 export interface TerminalOutput {
   type: 'text' | 'success' | 'error' | 'warning' | 'info' | 'ascii';
@@ -21,33 +21,35 @@ export const executeCommand = (
   switch (command) {
     case 'help':
       return [
-        { type: 'info', content: '⚡ Wipaporn OS Shell v2.4.0 (Type a command and press Enter)' },
-        { type: 'text', content: '  whoami          - Print brief overview about Wipaporn' },
-        { type: 'text', content: '  pil             - Inspect PIL Management System flagship study' },
-        { type: 'text', content: '  projects        - List top software engineering projects' },
-        { type: 'text', content: '  skills          - Display system capability & tech stack diagnostics' },
-        { type: 'text', content: '  contact         - Reveal contact details & social channels' },
-        { type: 'text', content: '  resume          - Open clean PDF-style resume window' },
-        { type: 'text', content: '  sudo hire       - Execute high-priority hiring protocol 🎉' },
-        { type: 'text', content: '  matrix          - Activate cyber rain effect' },
+        { type: 'info', content: '⚡ Wipaporn Portfolio Shell v3.0 (Type a command and press Enter)' },
+        { type: 'text', content: '  whoami          - Print student background & education (PSU Phuket)' },
+        { type: 'text', content: '  pil             - Inspect PIL Management System flagship project' },
+        { type: 'text', content: '  projects        - List top software engineering and web works' },
+        { type: 'text', content: '  skills          - Display technical stack (Python, Java, React, SQL)' },
+        { type: 'text', content: '  hobbies         - View creative side job & personal hobbies' },
+        { type: 'text', content: '  contact         - Reveal contact details & channels' },
+        { type: 'text', content: '  resume          - Open recruiter-ready CV previewer' },
         { type: 'text', content: '  clear           - Clear terminal history' },
       ];
 
     case 'whoami':
       return [
-        { type: 'success', content: `[IDENTITY CONFIRMED]: ${personalInfo.name}` },
-        { type: 'text', content: `Role:     ${personalInfo.title}` },
-        { type: 'text', content: `Status:   ${personalInfo.status}` },
-        { type: 'text', content: `Location: ${personalInfo.location}` },
+        { type: 'success', content: `[IDENTITY]: ${personalInfo.name} (${personalInfo.nameTh})` },
+        { type: 'text', content: `Role:      ${personalInfo.title}` },
+        { type: 'text', content: `Education: ${personalInfo.education.degree}` },
+        { type: 'text', content: `Campus:    ${personalInfo.education.institution}` },
+        { type: 'text', content: `Status:    ${personalInfo.status}` },
+        { type: 'text', content: `Location:  ${personalInfo.location}` },
         { type: 'info', content: `\n"${personalInfo.bio}"` },
       ];
 
     case 'pil':
       if (onAction) onAction('open_pil');
       return [
-        { type: 'success', content: `[OPENING WINDOW]: ${flagshipProject.title}` },
+        { type: 'success', content: `[FLAGSHIP]: ${flagshipProject.title}` },
         { type: 'text', content: `Subtitle:   ${flagshipProject.subtitle}` },
         { type: 'text', content: `Partner:    ${flagshipProject.collaboration}` },
+        { type: 'text', content: `Live URL:   ${flagshipProject.liveUrl} (Guest Access Ready)` },
         { type: 'info', content: `\nDescription: ${flagshipProject.description}` },
         { type: 'text', content: `Metrics:    ${flagshipProject.metrics?.map(m => `${m.label}: ${m.value}`).join(' | ')}` },
         { type: 'warning', content: '>> Launching interactive PIL case study window on screen...' }
@@ -55,9 +57,8 @@ export const executeCommand = (
 
     case 'projects':
       return [
-        { type: 'info', content: '=== RECENT SOFTWARE ENGINEERING PROJECTS ===' },
-        { type: 'success', content: `1. ★ ${flagshipProject.title} [FEATURED]` },
-        { type: 'text', content: `   ${flagshipProject.subtitle} - Built with ${flagshipProject.tags.slice(0, 4).join(', ')}` },
+        { type: 'info', content: '=== SELECTED SOFTWARE ENGINEERING WORKS ===' },
+        { type: 'success', content: `1. ★ ${flagshipProject.title} [FLAGSHIP] - ${flagshipProject.liveUrl}` },
         ...bentoProjects.map((p, idx) => ({
           type: 'text' as const,
           content: `${idx + 2}. ${p.title} (${p.subtitle})\n   Tags: [${p.tags.join(', ')}]`
@@ -67,7 +68,7 @@ export const executeCommand = (
 
     case 'skills':
       return [
-        { type: 'info', content: '=== SYSTEM CAPABILITIES & TECH STACK ===' },
+        { type: 'info', content: '=== CORE TECHNICAL PROFICIENCIES ===' },
         ...skillCategories.flatMap(cat => [
           { type: 'warning' as const, content: `[${cat.category.toUpperCase()}]` },
           { 
@@ -77,13 +78,24 @@ export const executeCommand = (
         ])
       ];
 
+    case 'hobbies':
+      return [
+        { type: 'info', content: '=== CREATIVE SIDE JOB & HOBBIES ===' },
+        { type: 'success', content: `📸 Side Job: ${sideJobsAndHobbies.sideJob.title}` },
+        { type: 'text', content: `   ${sideJobsAndHobbies.sideJob.description}` },
+        ...sideJobsAndHobbies.hobbies.map(h => ({
+          type: 'text' as const,
+          content: `${h.icon} ${h.title}: ${h.description}`
+        }))
+      ];
+
     case 'contact':
       return [
-        { type: 'info', content: '=== DIRECT COMM CHANNELS ===' },
+        { type: 'info', content: '=== DIRECT COMMUNICATION CHANNELS ===' },
         { type: 'text', content: `📧 Email:    ${personalInfo.email}` },
         { type: 'text', content: `💼 LinkedIn: ${personalInfo.linkedin}` },
         { type: 'text', content: `🐙 GitHub:   ${personalInfo.github}` },
-        { type: 'success', content: 'Feel free to reach out for software engineering roles or collaborations!' }
+        { type: 'success', content: 'Open for Full-Stack Developer & Software Engineer opportunities!' }
       ];
 
     case 'resume':
@@ -113,16 +125,9 @@ export const executeCommand = (
         { type: 'error', content: `sudo: ${args || 'command'}: permission denied. Try 'sudo hire'` }
       ];
 
-    case 'matrix':
-      return [
-        { type: 'success', content: '01010111 01101001 01110000 01100001 01110000 01101111 01110010 01101110' },
-        { type: 'info', content: 'Follow the white rabbit... Wake up, Neo. The matrix has you.' }
-      ];
-
     default:
       return [
         { type: 'error', content: `zsh: command not found: ${command}. Type 'help' for available commands.` }
       ];
   }
 };
-

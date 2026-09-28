@@ -6,7 +6,7 @@ import {
   Users, 
   CheckCircle2, 
   AlertTriangle, 
-  FileCheck, 
+  ExternalLink,
   Sparkles, 
   Eye, 
   Layers, 
@@ -14,168 +14,240 @@ import {
 } from 'lucide-react';
 import { flagshipProject } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../data/translations';
 
 export const PilCaseStudyWindow: React.FC = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang].pilWindow;
+  const isTh = lang === 'th';
   const [activeTab, setActiveTab] = useState<'overview' | 'interactive-demo' | 'architecture' | 'pharmacist-sync'>('overview');
   const [selectedMed, setSelectedMed] = useState<'paracetamol' | 'amoxicillin' | 'metformin'>('paracetamol');
   const [elderlyMode, setElderlyMode] = useState(false);
 
   const mockMedications = {
-    paracetamol: {
-      brand: 'Sara / Tylenol (Paracetamol 500 mg)',
-      generic: 'Acetaminophen / Paracetamol',
-      indication: 'บรรเทาอาการปวดศีรษะ ลดไข้ บรรเทาอาการปวดเมื่อยกล้ามเนื้อ',
-      dosage: 'รับประทานครั้งละ 1-2 เม็ด ทุก 4-6 ชั่วโมงเมื่อมีอาการ (ห้ามเกิน 8 เม็ด/วัน หรือ 4,000 มก.)',
-      warning: 'ห้ามใช้ในผู้ที่แพ้ยานี้ หรือผู้ป่วยโรคตับรุนแรง การรับประทานยาเกินขนาดอาจทำให้ตับวายเฉียบพลัน',
-      pharmacistNote: 'ตรวจสอบแล้ว: ตรวจสอบความถูกต้องโดย ภญ. ทีมที่ปรึกษา (Certified Pharmacist Verified)',
-      contraindications: ['ตับแข็งขั้นรุนแรง', 'แพ้ตัวยาพาราเซตามอล'],
-      qrCodeId: 'PIL-TH-PAR-0029'
+    en: {
+      paracetamol: {
+        brand: 'Sara / Tylenol (Paracetamol 500 mg)',
+        generic: 'Acetaminophen / Paracetamol',
+        indication: 'Relief of mild to moderate pain, headache, and fever reduction.',
+        dosage: 'Take 1-2 tablets every 4-6 hours as needed for symptoms (Do not exceed 8 tablets / 4,000 mg daily).',
+        warning: 'Do not use in patients with severe hepatic impairment or known allergy. Accidental overdose may cause acute liver failure.',
+        pharmacistNote: 'Verified: Audited & certified by Clinical Pharmacist Advisory Board',
+        contraindications: ['Severe Cirrhosis / Liver Disease', 'Paracetamol Hypersensitivity'],
+        qrCodeId: 'PIL-TH-PAR-0029'
+      },
+      amoxicillin: {
+        brand: 'Amoxycillin 500 mg (Capsule)',
+        generic: 'Amoxicillin Trihydrate',
+        indication: 'Broad-spectrum antibiotic for bacterial respiratory tract, tonsillitis, and skin infections.',
+        dosage: 'Take 1 capsule 3 times daily before or after meals (Must complete the full prescribed course).',
+        warning: 'Discontinue immediately and seek emergency care if rash, swelling of lips/face, or breathing difficulty occurs.',
+        pharmacistNote: 'Verified: Critical reminder added — "Must complete the full prescribed course even if symptoms resolve"',
+        contraindications: ['History of Penicillin/Beta-lactam Allergy'],
+        qrCodeId: 'PIL-TH-AMX-0104'
+      },
+      metformin: {
+        brand: 'Glucophage (Metformin HCl 500 mg)',
+        generic: 'Metformin Hydrochloride',
+        indication: 'Blood glucose reduction and glycemic control for type 2 diabetes mellitus.',
+        dosage: 'Take 1 tablet with morning and evening meals to minimize gastrointestinal discomfort.',
+        warning: 'Avoid alcohol consumption while on therapy. Consult physician before radiological contrast procedures.',
+        pharmacistNote: 'Verified: Formatted in extra-large font mode for elderly diabetic patients',
+        contraindications: ['Severe Renal Dysfunction (eGFR < 30)', 'Lactic Acidosis'],
+        qrCodeId: 'PIL-TH-MET-0588'
+      }
     },
-    amoxicillin: {
-      brand: 'Amoxycillin 500 mg (Capsule)',
-      generic: 'Amoxicillin Trihydrate',
-      indication: 'ยาปฏิชีวนะฆ่าเชื้อแบคทีเรียในระบบทางเดินหายใจ ต่อมทอนซิลอักเสบ หรือผิวหนัง',
-      dosage: 'รับประทานครั้งละ 1 เม็ด วันละ 3 ครั้ง ก่อนหรือหลังอาหาร (ต้องทานติดต่อกันจนหมดตามแพทย์สั่ง)',
-      warning: 'หากมีผื่นคัน ปากบวม หายใจไม่ออก ให้หยุดยาทันทีและพบแพทย์ (อาการแพ้ยาตระกูลเพนิซิลลิน)',
-      pharmacistNote: 'ตรวจสอบแล้ว: เน้นย้ำข้อความ "ต้องรับประทานติดต่อกันจนหมดแผงแม้จะหายป่วยแล้ว"',
-      contraindications: ['ประวัติแพ้ยาในกลุ่ม Penicillin'],
-      qrCodeId: 'PIL-TH-AMX-0104'
-    },
-    metformin: {
-      brand: 'Glucophage (Metformin HCl 500 mg)',
-      generic: 'Metformin Hydrochloride',
-      indication: 'ยาลดระดับน้ำตาลในเลือดสำหรับผู้ป่วยเบาหวานชนิดที่ 2',
-      dosage: 'รับประทานครั้งละ 1 เม็ด พร้อมอาหารมื้อเช้า-เย็น เพื่อลดอาการคลื่นไส้ แน่นท้อง',
-      warning: 'หลีกเลี่ยงการดื่มเครื่องดื่มแอลกอฮอล์ขณะรับประทานยา แจ้งแพทย์ทันทีก่อนตรวจฉีดสีเอกซเรย์',
-      pharmacistNote: 'ตรวจสอบแล้ว: จัดทำคู่มือขนาดตัวอักษรใหญ่พิเศษสำหรับผู้สูงอายุที่เป็นเบาหวาน',
-      contraindications: ['ภาวะไตเสื่อมรุนแรง (eGFR < 30)', 'ภาวะเลือดเป็นกรด Lactic Acidosis'],
-      qrCodeId: 'PIL-TH-MET-0588'
+    th: {
+      paracetamol: {
+        brand: 'Sara / Tylenol (Paracetamol 500 mg)',
+        generic: 'Acetaminophen / Paracetamol',
+        indication: 'บรรเทาอาการปวดศีรษะ ลดไข้ บรรเทาอาการปวดเมื่อยกล้ามเนื้อ',
+        dosage: 'รับประทานครั้งละ 1-2 เม็ด ทุก 4-6 ชั่วโมงเมื่อมีอาการ (ห้ามเกิน 8 เม็ด/วัน หรือ 4,000 มก.)',
+        warning: 'ห้ามใช้ในผู้ที่แพ้ยานี้ หรือผู้ป่วยโรคตับรุนแรง การรับประทานยาเกินขนาดอาจทำให้ตับวายเฉียบพลัน',
+        pharmacistNote: 'ตรวจสอบแล้ว: ตรวจสอบความถูกต้องโดย ภญ. ทีมที่ปรึกษา (Certified Pharmacist Verified)',
+        contraindications: ['ตับแข็งขั้นรุนแรง', 'แพ้ตัวยาพาราเซตามอล'],
+        qrCodeId: 'PIL-TH-PAR-0029'
+      },
+      amoxicillin: {
+        brand: 'Amoxycillin 500 mg (Capsule)',
+        generic: 'Amoxicillin Trihydrate',
+        indication: 'ยาปฏิชีวนะฆ่าเชื้อแบคทีเรียในระบบทางเดินหายใจ ต่อมทอนซิลอักเสบ หรือผิวหนัง',
+        dosage: 'รับประทานครั้งละ 1 เม็ด วันละ 3 ครั้ง ก่อนหรือหลังอาหาร (ต้องทานติดต่อกันจนหมดตามแพทย์สั่ง)',
+        warning: 'หากมีผื่นคัน บวมที่ริมฝีปาก ใบหน้า หรือหายใจติดขัด ให้หยุดยาและพบแพทย์ทันที',
+        pharmacistNote: 'ตรวจสอบแล้ว: เพิ่มข้อความย้ำเตือนสำคัญ — "ต้องทานยาให้ครบตามแพทย์สั่งแม้ว่าอาการจะดีขึ้นแล้ว"',
+        contraindications: ['ประวัติแพ้ยาในกลุ่มเพนิซิลลิน (Penicillin)'],
+        qrCodeId: 'PIL-TH-AMX-0104'
+      },
+      metformin: {
+        brand: 'Glucophage (Metformin HCl 500 mg)',
+        generic: 'Metformin Hydrochloride',
+        indication: 'ยาลดระดับน้ำตาลในเลือดสำหรับผู้ป่วยเบาหวานชนิดที่ 2',
+        dosage: 'รับประทานครั้งละ 1 เม็ด พร้อมอาหารเช้าและเย็น เพื่อลดผลข้างเคียงต่อกระเพาะอาหาร',
+        warning: 'หลีกเลี่ยงการดื่มเครื่องดื่มแอลกอฮอล์ขณะใช้ยา และต้องแจ้งแพทย์หากต้องเข้ารับการฉีดสารทึบรังสี',
+        pharmacistNote: 'ตรวจสอบแล้ว: ปรับฟอนต์ให้ใหญ่เป็นพิเศษเพื่อผู้สูงอายุที่เป็นเบาหวาน',
+        contraindications: ['ภาวะไตวายรุนแรง (eGFR < 30)', 'ภาวะเลือดเป็นกรดจากกรดแล็กติก'],
+        qrCodeId: 'PIL-TH-MET-0588'
+      }
     }
   };
 
-  const currentMed = mockMedications[selectedMed];
+  const currentMed = mockMedications[lang][selectedMed];
 
   return (
-    <div className="space-y-6 text-slate-200">
-      {/* Hero Header */}
-      <div className="relative overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 via-slate-900/60 to-slate-950 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
-          <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center gap-1.5">
-              <Pill size={12} />
-              FLAGSHIP HEALTHCARE CASE STUDY
+    <div className="space-y-6 text-slate-700 font-sans">
+      {/* Top Header Card */}
+      <div className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200/70">
+              {t.flagshipBadge}
             </span>
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-              <ShieldCheck size={12} />
-              Pharmacist Co-Engineered
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/70 flex items-center gap-1">
+              <ShieldCheck size={13} className="text-emerald-600" />
+              {t.partnerBadge}
+            </span>
+            <span className="text-xs font-mono text-slate-500">
+              {t.systemId}
             </span>
           </div>
 
-          <div className="text-xs font-mono text-slate-400">
-            System ID: <span className="text-cyan-300">MED-PIL-PROD</span>
-          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            {t.title}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            {t.thaiTitle}
+          </p>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          PIL Management System
-        </h2>
-        <p className="text-base text-cyan-200/90 font-medium mt-1">
-          ระบบบริหารจัดการเอกสารกำกับยาฉบับประชาชน (Patient Information Leaflets)
-        </p>
-        <p className="text-sm text-slate-300 max-w-3xl mt-2 leading-relaxed">
-          {flagshipProject.description}
-        </p>
-
-        {/* Quick Metrics Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-5 border-t border-white/[0.08]">
-          {flagshipProject.metrics?.map((m, idx) => (
-            <div key={idx} className="bg-white/[0.03] p-3 rounded-xl border border-white/[0.05]">
-              <div className="text-xs font-mono text-slate-400">{m.label}</div>
-              <div className="text-lg font-bold text-cyan-400 mt-0.5">{m.value}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex items-center space-x-2 border-b border-white/[0.08] pb-1 font-mono text-xs overflow-x-auto">
-        {[
-          { id: 'overview', label: '1. Executive Summary', icon: <FileCheck size={14} /> },
-          { id: 'interactive-demo', label: '2. Live Leaflet Demo', icon: <Eye size={14} /> },
-          { id: 'architecture', label: '3. Technical Architecture', icon: <Layers size={14} /> },
-          { id: 'pharmacist-sync', label: '4. Pharmacist Co-Design', icon: <Users size={14} /> },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => {
-              sound.playClick();
-              setActiveTab(tab.id as typeof activeTab);
-            }}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg transition-all whitespace-nowrap ${
-              activeTab === tab.id
-                ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]'
-            }`}
+        {/* Live Website Button with Guest Access Note */}
+        <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
+          <a
+            href="https://medication-project-tau.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => sound.playClick()}
+            className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-sm hover:shadow-md"
           >
-            {tab.icon}
-            <span>{tab.label}</span>
-          </button>
-        ))}
+            <span>{t.liveButtonLabel}</span>
+            <ExternalLink size={14} />
+          </a>
+          <span className="text-[11px] font-medium text-slate-500">
+            {t.liveButtonGuest}
+          </span>
+        </div>
       </div>
 
-      {/* Tab 1: Overview */}
+      {/* Tabs Bar */}
+      <div className="flex items-center space-x-2 border-b border-slate-200 pb-2 overflow-x-auto text-xs font-medium">
+        <button
+          onClick={() => {
+            sound.playClick(900);
+            setActiveTab('overview');
+          }}
+          className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+            activeTab === 'overview'
+              ? 'bg-blue-600 text-white shadow-xs font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <Layers size={14} />
+          <span>{t.tabs.overview}</span>
+        </button>
+
+        <button
+          onClick={() => {
+            sound.playClick(950);
+            setActiveTab('interactive-demo');
+          }}
+          className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+            activeTab === 'interactive-demo'
+              ? 'bg-blue-600 text-white shadow-xs font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <QrCode size={14} />
+          <span>{t.tabs.demo}</span>
+        </button>
+
+        <button
+          onClick={() => {
+            sound.playClick(1000);
+            setActiveTab('architecture');
+          }}
+          className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+            activeTab === 'architecture'
+              ? 'bg-blue-600 text-white shadow-xs font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <Workflow size={14} />
+          <span>{t.tabs.architecture}</span>
+        </button>
+
+        <button
+          onClick={() => {
+            sound.playClick(1050);
+            setActiveTab('pharmacist-sync');
+          }}
+          className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+            activeTab === 'pharmacist-sync'
+              ? 'bg-blue-600 text-white shadow-xs font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <Users size={14} />
+          <span>{t.tabs.pharmacist}</span>
+        </button>
+      </div>
+
+      {/* Tab 1: Executive Summary */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* The Challenge */}
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
-              <div className="flex items-center space-x-2 text-amber-400 font-semibold text-sm">
-                <AlertTriangle size={16} />
-                <span>The Challenge (ปัญหาเดิมในโรงพยาบาล/ร้านยา)</span>
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-3">
+              <div className="flex items-center space-x-2 text-rose-700 font-bold text-xs uppercase tracking-wider">
+                <AlertTriangle size={15} />
+                <span>{t.challengeTitle}</span>
               </div>
-              <ul className="text-xs text-slate-300 space-y-2 list-disc pl-4 leading-relaxed">
-                <li>
-                  <strong>ตัวหนังสือเล็กและศัพท์ยาก:</strong> เอกสารกำกับยาฉบับเดิม (Package Insert) มีศัพท์เทคนิคทางการแพทย์ ประชาชนทั่วไปและผู้สูงอายุอ่านไม่เข้าใจ
-                </li>
-                <li>
-                  <strong>การสูญหายและการเข้าถึง:</strong> ผู้ป่วยมักทำซองยาหรือใบแทรกหาย เมื่อมีอาการผิดปกติไม่รู้ว่าต้องปฏิบัติตัวอย่างไร
-                </li>
-                <li>
-                  <strong>การอัปเดตข้อมูลยา:</strong> เมื่อมีคำเตือนใหม่จาก อย. การกระจายข้อมูลฉบับอัปเดตไปยังคนไข้แบบกระดาษทำได้ยากมาก
-                </li>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600">
+                {t.challenges.map((c, i) => (
+                  <li key={i} className="flex items-start space-x-2">
+                    <span className="text-rose-500 font-bold">•</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* The Solution */}
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-cyan-500/20 space-y-3">
-              <div className="flex items-center space-x-2 text-cyan-400 font-semibold text-sm">
-                <CheckCircle2 size={16} />
-                <span>The Engineering Solution (ระบบที่เราสร้างขึ้น)</span>
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-3">
+              <div className="flex items-center space-x-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
+                <CheckCircle2 size={15} />
+                <span>{t.solutionTitle}</span>
               </div>
-              <ul className="text-xs text-slate-300 space-y-2 list-disc pl-4 leading-relaxed">
-                <li>
-                  <strong>โครงสร้างข้อมูลแบบแบ่งส่วน (Structured PIL Schema):</strong> แยกประเภทยา, ขนาดยา, ข้อควรระวังพิเศษ และข้อห้ามใช้เด็ดขาดอย่างชัดเจน
-                </li>
-                <li>
-                  <strong>Dynamic QR Code on Pill Packs:</strong> ผู้ป่วยสแกนจากซองยาแล้วเปิดอ่านเอกสารฉบับประชาชนได้ทันทีใน 1 คลิก ไม่ต้องล็อกอิน
-                </li>
-                <li>
-                  <strong>Elderly-Friendly Accessible UI:</strong> ปรับขนาดตัวอักษรได้ มี Contrast สีที่ผู้สูงอายุและผู้มีความบกพร่องทางสายตาอ่านง่าย (WCAG AAA)
-                </li>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600">
+                {t.solutions.map((s, i) => (
+                  <li key={i} className="flex items-start space-x-2">
+                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span>{s}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          {/* Key Engineering Highlights */}
-          <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Sparkles size={16} className="text-cyan-400" />
-              จุดเด่นทางวิศวกรรมซอฟต์แวร์ (Software Engineering Highlights)
+          {/* Highlights Box */}
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+              <Sparkles size={14} className="text-blue-600" />
+              {t.highlightsTitle}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {flagshipProject.highlights?.map((hl, i) => (
-                <div key={i} className="flex items-start space-x-2 text-xs text-slate-300 bg-white/[0.02] p-3 rounded-lg border border-white/[0.04]">
-                  <span className="text-cyan-400 font-mono mt-0.5">0{i+1}.</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-600">
+              {flagshipProject.highlights?.map((hl, idx) => (
+                <div key={idx} className="flex items-start space-x-2 bg-white p-3 rounded-xl border border-slate-200/70">
+                  <CheckCircle2 size={15} className="text-blue-600 shrink-0 mt-0.5" />
                   <span>{hl}</span>
                 </div>
               ))}
@@ -184,111 +256,123 @@ export const PilCaseStudyWindow: React.FC = () => {
         </div>
       )}
 
-      {/* Tab 2: Interactive Live Leaflet Demo */}
+      {/* Tab 2: Live Leaflet Demo */}
       {activeTab === 'interactive-demo' && (
         <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-xs font-mono">
+          {/* Medication Selector & Elderly Mode Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
             <div className="flex items-center space-x-2">
-              <span className="text-slate-400">เลือกตัวอย่างยาเพื่อทดสอบ:</span>
-              {(['paracetamol', 'amoxicillin', 'metformin'] as const).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => {
-                    sound.playClick();
-                    setSelectedMed(key);
-                  }}
-                  className={`px-2.5 py-1 rounded-md capitalize transition-all ${
-                    selectedMed === key
-                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_10px_rgba(0,240,255,0.4)]'
-                      : 'bg-white/[0.05] text-slate-300 hover:bg-white/[0.1]'
-                  }`}
-                >
-                  {key}
-                </button>
-              ))}
+              <span className="text-xs font-semibold text-slate-600">{t.selectMedLabel}</span>
+              <div className="flex space-x-1.5">
+                {(['paracetamol', 'amoxicillin', 'metformin'] as const).map((med) => (
+                  <button
+                    key={med}
+                    onClick={() => {
+                      sound.playClick(1000);
+                      setSelectedMed(med);
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                      selectedMed === med
+                        ? 'bg-blue-600 text-white shadow-xs'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {med.charAt(0).toUpperCase() + med.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
 
+            {/* Elderly Friendly Toggle */}
             <button
               onClick={() => {
                 sound.playClick(900);
                 setElderlyMode(!elderlyMode);
               }}
-              className={`flex items-center space-x-1.5 px-3 py-1 rounded-md border transition-all ${
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
                 elderlyMode
-                  ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
-                  : 'bg-white/[0.04] border-white/[0.08] text-slate-400 hover:text-slate-200'
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
               }`}
             >
-              <span>{elderlyMode ? '✓ โหมดผู้สูงอายุ (Large Text ON)' : '🔍 เปิดโหมดอ่านง่าย/ผู้สูงอายุ'}</span>
+              <Eye size={14} />
+              <span>{elderlyMode ? t.elderlyModeOn : t.elderlyModeOff}</span>
             </button>
           </div>
 
-          {/* Interactive Leaflet Paper Mockup */}
-          <div className={`p-6 rounded-2xl border transition-all duration-300 ${
-            elderlyMode 
-              ? 'bg-[#151922] border-amber-500/30 shadow-2xl scale-[1.01]' 
-              : 'bg-[#0f1118] border-white/[0.1]'
-          }`}>
-            {/* Leaflet Header */}
-            <div className="flex items-start justify-between border-b border-white/[0.08] pb-4 mb-4">
+          {/* Simulated Mobile Leaflet View */}
+          <div className={`p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-md space-y-5 transition-all ${elderlyMode ? 'scale-[1.02]' : ''}`}>
+            
+            {/* Header info */}
+            <div className="border-b border-slate-200 pb-4 flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/20">
-                  {currentMed.qrCodeId} • VERIFIED PHARMA LEAFLET
-                </span>
-                <h3 className={`font-bold text-white mt-1.5 ${elderlyMode ? 'text-2xl' : 'text-lg'}`}>
+                <div className="flex items-center space-x-2 text-xs font-mono text-emerald-700 font-semibold mb-1">
+                  <ShieldCheck size={14} />
+                  <span>{t.verifiedLeaflet}</span>
+                </div>
+                <h3 className={`font-extrabold text-slate-900 ${elderlyMode ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
                   {currentMed.brand}
                 </h3>
-                <p className={`text-slate-400 font-mono ${elderlyMode ? 'text-sm' : 'text-xs'}`}>
-                  ชื่อสามัญทางยา (Generic Name): <span className="text-slate-200 font-medium">{currentMed.generic}</span>
+                <p className={`text-slate-600 ${elderlyMode ? 'text-base font-semibold' : 'text-xs'}`}>
+                  {t.genericLabel} {currentMed.generic}
                 </p>
               </div>
 
-              <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-center hidden sm:block">
-                <QrCode size={36} className="text-cyan-400 mx-auto" />
-                <span className="text-[9px] font-mono text-slate-400 mt-1 block">Scan PIL</span>
+              {/* Dynamic QR Mock */}
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center font-mono text-[10px] text-slate-600 shrink-0">
+                <QrCode size={40} className="text-slate-800 mx-auto" />
+                <span className="block mt-1 font-bold">{t.scanQr}</span>
+                <span className="text-[9px] text-slate-400">{currentMed.qrCodeId}</span>
               </div>
             </div>
 
-            {/* Content Sections */}
-            <div className={`space-y-4 ${elderlyMode ? 'text-base' : 'text-sm'}`}>
-              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.04]">
-                <div className="font-semibold text-cyan-300 text-xs font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <CheckCircle2 size={14} className="text-cyan-400" />
-                  1. ยานี้ใช้เพื่อรักษาอะไร (Indications)
-                </div>
-                <p className="text-slate-200 leading-relaxed">{currentMed.indication}</p>
-              </div>
+            {/* Section 1: Indications */}
+            <div className="space-y-1.5">
+              <h4 className={`font-bold text-blue-700 ${elderlyMode ? 'text-lg' : 'text-xs uppercase tracking-wider'}`}>
+                {t.sections.indications}
+              </h4>
+              <p className={`text-slate-700 leading-relaxed ${elderlyMode ? 'text-base font-medium' : 'text-xs sm:text-sm'}`}>
+                {currentMed.indication}
+              </p>
+            </div>
 
-              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.04]">
-                <div className="font-semibold text-emerald-300 text-xs font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <CheckCircle2 size={14} className="text-emerald-400" />
-                  2. วิธีใช้ยาและขนาดยาที่ถูกต้อง (Dosage & Instructions)
-                </div>
-                <p className="text-slate-200 leading-relaxed font-medium">{currentMed.dosage}</p>
-              </div>
+            {/* Section 2: Dosage */}
+            <div className="space-y-1.5 p-4 rounded-xl bg-blue-50/70 border border-blue-200/80">
+              <h4 className={`font-bold text-blue-900 ${elderlyMode ? 'text-lg' : 'text-xs uppercase tracking-wider'}`}>
+                {t.sections.dosage}
+              </h4>
+              <p className={`text-slate-800 leading-relaxed font-medium ${elderlyMode ? 'text-base' : 'text-xs sm:text-sm'}`}>
+                {currentMed.dosage}
+              </p>
+            </div>
 
-              <div className="bg-rose-950/20 p-4 rounded-xl border border-rose-500/30">
-                <div className="font-semibold text-rose-300 text-xs font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <AlertTriangle size={14} className="text-rose-400" />
-                  3. ข้อควรระวังและอาการเตือนอันตราย (Important Warnings)
-                </div>
-                <p className="text-rose-200/90 leading-relaxed">{currentMed.warning}</p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {currentMed.contraindications.map((c, i) => (
-                    <span key={i} className="text-[11px] font-mono px-2 py-0.5 bg-rose-500/10 text-rose-300 rounded border border-rose-500/20">
-                      ห้ามใช้: {c}
-                    </span>
-                  ))}
-                </div>
+            {/* Section 3: Critical Warning */}
+            <div className="space-y-2 p-4 rounded-xl bg-rose-50 border border-rose-200">
+              <h4 className={`font-bold text-rose-900 flex items-center gap-1.5 ${elderlyMode ? 'text-lg' : 'text-xs uppercase tracking-wider'}`}>
+                <AlertTriangle size={15} />
+                <span>{t.sections.warnings}</span>
+              </h4>
+              <p className={`text-rose-800 leading-relaxed font-medium ${elderlyMode ? 'text-base' : 'text-xs sm:text-sm'}`}>
+                {currentMed.warning}
+              </p>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                <span className="text-xs font-bold text-rose-800">{t.sections.contraindicationPrefix}</span>
+                {currentMed.contraindications.map((ci, idx) => (
+                  <span key={idx} className="px-2 py-0.5 rounded bg-rose-100 text-rose-900 text-[11px] font-semibold">
+                    {ci}
+                  </span>
+                ))}
               </div>
+            </div>
 
-              {/* Pharmacist Badge Verification */}
-              <div className="flex items-center justify-between p-3 rounded-lg bg-cyan-950/30 border border-cyan-500/20 text-xs font-mono text-cyan-300">
-                <div className="flex items-center space-x-2">
-                  <ShieldCheck size={16} className="text-cyan-400" />
-                  <span>{currentMed.pharmacistNote}</span>
-                </div>
-                <span className="text-[10px] text-slate-400 hidden sm:inline">Cryptographically Signed</span>
+            {/* Pharmacist Cryptographic Sign-Off Footer */}
+            <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 font-mono">
+              <div className="flex items-center space-x-1.5">
+                <ShieldCheck size={14} className="text-emerald-600" />
+                <span>{currentMed.pharmacistNote}</span>
+              </div>
+              <div>
+                <span>{t.pharmacistSigned}</span>
               </div>
             </div>
           </div>
@@ -297,53 +381,40 @@ export const PilCaseStudyWindow: React.FC = () => {
 
       {/* Tab 3: Technical Architecture */}
       {activeTab === 'architecture' && (
-        <div className="space-y-4">
-          <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Workflow size={16} className="text-cyan-400" />
-              Data Pipeline & Architecture Flow
+        <div className="space-y-5">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Workflow size={16} className="text-blue-600" />
+              <span>{t.archTitle}</span>
             </h3>
 
-            {/* Architecture diagram mockup */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs font-mono">
-              <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-center space-y-1">
-                <div className="text-slate-400">1. Data Ingestion</div>
-                <div className="font-semibold text-white">Pharmacist Editor</div>
-                <div className="text-[10px] text-cyan-400">Draft & Review State</div>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.03] border border-cyan-500/30 text-center space-y-1 shadow-[0_0_12px_rgba(0,240,255,0.1)]">
-                <div className="text-slate-400">2. Normalization</div>
-                <div className="font-semibold text-cyan-300">Domain Parser</div>
-                <div className="text-[10px] text-cyan-400">FDA Rules Engine</div>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-center space-y-1">
-                <div className="text-slate-400">3. Storage & Index</div>
-                <div className="font-semibold text-white">PostgreSQL + Redis</div>
-                <div className="text-[10px] text-purple-400">Sub-85ms Search Index</div>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.03] border border-emerald-500/30 text-center space-y-1 shadow-[0_0_12px_rgba(16,185,129,0.1)]">
-                <div className="text-slate-400">4. Distribution</div>
-                <div className="font-semibold text-emerald-300">PWA & QR Reader</div>
-                <div className="text-[10px] text-emerald-400">Offline Cache Ready</div>
-              </div>
+            {/* 4 Pipeline Steps */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              {t.archSteps.map((step, idx) => (
+                <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="text-[11px] font-mono text-slate-500 uppercase">{step.step}</div>
+                  <div className="font-bold text-xs text-slate-900">{step.role}</div>
+                  <div className="text-[11px] text-blue-700 font-medium">{step.sub}</div>
+                </div>
+              ))}
             </div>
 
-            <div className="p-4 rounded-lg bg-black/40 border border-white/[0.05] font-mono text-xs text-slate-300 space-y-2">
-              <div className="text-slate-500">// Core Schema Entity Definition (TypeScript)</div>
-              <pre className="text-cyan-300 overflow-x-auto">
+            {/* TypeScript Schema Box */}
+            <div className="p-4 rounded-xl bg-slate-900 font-mono text-xs text-slate-200 space-y-2">
+              <div className="text-slate-400">// Medication Domain Schema (TypeScript / Flask Models)</div>
+              <pre className="text-blue-300 overflow-x-auto">
 {`interface PatientInformationLeaflet {
-  id: LeafletUUID;
-  medicationCode: ThaiFDAStandardCode;
+  id: string; // UUID
+  medicationCode: string; // Thai FDA Standard Registration
+  genericName: string;
   brandNames: string[];
-  activeIngredients: {
-    name: string;
-    dosageStrength: string;
-  }[];
-  indicationsPlainLanguage: string; // เขียนสำหรับประชาชน
-  administrationRules: AdministrationSchedule;
-  criticalWarnings: BlackBoxWarning[];
-  pharmacistAuditorId: LicenseNumber;
-  approvedAt: ISODateString;
+  activeIngredients: { name: string; dosageStrength: string }[];
+  indicationsPlainLanguage: string; // Patient-friendly description
+  administrationRules: string;
+  criticalWarnings: string[];
+  contraindications: string[];
+  pharmacistAuditorId: string;
+  verifiedAt: string; // ISO Date
 }`}
               </pre>
             </div>
@@ -351,40 +422,32 @@ export const PilCaseStudyWindow: React.FC = () => {
         </div>
       )}
 
-      {/* Tab 4: Pharmacist Co-Design */}
+      {/* Tab 4: Pharmacist Collaboration */}
       {activeTab === 'pharmacist-sync' && (
         <div className="space-y-4">
-          <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Users size={16} className="text-cyan-400" />
-              การทำงานร่วมกับเภสัชกร (Interdisciplinary Collaboration)
+          <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Users size={16} className="text-blue-600" />
+              <span>{t.pharmaSyncTitle}</span>
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              ในฐานะ Software Engineer การพัฒนาแอปพลิเคชันสาย HealthTech ไม่ใช่แค่การเขียนโค้ด แต่คือการเข้าใจ
-              <strong> Domain Knowledge</strong> ของบุคลากรทางการแพทย์อย่างลึกซึ้ง:
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              {t.pharmaSyncDesc}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.05] space-y-1.5">
-                <div className="font-bold text-xs text-cyan-300">การสัมภาษณ์ความต้องการจริง</div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  ทำ Workshop ร่วมกับเภสัชกรเพื่อค้นหา Pain point เวลาคนไข้โทรเข้ามาสอบถามเรื่องการลืมกินยา หรือเข้าใจผิดเรื่องขนาดยา
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.05] space-y-1.5">
-                <div className="font-bold text-xs text-emerald-300">กระบวนการ Cross-Validation</div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  สร้างระบบ Audit Trail บันทึกว่าเภสัชกรท่านใดเป็นผู้อนุมัติเอกสารฉบับล่าสุด ป้องกันข้อมูลคลาดเคลื่อน 100%
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.05] space-y-1.5">
-                <div className="font-bold text-xs text-purple-300">User Testing กับผู้ป่วยจริง</div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  ทดสอบการอ่านของผู้สูงอายุในคลินิก ปรับขนาดฟอนต์ สีเตือนอันตราย และปุ่มเปิดเสียงอ่านคำแนะนำ
-                </p>
-              </div>
+              {t.pharmaPoints.map((pt, idx) => (
+                <div 
+                  key={idx} 
+                  className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2"
+                >
+                  <div className="font-bold text-xs text-blue-700">
+                    {pt.title}
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {pt.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

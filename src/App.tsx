@@ -12,10 +12,16 @@ import { ScrollStoryShowcase } from './components/sections/ScrollStoryShowcase';
 import { FeaturedPilCard } from './components/sections/FeaturedPilCard';
 import { BentoProjects } from './components/sections/BentoProjects';
 import { SkillsDiagnostics } from './components/sections/SkillsDiagnostics';
+import { SideJobsAndHobbies } from './components/sections/SideJobsAndHobbies';
 import { ContactSection } from './components/sections/ContactSection';
 import { sound } from './utils/sound';
+import { useLanguage } from './context/LanguageContext';
+import { translations } from './data/translations';
 
 export const App: React.FC = () => {
+  const { lang } = useLanguage();
+  const wt = translations[lang].windowTitles;
+
   // Window states
   const [windows, setWindows] = useState<Record<WindowId, WindowState>>({
     pil: { id: 'pil', title: 'PIL Management System Explorer', isOpen: false, isMinimized: false, isMaximized: false, zIndex: 50 },
@@ -92,7 +98,7 @@ export const App: React.FC = () => {
   const openWindowsCount = Object.values(windows).filter((w) => w.isOpen).length;
 
   return (
-    <div className="relative min-h-screen text-slate-100 bg-[#08090d]">
+    <div className="relative min-h-screen text-slate-800 bg-[#F8FAFC] font-sans antialiased selection:bg-blue-600/15 selection:text-blue-800">
       {/* Top System Bar */}
       <SystemBar
         onOpenTerminal={() => openWindow('terminal')}
@@ -101,7 +107,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Portfolio Sections */}
-      <main className="relative z-10 pb-20">
+      <main className="relative z-10 pb-24">
         <HeroSection
           onOpenWindow={openWindow}
           onScrollTo={scrollToSection}
@@ -120,6 +126,8 @@ export const App: React.FC = () => {
         />
 
         <SkillsDiagnostics />
+
+        <SideJobsAndHobbies />
 
         <ContactSection
           onOpenWindow={openWindow}
@@ -151,8 +159,8 @@ export const App: React.FC = () => {
       {/* 1. PIL Management System Window */}
       <WindowFrame
         id="pil"
-        title="PIL Management System"
-        subtitle="Flagship Healthcare Case Study • Co-Designed with Pharmacists"
+        title={wt.pil.title}
+        subtitle={wt.pil.subtitle}
         isOpen={windows.pil.isOpen}
         onClose={() => closeWindow('pil')}
         zIndex={windows.pil.zIndex}
@@ -165,8 +173,8 @@ export const App: React.FC = () => {
       {/* 2. Interactive Terminal Window */}
       <WindowFrame
         id="terminal"
-        title="bash - wipaporn@mac: ~"
-        subtitle="Interactive Developer Shell (Type 'help')"
+        title={wt.terminal.title}
+        subtitle={wt.terminal.subtitle}
         isOpen={windows.terminal.isOpen}
         onClose={() => closeWindow('terminal')}
         zIndex={windows.terminal.zIndex}
@@ -180,8 +188,8 @@ export const App: React.FC = () => {
       {/* 3. Interactive Resume Window */}
       <WindowFrame
         id="resume"
-        title="Curriculum Vitae"
-        subtitle="Recruiter Ready • Printable Format"
+        title={wt.resume.title}
+        subtitle={wt.resume.subtitle}
         isOpen={windows.resume.isOpen}
         onClose={() => closeWindow('resume')}
         zIndex={windows.resume.zIndex}
@@ -195,4 +203,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Terminal, Command } from 'lucide-react';
+import { Volume2, VolumeX, Terminal, Command, Globe, Briefcase } from 'lucide-react';
 import { sound } from '../../utils/sound';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../data/translations';
 
 interface SystemBarProps {
   onOpenTerminal: () => void;
@@ -13,13 +15,15 @@ export const SystemBar: React.FC<SystemBarProps> = ({
   onOpenCommandPalette,
   openWindowsCount
 }) => {
+  const { lang, setLang, toggleLang } = useLanguage();
+  const t = translations[lang].systemBar;
   const [time, setTime] = useState<string>('');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', {
+      setTime(now.toLocaleTimeString(lang === 'th' ? 'th-TH' : 'en-US', {
         timeZone: 'Asia/Bangkok',
         hour12: false,
         hour: '2-digit',
@@ -30,7 +34,7 @@ export const SystemBar: React.FC<SystemBarProps> = ({
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [lang]);
 
   const handleToggleSound = () => {
     const newState = sound.toggle();
@@ -38,71 +42,108 @@ export const SystemBar: React.FC<SystemBarProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 h-11 border-b border-white/[0.06] bg-[#090a0f]/80 backdrop-blur-md px-3 sm:px-6 flex items-center justify-between text-xs font-mono select-none">
+    <header className="fixed top-0 left-0 right-0 z-40 h-12 border-b border-slate-200/90 bg-white/90 backdrop-blur-md px-3 sm:px-6 flex items-center justify-between text-xs select-none shadow-xs">
       {/* Left: Branding & Status */}
       <div className="flex items-center space-x-3 sm:space-x-4">
         <div className="flex items-center space-x-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981] animate-pulse" />
-          <span className="font-semibold text-slate-200 tracking-wider hidden sm:inline">WIPAPORN_SYS</span>
-          <span className="text-slate-500 hidden md:inline">/</span>
-          <span className="text-slate-400 hidden md:inline">SE-PORTFOLIO</span>
+          <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm animate-pulse" />
+          <span className="font-bold text-slate-900 tracking-wide text-sm">{t.branding}</span>
+          <span className="text-slate-300 hidden md:inline">•</span>
+          <span className="text-blue-700 font-medium hidden md:inline px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200/60 text-[11px]">
+            {t.role}
+          </span>
         </div>
 
         {openWindowsCount > 0 && (
-          <div className="hidden lg:flex items-center space-x-1.5 px-2 py-0.5 rounded-full bg-cyan-950/40 border border-cyan-500/20 text-cyan-400 text-[10px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-            <span>{openWindowsCount} active window{openWindowsCount > 1 ? 's' : ''}</span>
+          <div className="hidden lg:flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping" />
+            <span>
+              {openWindowsCount} {openWindowsCount > 1 ? t.activeWindowsPlural : t.activeWindows}
+            </span>
           </div>
         )}
       </div>
 
       {/* Center: Bangkok Realtime Clock & Diagnostic Pill */}
-      <div className="flex items-center space-x-2 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full text-slate-300 shadow-inner">
-        <span className="text-cyan-400">BKK</span>
-        <span className="text-slate-500">|</span>
-        <span className="font-medium text-slate-200">{time || '17:00:00'}</span>
-        <span className="text-[10px] text-emerald-400 font-sans hidden sm:inline px-1 bg-emerald-500/10 rounded">● LIVE</span>
+      <div className="flex items-center space-x-2 bg-slate-100/90 border border-slate-200 px-3 py-1 rounded-full text-slate-700 shadow-inner font-mono text-[11px]">
+        <span className="text-blue-700 font-semibold">BKK</span>
+        <span className="text-slate-300">|</span>
+        <span className="font-semibold text-slate-800">{time || '15:30:00'}</span>
+        <span className="text-[10px] text-emerald-700 font-sans hidden sm:inline px-1 bg-emerald-100 rounded font-medium">● {t.live}</span>
       </div>
 
-      {/* Right: Quick Tools & Sound */}
+      {/* Right: Quick Tools, Language Switcher & Sound */}
       <div className="flex items-center space-x-2 sm:space-x-3">
+        {/* Language Switcher Pill */}
+        <div className="flex items-center p-0.5 rounded-lg bg-slate-100 border border-slate-200">
+          <button
+            onClick={() => {
+              if (lang !== 'en') {
+                sound.playClick(950, 0.02);
+                setLang('en');
+              }
+            }}
+            className={`px-2.5 py-0.5 rounded text-[11px] font-bold transition-all ${
+              lang === 'en'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+            title="Switch to English"
+          >
+            EN
+          </button>
+          <span className="text-slate-300 text-[10px] px-0.5">/</span>
+          <button
+            onClick={() => {
+              if (lang !== 'th') {
+                sound.playClick(950, 0.02);
+                setLang('th');
+              }
+            }}
+            className={`px-2.5 py-0.5 rounded text-[11px] font-bold transition-all ${
+              lang === 'th'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+            title="สลับเป็นภาษาไทย"
+          >
+            TH
+          </button>
+        </div>
+
         {/* Terminal quick launcher */}
         <button
           onClick={() => {
             sound.playClick();
             onOpenTerminal();
           }}
-          className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.05] transition-all"
-          title="Open Terminal"
+          className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all font-mono text-[11px]"
+          title="Open Developer Shell"
         >
-          <Terminal size={13} className="text-cyan-400" />
-          <span className="hidden sm:inline">shell</span>
+          <Terminal size={12} className="text-blue-600" />
+          <span className="hidden sm:inline">&gt;_ {t.shell}</span>
         </button>
 
-        {/* Cmd+K trigger */}
+        {/* Command Palette Button */}
         <button
           onClick={() => {
             sound.playClick();
             onOpenCommandPalette();
           }}
-          className="hidden sm:flex items-center space-x-1.5 px-2 py-1 rounded-md bg-white/[0.02] hover:bg-white/[0.07] border border-white/[0.08] text-slate-400 hover:text-slate-200 transition-all"
-          title="Command Palette (Cmd+K)"
+          className="flex items-center space-x-1 px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all font-mono text-[11px]"
+          title="Open Command Menu (⌘K)"
         >
           <Command size={11} />
-          <span className="text-[10px]">K</span>
+          <span className="hidden sm:inline">K</span>
         </button>
 
-        {/* Sound Toggle */}
+        {/* Sound toggle */}
         <button
           onClick={handleToggleSound}
-          className={`p-1.5 rounded-md border transition-all ${
-            soundEnabled
-              ? 'text-cyan-400 bg-cyan-950/30 border-cyan-500/30 shadow-[0_0_10px_rgba(0,240,255,0.15)]'
-              : 'text-slate-500 bg-white/[0.02] border-white/[0.05] hover:text-slate-300'
-          }`}
-          title={soundEnabled ? 'Mute System Sounds' : 'Unmute System Sounds'}
+          className="p-1.5 rounded-md text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+          title={soundEnabled ? t.soundMute : t.soundUnmute}
         >
-          {soundEnabled ? <Volume2 size={13} /> : <VolumeX size={13} />}
+          {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} className="text-slate-400" />}
         </button>
       </div>
     </header>
