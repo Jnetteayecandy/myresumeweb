@@ -482,46 +482,50 @@ export const SideJobsAndHobbies: React.FC = () => {
                           {isTh ? hobby.descriptionTh : hobby.description}
                         </p>
 
-                        {/* Accordion Toggle for Hobby Cards */}
-                        <button
-                          onClick={() => {
-                            sound.playClick();
-                            setExpandedHobbyId(prev => prev === hobby.id ? null : hobby.id);
-                          }}
-                          className="mt-3 flex items-center justify-between w-full pt-2 border-t border-slate-100 text-[11px] font-semibold text-slate-500 hover:text-blue-700 transition-colors group/hb cursor-pointer"
-                        >
-                          <span>
-                            {isExpanded 
-                              ? tSide.collapseBtn 
-                              : (hobby.id === 'photography' 
-                                  ? (isTh ? 'ดูรายละเอียดบริการถ่ายภาพ' : 'View Photography Scope')
+
+                        {/* Accordion Toggle for Hobby Cards (not shown for photography) */}
+                        {hobby.id !== 'photography' && (
+                          <>
+                            <button
+                              onClick={() => {
+                                sound.playClick();
+                                setExpandedHobbyId(prev => prev === hobby.id ? null : hobby.id);
+                              }}
+                              className="mt-3 flex items-center justify-between w-full pt-2 border-t border-slate-100 text-[11px] font-semibold text-slate-500 hover:text-blue-700 transition-colors group/hb cursor-pointer"
+                            >
+                              <span>
+                                {isExpanded 
+                                  ? tSide.collapseBtn 
                                   : hobby.id === 'water-sports'
                                   ? (isTh ? 'ชมรูปพรีวิว & คลิปวิดีโอ' : 'View Photos & Action Clips')
                                   : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
-                                )}
-                          </span>
-                          <ChevronDown 
-                            size={14} 
-                            className={`text-slate-400 group-hover/hb:text-blue-600 transition-transform duration-300 ${
-                              isExpanded ? 'rotate-180' : ''
-                            }`} 
-                          />
-                        </button>
+                                }
+                              </span>
+                              <ChevronDown 
+                                size={14} 
+                                className={`text-slate-400 group-hover/hb:text-blue-600 transition-transform duration-300 ${
+                                  isExpanded ? 'rotate-180' : ''
+                                }`} 
+                              />
+                            </button>
 
-                        {/* Collapsible Content */}
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.25 }}
-                              className="overflow-hidden"
-                            >
-                              {getHobbyExpandedContent(hobby.id)}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                            {/* Collapsible Content */}
+                            <AnimatePresence>
+                              {isExpanded && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.25 }}
+                                  className="overflow-hidden"
+                                >
+                                  {getHobbyExpandedContent(hobby.id)}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+
                       </div>
                     </div>
                   </div>
