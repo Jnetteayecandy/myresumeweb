@@ -475,7 +475,7 @@ export const SideJobsAndHobbies: React.FC = () => {
                                 {isExpanded 
                                   ? tSide.collapseBtn 
                                   : hobby.id === 'water-sports'
-                                  ? (isTh ? 'ชมรูปพรีวิว & คลิปวิดีโอ' : 'View Photos & Action Clips')
+                                  ? (isTh ? 'ชมรูปพรีวิว' : 'View Photos')
                                   : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
                                 }
                               </span>
