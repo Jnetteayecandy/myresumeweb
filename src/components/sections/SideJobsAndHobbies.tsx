@@ -55,50 +55,6 @@ export const SideJobsAndHobbies: React.FC = () => {
 
   const getHobbyExpandedContent = (id: string) => {
     switch (id) {
-      case 'photography':
-        return (
-          <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
-            <div className="flex items-center gap-1.5 font-bold text-slate-800">
-              <ImageIcon size={13} className="text-indigo-600" />
-              <span>{isTh ? 'ขอบเขตบริการและผลงานภาพถ่าย:' : 'Service Scope & Photography Work:'}</span>
-            </div>
-            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
-              <li>{isTh ? 'ถ่ายภาพอีเวนต์ของมหาวิทยาลัย งานพิธีการ และกิจกรรมชมรม' : 'University ceremonies, student clubs, and official campus events'}</li>
-              <li>{isTh ? 'ภาพพอร์ตเทรตและแคนดิด (Candid) เน้นอารมณ์ธรรมชาติและจังหวะเวลา' : 'Portrait & candid shots focusing on genuine expressions'}</li>
-              <li>{isTh ? 'แต่งโทนสีและควบคุมคุณภาพส่งมอบงานด้วย Adobe Lightroom' : 'Professional color grading and batch post-production via Adobe Lightroom'}</li>
-            </ul>
-          </div>
-        );
-      case 'water-sports':
-        return (
-          <div className="space-y-3 sm:space-y-3.5 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
-            {/* Real Surfing Preview Photo */}
-            <div className="relative w-full h-40 sm:h-48 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/surf">
-              <img
-                src="/images/surfing.jpeg"
-                alt="Surfing & Water Sports in Phuket"
-                className="w-full h-40 sm:h-48 object-cover rounded-xl group-hover/surf:scale-105 transition-transform duration-500"
-                loading="eager"
-              />
-              <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-2.5 px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-xs text-[11px] sm:text-xs font-semibold text-white flex items-center gap-1.5 shadow-xs">
-                <Waves size={13} className="text-cyan-300" />
-                <span>{isTh ? 'กีฬาทางน้ำและการโต้คลื่น • ชายหาดภูเก็ต' : 'Surfing & Marine Sports • Phuket'}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5 font-bold text-slate-800 pt-1">
-              <Waves size={13} className="text-cyan-600" />
-              <span>{isTh ? 'ทักษะและจุดเน้นด้านกีฬาทางน้ำ:' : 'Marine Disciplines & Outdoor Agility:'}</span>
-            </div>
-            <ul className="space-y-1.5 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
-              <li>{isTh ? 'โต้คลื่น (Surfing) ตามชายหาดฝั่งตะวันตกของภูเก็ต (หาดกะตะ, กะตะน้อย)' : 'Ocean surfing at Phuket’s west-coast breaks (Kata Beach, Nai Harn)'}</li>
-              <li>{isTh ? 'ว่ายน้ำทะเลเปิด ฝึกการอ่านกระแสน้ำและตัดสินใจรวดเร็ว' : 'Open water swimming: reading currents and dynamic condition adaptation'}</li>
-              <li>{isTh ? 'เสริมสร้างความอดทน สมาธิ และความมั่นคงทางอารมณ์' : 'Nurtures physical endurance, mental stillness, and situational agility'}</li>
-            </ul>
-
-
-          </div>
-        );
       case 'travel':
         return (
           <div className="space-y-2 text-xs text-slate-600 bg-slate-50/80 p-3 sm:p-3.5 rounded-lg border border-slate-200/70 mt-3">
@@ -429,8 +385,39 @@ export const SideJobsAndHobbies: React.FC = () => {
                         </p>
 
 
-                        {/* Accordion Toggle for Hobby Cards (not shown for photography) */}
-                        {hobby.id !== 'photography' && (
+                        {/* Always show Water Sports photo & details directly without toggle */}
+                        {hobby.id === 'water-sports' && (
+                          <div className="mt-3.5 space-y-3 pt-3 border-t border-slate-100">
+                            {/* Real Surfing Preview Photo */}
+                            <div className="relative w-full h-40 sm:h-48 overflow-hidden rounded-xl border border-slate-200 shadow-sm bg-slate-100 group/surf">
+                              <img
+                                src="/images/surfing.jpeg"
+                                alt="Surfing & Water Sports in Phuket"
+                                className="w-full h-40 sm:h-48 object-cover rounded-xl group-hover/surf:scale-105 transition-transform duration-500"
+                                loading="eager"
+                              />
+                              <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-2.5 px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-xs text-[11px] sm:text-xs font-semibold text-white flex items-center gap-1.5 shadow-xs">
+                                <Waves size={13} className="text-cyan-300" />
+                                <span>{isTh ? 'กีฬาทางน้ำและการโต้คลื่น • ชายหาดภูเก็ต' : 'Surfing & Marine Sports • Phuket'}</span>
+                              </div>
+                            </div>
+
+                            <div className="space-y-1.5 pt-1">
+                              <div className="flex items-center gap-1.5 font-bold text-slate-800 text-xs">
+                                <Waves size={13} className="text-cyan-600" />
+                                <span>{isTh ? 'ทักษะและจุดเน้นด้านกีฬาทางน้ำ:' : 'Marine Disciplines & Outdoor Agility:'}</span>
+                              </div>
+                              <ul className="space-y-1 list-disc pl-4 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
+                                <li>{isTh ? 'โต้คลื่น (Surfing) ตามชายหาดฝั่งตะวันตกของภูเก็ต (หาดกะตะ, กะตะน้อย)' : 'Ocean surfing at Phuket’s west-coast breaks (Kata Beach, Nai Harn)'}</li>
+                                <li>{isTh ? 'ว่ายน้ำทะเลเปิด ฝึกการอ่านกระแสน้ำและตัดสินใจรวดเร็ว' : 'Open water swimming: reading currents and dynamic condition adaptation'}</li>
+                                <li>{isTh ? 'เสริมสร้างความอดทน สมาธิ และความมั่นคงทางอารมณ์' : 'Nurtures physical endurance, mental stillness, and situational agility'}</li>
+                              </ul>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Accordion Toggle only for Travel */}
+                        {hobby.id === 'travel' && (
                           <>
                             <button
                               onClick={() => {
@@ -442,8 +429,6 @@ export const SideJobsAndHobbies: React.FC = () => {
                               <span>
                                 {isExpanded 
                                   ? tSide.collapseBtn 
-                                  : hobby.id === 'water-sports'
-                                  ? (isTh ? 'ชมรูปพรีวิว' : 'View Photos')
                                   : (isTh ? 'ดูรายละเอียดกิจกรรมเพิ่มเติม' : 'View Activity Details')
                                 }
                               </span>
