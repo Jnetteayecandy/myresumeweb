@@ -297,10 +297,10 @@ export const SideJobsAndHobbies: React.FC = () => {
           </p>
         </div>
 
-        {/* Side Jobs & Hobbies Grid: Stacked 1-col on mobile, 12-col on lg */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left: Fire Show Performer (Featured Main Card - Span 7) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow p-5 sm:p-8 flex flex-col justify-between">
+        {/* Side Jobs & Hobbies Grid: Symmetrical 50/50 Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          {/* Left: Fire Show Performer (Featured Main Card) */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow p-5 sm:p-7 flex flex-col justify-between h-full">
             <div>
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200/70">
@@ -359,65 +359,33 @@ export const SideJobsAndHobbies: React.FC = () => {
                 </div>
               </div>
 
-              {/* Accordion Toggle Button for Fire Show Video */}
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setExpandedFireShow(prev => !prev);
-                }}
-                className="mt-4 sm:mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-orange-50/80 hover:bg-orange-100/80 border border-orange-200/80 text-xs font-bold text-orange-900 transition-all group/btn cursor-pointer shadow-2xs"
-              >
-                <span className="flex items-center gap-2">
-                  <Play size={14} className="text-orange-600 fill-orange-600" />
-                  <span>{expandedFireShow ? tSide.collapseBtn : tSide.viewVideoBtn}</span>
-                </span>
-                <ChevronDown 
-                  size={16} 
-                  className={`text-orange-600 transition-transform duration-300 ${
-                    expandedFireShow ? 'rotate-180' : ''
-                  }`} 
-                />
-              </button>
-
-              {/* Collapsible Video Player */}
-              <AnimatePresence>
-                {expandedFireShow && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.35, ease: 'easeInOut' }}
-                    className="overflow-hidden mt-4 pt-4 border-t border-slate-100 space-y-3"
+              {/* Inline Video Player for Fire Show (always visible) */}
+              <div className="mt-4 sm:mt-5 space-y-3">
+                <div className="relative rounded-xl overflow-hidden border border-slate-200 bg-black aspect-video shadow-sm w-full">
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    controls 
+                    className="w-full aspect-video rounded-xl object-cover"
                   >
-                    <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-md w-full">
-                      <video 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
-                        controls 
-                        className="w-full aspect-video rounded-xl object-cover"
-                      >
-                        <source src="/videos/fireshow.mov" type="video/quicktime" />
-                        <source src="/videos/fireshow.mov" type="video/mp4" />
-                        {isTh ? 'เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ' : 'Your browser does not support playing this video.'}
-                      </video>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 font-medium px-1 gap-1">
-                      <span className="flex items-center gap-1.5 text-orange-800">
-                        <Flame size={12} className="text-orange-600" />
-                        <span>{isTh ? 'คลิปการแสดงควงกระบองไฟสด (Live Performance Clip)' : 'Live Fire Performance Clip'}</span>
-                      </span>
-                      <span className="font-mono text-[10px] text-slate-400">/videos/fireshow.mov</span>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <source src="/videos/fireshow.mov" type="video/quicktime" />
+                    <source src="/videos/fireshow.mov" type="video/mp4" />
+                    {isTh ? 'เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ' : 'Your browser does not support playing this video.'}
+                  </video>
+                </div>
+                <div className="flex items-center gap-1.5 text-[11px] text-orange-800 font-medium px-1">
+                  <Flame size={12} className="text-orange-600" />
+                  <span>{isTh ? 'คลิปการแสดงควงกระบองไฟสด (Live Performance Clip)' : 'Live Fire Performance Clip'}</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Right: Freelance Photography, Water Sports & Travel (Span 5) */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+          {/* Right: Freelance Photography, Water Sports & Travel */}
+          <div className="flex flex-col space-y-4">
             <div className="px-1 sm:px-2">
               <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
                 <Sparkles size={16} className="text-blue-600" />
@@ -428,7 +396,7 @@ export const SideJobsAndHobbies: React.FC = () => {
               </p>
             </div>
 
-            <div className="space-y-3.5 flex-1 flex flex-col justify-between">
+            <div className="space-y-4">
               {hobbies.map((hobby) => {
                 const getIcon = () => {
                   if (hobby.id === 'photography') return <Camera size={18} className="text-indigo-600" />;
