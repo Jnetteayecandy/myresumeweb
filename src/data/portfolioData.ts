@@ -128,7 +128,7 @@ export const bentoProjects: Project[] = [
       { label: "Install Required", value: "0 MB (Play Now)" }
     ],
     githubUrl: "https://github.com/Jnetteayecandy",
-    liveUrl: "https://github.com/Jnetteayecandy",
+    liveUrl: "https://living-cursor-game-server.vercel.app",
     highlights: [
       "Playable immediately in any browser with zero installation",
       "Smooth frame rate physics and local high-score persistence",
