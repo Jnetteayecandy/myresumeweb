@@ -40,14 +40,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) 
             {/* Small Secret Character Badge */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-100/90 text-indigo-900 text-xs font-bold border border-indigo-200/80 shadow-2xs">
               <Sparkles size={13} className="text-indigo-600" />
-              <span>{isTh ? '🎮 ปลดล็อกตัวละครลับ (Secret Character)' : '🎮 Secret Character Unlocked'}</span>
+              <span>{isTh ? 'HRคุณเจอตัวsecretแล้ว' : (t.secretBadge || 'HR, you found the secret character!')}</span>
             </div>
 
             {/* Formatted Message */}
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               {isTh ? (
                 <>
-                  ใครๆ ก็เป็นโปรแกรมเมอร์ได้ แต่โปรแกรมเมอร์ที่ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">คุยภาษาคนทั่วไปรู้เรื่อง</span> และสามารถ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">อธิบายงานเกี่ยวกับโค้ดให้คนธรรมดาเข้าใจได้ง่าย</span> อยู่ที่นี่แล้ว... คุณเจอ <span className="font-extrabold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200/80 inline-block mt-1 sm:mt-0">ตัวละครลับ (Secret Character)</span> แล้วค่ะ!
+                  ใครๆ ก็เป็นโปรแกรมเมอร์ได้ แต่โปรแกรมเมอร์ที่ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">คุยภาษาคนทั่วไปรู้เรื่อง</span> และสามารถ <span className="font-bold text-slate-900 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100/80">อธิบายงานเกี่ยวกับโค้ดให้คนธรรมดาเข้าใจได้</span>อยู่ที่นี่แล้วค่ะ
                 </>
               ) : (
                 <>
@@ -136,7 +136,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenWindow }) 
 
       {/* Footer Info */}
       <footer className="text-xs text-slate-400 space-y-1">
-        <p>© 2026 Wipaporn Wikornmetkul. Prince of Songkla University, Phuket Campus.</p>
+        <p>© 2026 Wipaporn Wikornmetkul. Prince of Songkla University</p>
         <p>{t.footerTech}</p>
       </footer>
     </section>
