@@ -96,29 +96,7 @@ export const SideJobsAndHobbies: React.FC = () => {
               <li>{isTh ? 'เสริมสร้างความอดทน สมาธิ และความมั่นคงทางอารมณ์' : 'Nurtures physical endurance, mental stillness, and situational agility'}</li>
             </ul>
 
-            {/* Accordion Video Player for Water Sports */}
-            <div className="pt-2 border-t border-slate-200/60">
-              <div className="flex items-center justify-between text-[11px] font-bold text-cyan-900 mb-1.5">
-                <span className="flex items-center gap-1.5">
-                  <Play size={11} className="text-cyan-600 fill-cyan-600" />
-                  <span>{tSide.waterSportsVideoLabel || (isTh ? 'คลิปการโต้คลื่นและกิจกรรมทางน้ำ' : 'Surfing & Marine Action Clip')}</span>
-                </span>
-                <span className="font-mono text-[10px] text-slate-400">/videos/watersports.mp4</span>
-              </div>
-              <div className="relative rounded-xl overflow-hidden border border-slate-300/80 bg-black aspect-video shadow-xs w-full">
-                <video 
-                  controls 
-                  playsInline 
-                  poster="/images/surfing.jpeg"
-                  className="w-full aspect-video rounded-xl object-cover"
-                >
-                  <source src="/videos/watersports.mp4" type="video/mp4" />
-                  <p className="p-4 text-xs text-slate-300 text-center">
-                    {isTh ? 'พร้อมเล่นวิดีโอทันทีเมื่อมีไฟล์ /videos/watersports.mp4' : 'Video player ready for /videos/watersports.mp4'}
-                  </p>
-                </video>
-              </div>
-            </div>
+
           </div>
         );
       case 'travel':
