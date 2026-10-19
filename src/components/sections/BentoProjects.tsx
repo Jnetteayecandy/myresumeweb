@@ -215,18 +215,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                     </a>
                   ) : null}
 
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => sound.playClick()}
-                      className="inline-flex items-center space-x-1 text-xs text-slate-500 hover:text-slate-800 font-medium ml-auto"
-                    >
-                      <span>{isTh ? 'ดูโค้ดบน GitHub' : 'GitHub'}</span>
-                      <ExternalLink size={12} />
-                    </a>
-                  )}
+
                 </div>
               </div>
             </motion.div>
