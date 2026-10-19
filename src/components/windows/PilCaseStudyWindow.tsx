@@ -10,7 +10,9 @@ import {
   Sparkles, 
   Eye, 
   Layers, 
-  Workflow
+  Workflow,
+  Maximize2,
+  X
 } from 'lucide-react';
 import { flagshipProject } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
@@ -24,6 +26,7 @@ export const PilCaseStudyWindow: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'interactive-demo' | 'architecture' | 'pharmacist-sync'>('overview');
   const [selectedMed, setSelectedMed] = useState<'paracetamol' | 'amoxicillin' | 'metformin'>('paracetamol');
   const [elderlyMode, setElderlyMode] = useState(false);
+  const [isArchEnlarged, setIsArchEnlarged] = useState(false);
 
   const mockMedications = {
     en: {
@@ -399,24 +402,137 @@ export const PilCaseStudyWindow: React.FC = () => {
               ))}
             </div>
 
-            {/* TypeScript Schema Box */}
-            <div className="p-4 rounded-xl bg-slate-900 font-mono text-xs text-slate-200 space-y-2">
-              <div className="text-slate-400">// Medication Domain Schema (TypeScript / Flask Models)</div>
-              <pre className="text-blue-300 overflow-x-auto">
-{`interface PatientInformationLeaflet {
-  id: string; // UUID
-  medicationCode: string; // Thai FDA Standard Registration
-  genericName: string;
-  brandNames: string[];
-  activeIngredients: { name: string; dosageStrength: string }[];
-  indicationsPlainLanguage: string; // Patient-friendly description
-  administrationRules: string;
-  criticalWarnings: string[];
-  contraindications: string[];
-  pharmacistAuditorId: string;
-  verifiedAt: string; // ISO Date
-}`}
-              </pre>
+            {/* System Architecture Diagram (Replaces Schema Code Box) */}
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-slate-800 flex items-center gap-1.5">
+                  <Workflow size={14} className="text-blue-600" />
+                  <span>{isTh ? 'แผนภาพสถาปัตยกรรมระบบจริง (System Architecture & RBAC Flow):' : 'System Architecture Diagram (RBAC & Security Flow):'}</span>
+                </span>
+                <span className="text-[11px] text-blue-600 font-semibold cursor-pointer hover:underline flex items-center gap-1" onClick={() => { sound.playClick(); setIsArchEnlarged(true); }}>
+                  <Maximize2 size={12} />
+                  <span>{isTh ? 'คลิกที่รูปเพื่อขยายเต็มจอ' : 'Click to view full screen'}</span>
+                </span>
+              </div>
+
+              <div 
+                onClick={() => {
+                  sound.playClick();
+                  setIsArchEnlarged(true);
+                }}
+                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-white p-2.5 sm:p-4 shadow-xs hover:shadow-md hover:border-blue-400 transition-all cursor-pointer group"
+                title={isTh ? 'คลิกเพื่อดูภาพขยายขนาดเต็ม' : 'Click to enlarge architecture diagram'}
+              >
+                <img 
+                  src="/images/pil_architecture.png" 
+                  alt="PIL System Architecture Diagram" 
+                  className="w-full h-auto object-contain rounded-xl max-h-[380px] sm:max-h-[460px] mx-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                />
+                <div className="absolute inset-0 bg-slate-900/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px] rounded-2xl">
+                  <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 text-xs font-semibold shadow-md">
+                    <Maximize2 size={13} className="text-blue-600" />
+                    <span>{isTh ? 'คลิกดูภาพขยายความละเอียดสูง' : 'Click to enlarge high-res diagram'}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Architecture Key Components Breakdown */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    <span>Client Side (Vercel)</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    {isTh ? 'React 19 + Vite SPA, รองรับ Guest Dashboard และ PDF Engine (jsPDF + Sarabun)' : 'React 19 + Vite SPA, Guest Dashboard & jsPDF Export Engine'}
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-rose-500" />
+                    <span>Security & RBAC</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    {isTh ? 'Supabase Auth, JWT Session และ RLS Gate ตรวจสอบสิทธิ์ Role / Category / Ownership' : 'Supabase Auth, JWT Session & Row Level Security (RLS Gate)'}
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>Cloud Database</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    {isTh ? 'Supabase PostgreSQL เก็บ Profiles, Medication Templates และ Global Vocab (1,514 รายการ)' : 'Supabase PostgreSQL storing Profiles, Templates & Vocab tables'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Architecture Diagram Lightbox Modal */}
+      {isArchEnlarged && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/80 backdrop-blur-sm animate-in fade-in"
+          onClick={() => {
+            sound.playClick(900);
+            setIsArchEnlarged(false);
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-5xl w-full max-h-[92vh] flex flex-col overflow-hidden"
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 bg-slate-50">
+              <div className="flex items-center space-x-2.5">
+                <div className="p-1.5 rounded-lg bg-blue-100 text-blue-700">
+                  <Workflow size={16} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900">
+                    {isTh ? 'แผนภาพโครงสร้างสถาปัตยกรรมระบบ (System Architecture - Medication Label Information System)' : 'System Architecture - Medication Label Information System (RBAC)'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500">
+                    {isTh ? 'Client Side (Vercel) • Security Layer (Supabase Auth/RLS) • Cloud DB' : 'Client Side (Vercel) • Security Layer • Cloud DB (Supabase)'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  sound.playClick(900);
+                  setIsArchEnlarged(false);
+                }}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
+                title={isTh ? "ปิด" : "Close"}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Modal Image Body */}
+            <div className="flex-1 overflow-auto p-4 sm:p-6 bg-slate-100 flex items-center justify-center">
+              <img 
+                src="/images/pil_architecture.png" 
+                alt="System Architecture Diagram Full" 
+                className="max-h-[75vh] w-auto object-contain rounded-xl shadow-md border border-slate-200 bg-white"
+              />
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-5 py-3 border-t border-slate-200 bg-white flex items-center justify-between text-xs text-slate-500">
+              <span>{isTh ? 'สถาปัตยกรรมระบบพร้อมระบบจัดการสิทธิ์ระดับบทบาท (RBAC)' : 'Role-Based Access Control Architecture'}</span>
+              <button
+                onClick={() => {
+                  sound.playClick(900);
+                  setIsArchEnlarged(false);
+                }}
+                className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-semibold text-slate-700 transition-colors"
+              >
+                {isTh ? 'ปิดหน้าต่าง' : 'Close'}
+              </button>
             </div>
           </div>
         </div>
