@@ -98,7 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <button
           onClick={() => {
             sound.playClick();
-            onScrollTo('pil-section');
+            onScrollTo('projects-section');
           }}
           className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-98"
         >

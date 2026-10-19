@@ -117,12 +117,12 @@ export const App: React.FC = () => {
           <ScrollStoryShowcase onOpenWindow={openWindow} />
         </div>
 
-        <FeaturedPilCard
-          onOpenPilWindow={() => openWindow('pil')}
-        />
-
         <BentoProjects
           onOpenWindow={openWindow}
+        />
+
+        <FeaturedPilCard
+          onOpenPilWindow={() => openWindow('pil')}
         />
 
         <SkillsDiagnostics />

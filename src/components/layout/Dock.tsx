@@ -49,6 +49,15 @@ export const Dock: React.FC<DockProps> = ({
       }
     },
     {
+      id: 'projects',
+      label: t.projects,
+      icon: <FolderKanban size={18} className="text-indigo-600" />,
+      action: () => {
+        sound.playClick(950);
+        onScrollTo('projects-section');
+      }
+    },
+    {
       id: 'pil',
       label: t.pil,
       icon: <Pill size={18} className="text-blue-600" />,
@@ -58,15 +67,6 @@ export const Dock: React.FC<DockProps> = ({
       },
       isOpen: openWindows.pil,
       isBadge: true
-    },
-    {
-      id: 'projects',
-      label: t.projects,
-      icon: <FolderKanban size={18} className="text-indigo-600" />,
-      action: () => {
-        sound.playClick(950);
-        onScrollTo('projects-section');
-      }
     },
     {
       id: 'skills',
