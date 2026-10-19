@@ -139,10 +139,13 @@ export const bentoProjects: Project[] = [
       "เฟรมเรตลื่นไหล ฟิสิกส์สมูท และบันทึกคะแนนสูงสุด",
       "พัฒนาเพื่อความสนุกในคอมมูนิตี้และฝึกฝนฝีมือฟรอนต์เอนด์"
     ]
-  },
+  }
+];
+
+export const certificatesData: Project[] = [
   {
     id: "physics-certification",
-    badge: "PROJ-06",
+    badge: "CERT-01",
     title: "General Physics Certification (BITS Pilani)",
     titleTh: "ใบรับรองวิชาฟิสิกส์ทั่วไป (BITS Pilani via Coursera)",
     subtitle: "Online Course Certification via Coursera",
@@ -167,7 +170,7 @@ export const bentoProjects: Project[] = [
   },
   {
     id: "ibm-data-science-certification",
-    badge: "PROJ-07",
+    badge: "CERT-02",
     title: "What is Data Science? Certificate (IBM via Coursera)",
     titleTh: "ใบรับรองวิชาความรู้เบื้องต้นด้านวิทยาการข้อมูล (IBM via Coursera)",
     subtitle: "Online Course Authorized by IBM Offered Through Coursera",
@@ -188,6 +191,78 @@ export const bentoProjects: Project[] = [
     highlightsTh: [
       "ได้รับอนุมัติจาก IBM (Rav Ahuja - Global Program Director, Alex Aklson - Data Scientist)",
       "มีลิงก์และรหัสยืนยันสิทธิ์ทางการบน Coursera"
+    ]
+  },
+  {
+    id: "cpr-aed-certification",
+    badge: "CERT-03",
+    title: "CPR and AED for Members of Public",
+    titleTh: "ใบรับรองการช่วยชีวิตขั้นพื้นฐานและการใช้เครื่องกระตุกหัวใจไฟฟ้า (CPR & AED)",
+    subtitle: "Bangkok Dusit Medical Services (BDMS Southern Group)",
+    subtitleTh: "อบรมโดยเครือโรงพยาบาลกรุงเทพ (Bangkok Hospital Phuket, Siriroj, Dibuk)",
+    description: "Successfully completed the certified life-saving course in Cardiopulmonary Resuscitation (CPR) and Automated External Defibrillator (AED) operation for members of public.",
+    descriptionTh: "ผ่านการฝึกอบรมหลักสูตรการช่วยฟื้นคืนชีพขั้นพื้นฐาน (CPR) และการใช้งานเครื่องฟื้นคืนคลื่นหัวใจด้วยไฟฟ้าอัตโนมัติ (AED) สำหรับประชาชนทั่วไป ออกโดยศูนย์ฝึกอบรมเครือ BDMS Southern Group",
+    imageUrl: "/cpr_aed_certificate.png",
+    tags: ["BDMS Southern Group", "Bangkok Hospital", "CPR & AED", "First Responder", "ID: 2026-CPRAED-005-01-000511"],
+    metrics: [
+      { label: "Given on", value: "16 Sep 2026" },
+      { label: "Issuer", value: "BDMS Group 6" }
+    ],
+    highlights: [
+      "Certified by Lalita Kongseeha, M.D. (Assistant CEO - Group 6, BDMS)",
+      "Napapach Chotboonyathisa, RN. (Director of Simulation Training Center)"
+    ],
+    highlightsTh: [
+      "ได้รับการรับรองโดย พญ. ลลิตา กองสีหา (ผู้ช่วยประธานคณะผู้บริหาร กลุ่ม 6 BDMS)",
+      "คุณนภพัชร โชติบุญญาธิษณ์ (ผู้อำนวยการศูนย์ฝึกอบรมจำลองสถานการณ์ BDMS Southern Group)"
+    ]
+  },
+  {
+    id: "design-thinking-certification",
+    badge: "CERT-04",
+    title: "Design Thinking for Beginners",
+    titleTh: "ใบรับรองการคิดเชิงออกแบบ (Design Thinking for Beginners)",
+    subtitle: "Online Course Certification by Simplilearn SkillUp",
+    subtitleTh: "การรับรองหลักสูตรออนไลน์โดย Simplilearn SkillUp",
+    description: "Successfully completed professional coursework in Design Thinking methodology, covering empathy research, problem framing, ideation, prototyping, and user-centric solution design.",
+    descriptionTh: "สำเร็จหลักสูตรกระบวนการคิดเชิงออกแบบ (Design Thinking) ครอบคลุมการทำความเข้าใจผู้ใช้เชิงลึก (Empathy), การนิยามปัญหา, การสร้างสรรค์แนวคิดใหม่ และการทดสอบต้นแบบอย่างรวดเร็ว",
+    imageUrl: "/design_thinking_certificate.png",
+    tags: ["Simplilearn SkillUp", "Design Thinking", "UX Problem Solving", "Code: 10807608"],
+    metrics: [
+      { label: "Issue Date", value: "29 Sep 2026" },
+      { label: "Status", value: "Verified Completion" }
+    ],
+    highlights: [
+      "Certified by Krishna Kumar (CEO, Simplilearn)",
+      "Demonstrated initiative and commitment to deepening human-centric problem-solving skills"
+    ],
+    highlightsTh: [
+      "ลงนามรับรองโดย Krishna Kumar (CEO, Simplilearn)",
+      "พัฒนาทักษะการแก้ปัญหาเชิงนวัตกรรมที่ยึดผู้ใช้งานเป็นศูนย์กลาง (User-Centric Approach)"
+    ]
+  },
+  {
+    id: "workplace-communication-certification",
+    badge: "CERT-05",
+    title: "Communication in the Workplace",
+    titleTh: "ใบรับรองการสื่อสารในสถานที่ทำงาน (Communication in the Workplace)",
+    subtitle: "Open Online Course by Prince of Songkla University (PSUMOO)",
+    subtitleTh: "หลักสูตรออนไลน์โดยมหาวิทยาลัยสงขลานครินทร์ (PSUMOO)",
+    description: "Completed open online course in professional workplace communications covering interpersonal dynamics, team active listening, presentation skills, and collaborative organizational engagement.",
+    descriptionTh: "สำเร็จหลักสูตรการสื่อสารในสถานที่ทำงานอย่างมืออาชีพ ครอบคลุมการสื่อสารระหว่างบุคคล การประสานงานร่วมกันในทีม การฟังอย่างเข้าอกเข้าใจ และการสื่อสารเพื่อประสิทธิภาพการทำงาน",
+    imageUrl: "/workplace_communication_certificate.png",
+    tags: ["PSUMOO", "Prince of Songkla University", "Workplace Communication", "Soft Skills"],
+    metrics: [
+      { label: "Issue Date", value: "29 Sep 2026" },
+      { label: "Issuer", value: "Prince of Songkla University" }
+    ],
+    highlights: [
+      "Lecturer: Arno T Immelman, M.Sc. (Faculty of Management Sciences)",
+      "Director: Assoc. Prof. Dr. Wandee Suttharangsee (Education & Innovative Learning Academy)"
+    ],
+    highlightsTh: [
+      "ผู้สอน: อ. Arno T Immelman (คณะวิทยาการจัดการ มหาวิทยาลัยสงขลานครินทร์)",
+      "รับรองโดย รศ.ดร. วรรณดี สุทธรังษี (ผู้อำนวยการสำนักการศึกษาและนวัตกรรมการเรียนรู้)"
     ]
   }
 ];

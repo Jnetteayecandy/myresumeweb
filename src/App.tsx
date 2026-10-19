@@ -11,6 +11,7 @@ import { HeroSection } from './components/sections/HeroSection';
 import { ScrollStoryShowcase } from './components/sections/ScrollStoryShowcase';
 import { FeaturedPilCard } from './components/sections/FeaturedPilCard';
 import { BentoProjects } from './components/sections/BentoProjects';
+import { CertificatesSection } from './components/sections/CertificatesSection';
 import { SkillsDiagnostics } from './components/sections/SkillsDiagnostics';
 import { SideJobsAndHobbies } from './components/sections/SideJobsAndHobbies';
 import { ContactSection } from './components/sections/ContactSection';
@@ -120,6 +121,8 @@ export const App: React.FC = () => {
         <BentoProjects
           onOpenWindow={openWindow}
         />
+
+        <CertificatesSection />
 
         <FeaturedPilCard
           onOpenPilWindow={() => openWindow('pil')}

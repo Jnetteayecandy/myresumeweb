@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   FolderKanban, 
-  ExternalLink, 
   Gamepad2, 
   Heart, 
-  Award, 
   ShieldAlert, 
-  ArrowUpRight,
-  Maximize2,
-  X
+  ArrowUpRight 
 } from 'lucide-react';
 import { bentoProjects } from '../../data/portfolioData';
 import { sound } from '../../utils/sound';
-import { Project, WindowId } from '../../types';
+import { WindowId } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../data/translations';
 
@@ -25,19 +21,6 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
   const { lang } = useLanguage();
   const t = translations[lang].bento;
   const isTh = lang === 'th';
-  const [activeCert, setActiveCert] = useState<Project | null>(null);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setActiveCert(null);
-      }
-    };
-    if (activeCert) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeCert]);
 
   const getProjectIcon = (id: string) => {
     switch (id) {
@@ -47,10 +30,6 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
         return <ShieldAlert size={18} className="text-indigo-600" />;
       case 'web-mini-games':
         return <Gamepad2 size={18} className="text-emerald-600" />;
-      case 'physics-certification':
-        return <Award size={18} className="text-teal-600" />;
-      case 'ibm-data-science-certification':
-        return <Award size={18} className="text-blue-600" />;
       default:
         return <FolderKanban size={18} className="text-blue-600" />;
     }
@@ -72,12 +51,10 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
         </p>
       </div>
 
-      {/* Balanced Bento Grid (Card 1 spans 2 cols, remainder fit symmetrically) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Symmetrical 3-Column Grid for the 3 Flagship Projects */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {bentoProjects.map((project, index) => {
-          const isWedding = project.id === 'wedding-card-web';
           const isGame = project.id === 'web-mini-games';
-          const isCert = project.id.includes('certification') || !!project.imageUrl;
           const title = isTh && project.titleTh ? project.titleTh : project.title;
           const subtitle = isTh && project.subtitleTh ? project.subtitleTh : project.subtitle;
           const description = isTh && project.descriptionTh ? project.descriptionTh : project.description;
@@ -88,9 +65,7 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
               key={project.id}
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className={`rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden group ${
-                isWedding ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
-              }`}
+              className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden group col-span-1"
             >
               <div>
                 {/* Card Top Pill */}
@@ -111,32 +86,6 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                   )}
                 </div>
 
-                {/* Certificate Image Preview Container (if image exists) */}
-                {project.imageUrl && (
-                  <div 
-                    onClick={() => {
-                      sound.playClick();
-                      setActiveCert(project);
-                    }}
-                    className="mb-4 relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group/cert transition-all hover:border-blue-400 hover:shadow-sm"
-                    title={isTh ? "คลิกเพื่อดูภาพขยายใบประกาศนียบัตร" : "Click to view enlarged certificate preview"}
-                  >
-                    <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100 flex items-center justify-center">
-                      <img 
-                        src={project.imageUrl} 
-                        alt={title} 
-                        className="w-full h-full object-contain p-2 transition-transform duration-300 group-hover/cert:scale-[1.02]"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover/cert:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
-                      <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 text-xs font-semibold shadow-md">
-                        <Maximize2 size={13} className="text-blue-600" />
-                        <span>{isTh ? 'คลิกเพื่อดูภาพขยาย' : 'Click to enlarge'}</span>
-                      </span>
-                    </div>
-                  </div>
-                )}
-
                 {/* Title & Subtitle */}
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                   {title}
@@ -150,12 +99,12 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                   {description}
                 </p>
 
-                {/* Highlights List if available */}
+                {/* Highlights List */}
                 {highlightsList && (
-                  <ul className="mt-3 space-y-1.5 pt-2 border-t border-slate-100">
+                  <ul className="mt-4 space-y-2 pt-3 border-t border-slate-100">
                     {highlightsList.slice(0, 3).map((hl, i) => (
-                      <li key={i} className="text-xs text-slate-500 flex items-center space-x-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                      <li key={i} className="text-xs text-slate-600 flex items-start space-x-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5" />
                         <span>{hl}</span>
                       </li>
                     ))}
@@ -190,18 +139,6 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                       <Gamepad2 size={15} />
                       <span>{t.playGameBtn}</span>
                     </a>
-                  ) : isCert ? (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => sound.playClick()}
-                      className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
-                    >
-                      <Award size={15} />
-                      <span>{isTh ? 'ตรวจสอบใบรับรอง (Coursera)' : 'Verify Certificate (Coursera)'}</span>
-                      <ExternalLink size={13} />
-                    </a>
                   ) : project.liveUrl ? (
                     <a
                       href={project.liveUrl}
@@ -214,105 +151,12 @@ export const BentoProjects: React.FC<BentoProjectsProps> = () => {
                       <ArrowUpRight size={14} />
                     </a>
                   ) : null}
-
-
                 </div>
               </div>
             </motion.div>
           );
         })}
       </div>
-
-      {/* Dynamic Certificate Lightbox Modal */}
-      <AnimatePresence>
-        {activeCert && (
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/70 backdrop-blur-sm animate-in fade-in"
-            onClick={() => {
-              sound.playClick(900);
-              setActiveCert(null);
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden"
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200/90 bg-slate-50">
-                <div className="flex items-center space-x-2.5">
-                  <div className="p-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-700">
-                    <Award size={18} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
-                      {isTh && activeCert.titleTh ? activeCert.titleTh : activeCert.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 font-mono">
-                      {activeCert.tags.find(tag => tag.startsWith('Certificate ID:')) || 'Verified Credential'} • Coursera
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    sound.playClick(900);
-                    setActiveCert(null);
-                  }}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
-                  title={isTh ? "ปิด" : "Close"}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Modal Image Body */}
-              <div className="flex-1 overflow-auto p-4 sm:p-6 bg-slate-100/60 flex items-center justify-center">
-                <img
-                  src={activeCert.imageUrl}
-                  alt={activeCert.title}
-                  className="max-h-[65vh] w-auto object-contain rounded-xl shadow-md border border-slate-200"
-                />
-              </div>
-
-              {/* Modal Footer */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-slate-200/90 bg-white">
-                <div className="text-xs text-slate-500">
-                  {isTh && activeCert.subtitleTh ? activeCert.subtitleTh : activeCert.subtitle}
-                </div>
-                <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
-                  <button
-                    onClick={() => {
-                      sound.playClick(900);
-                      setActiveCert(null);
-                    }}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-colors"
-                  >
-                    {isTh ? 'ปิดหน้าต่าง' : 'Close'}
-                  </button>
-                  {activeCert.liveUrl && (
-                    <a
-                      href={activeCert.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => sound.playClick()}
-                      className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all"
-                    >
-                      <Award size={14} />
-                      <span>{isTh ? 'ตรวจสอบสิทธิ์บน Coursera' : 'Verify on Coursera'}</span>
-                      <ExternalLink size={13} />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
-

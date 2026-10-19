@@ -142,11 +142,20 @@ export const translations = {
     bento: {
       badge: 'Engineering Portfolio',
       title: 'Selected Projects & Software Works',
-      subtitle: 'A curated showcase of full-stack web applications, commercial digital services, formal verification models, and course certifications.',
+      subtitle: 'A curated showcase of full-stack web applications, commercial digital services, and formal software verification models.',
       visitProjectBtn: 'Visit Website',
       playGameBtn: 'Play Game Now',
       viewCodeBtn: 'Source Code',
       guestHint: 'Guest access available'
+    },
+    certificates: {
+      badge: 'Certifications & Credentials',
+      title: 'Verified Certifications & Professional Credentials',
+      subtitle: 'Accredited coursework and professional training across Computer Science, Data Science, Emergency Life Support (CPR/AED), and Workplace Communications.',
+      verifyBtn: 'Verify Certificate',
+      viewEnlarged: 'Click to view certificate',
+      enlargeBtn: 'Enlarge Certificate',
+      closeModal: 'Close'
     },
     skills: {
       badge: 'Technical Competencies',
@@ -510,11 +519,20 @@ export const translations = {
     bento: {
       badge: 'ผลงานโปรเจกต์',
       title: 'ผลงานทางวิศวกรรมและโปรเจกต์ที่คัดสรร',
-      subtitle: 'รวมเว็บแอปพลิเคชัน บริการพัฒนาเว็บเชิงพาณิชย์ การพิสูจน์ความถูกต้องของระบบ และใบรับรองหลักสูตรที่ผ่านการตรวจสอบ',
+      subtitle: 'รวมเว็บแอปพลิเคชัน บริการพัฒนาเว็บเชิงพาณิชย์ และการพิสูจน์ความถูกต้องของระบบด้วยวิธีเชิงรูปนัย',
       visitProjectBtn: 'เข้าชมเว็บไซต์',
       playGameBtn: 'คลิกเพื่อเล่นเกมทันที',
       viewCodeBtn: 'ดูโค้ดบน GitHub',
       guestHint: 'สามารถเข้าใช้งานแบบ Guest ได้ทันที'
+    },
+    certificates: {
+      badge: 'ใบรับรองและคุณวุฒิ',
+      title: 'ใบรับรองและหลักสูตรวิชาชีพที่ผ่านการตรวจสอบ',
+      subtitle: 'หลักสูตรและการฝึกอบรมที่ผ่านการรับรองจากสถาบันชั้นนำ ครอบคลุมทั้งด้านวิทยาการคอมพิวเตอร์ วิทยาการข้อมูล การช่วยชีวิตฉุกเฉิน (CPR & AED) และทักษะการทำงานระดับมืออาชีพ',
+      verifyBtn: 'ตรวจสอบใบรับรอง',
+      viewEnlarged: 'คลิกเพื่อดูภาพขยายใบประกาศนียบัตร',
+      enlargeBtn: 'ดูภาพขยาย',
+      closeModal: 'ปิดหน้าต่าง'
     },
     skills: {
       badge: 'ทักษะความเชี่ยวชาญ',
