@@ -120,7 +120,7 @@ export const ResumeWindow: React.FC = () => {
                   {flagshipProject.title} — {t.flagshipSubtitle}
                 </h3>
                 <p className="text-xs text-blue-800 font-semibold mt-0.5">
-                  {t.partnerLabel} • Stack: React, Flask (Python), MySQL, QR Code Engine
+                  Stack: React, Flask (Python), MySQL, QR Code Engine
                 </p>
               </div>
             </div>

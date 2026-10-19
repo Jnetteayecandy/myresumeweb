@@ -65,8 +65,8 @@ export const translations = {
           description: 'Co-developed with clinical hospital pharmacists to replace hard-to-read paper drug leaflets with accessible, QR-scannable digital patient information leaflets.',
           tags: ['React', 'Flask', 'MySQL', 'Clinical Co-Design', 'WCAG AAA'],
           metrics: [
-            { label: 'Domain Partner', value: 'Hospital Pharmacists' },
-            { label: 'Live Deployment', value: 'Guest Access Ready' }
+            { label: 'Live Deployment', value: 'Guest Access Ready' },
+            { label: 'Accessibility', value: 'WCAG 2.1 AAA' }
           ],
           ctaLabel: 'Visit Live Website (Guest Access)',
           floatingBadge: {
@@ -442,8 +442,8 @@ export const translations = {
           description: 'ร่วมมือกับเภสัชกรโรงพยาบาล เพื่อเปลี่ยนเอกสารกำกับยาที่เป็นกระดาษอ่านยาก สู่เอกสารดิจิทัลแบบโครงสร้าง สแกน QR Code บนซองยาเพื่ออ่านวิธีใช้ได้อย่างปลอดภัย',
           tags: ['React', 'Flask', 'MySQL', 'ออกแบบร่วมกับเภสัชกร', 'WCAG AAA'],
           metrics: [
-            { label: 'พันธมิตร', value: 'เภสัชกรโรงพยาบาล' },
-            { label: 'สถานะเว็บไซต์', value: 'เข้าใช้งานได้ทันที (Guest)' }
+            { label: 'สถานะเว็บไซต์', value: 'เข้าใช้งานได้ทันที (Guest)' },
+            { label: 'มาตรฐานการเข้าถึง', value: 'ระดับ WCAG AAA' }
           ],
           ctaLabel: 'เข้าชมเว็บไซต์จริง (เข้าใช้งานแบบ Guest ได้ทันที)',
           floatingBadge: {
