@@ -122,11 +122,11 @@ export const App: React.FC = () => {
           onOpenWindow={openWindow}
         />
 
-        <CertificatesSection />
-
         <FeaturedPilCard
           onOpenPilWindow={() => openWindow('pil')}
         />
+
+        <CertificatesSection />
 
         <SkillsDiagnostics />
 
