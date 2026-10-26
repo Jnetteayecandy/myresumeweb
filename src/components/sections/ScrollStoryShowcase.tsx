@@ -197,7 +197,22 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     }
 
     isSeekingRef.current = true;
-    video.currentTime = clampedTime;
+
+    // iOS Safari: video must NOT be in "ended" state to seek. Re-play briefly if needed.
+    if (video.ended || video.paused) {
+      const doSeek = () => {
+        video.currentTime = clampedTime;
+      };
+      // On iOS, calling play() unlocks seek. We pause immediately in the seeked handler.
+      const playPromise = video.play();
+      if (playPromise) {
+        playPromise.then(doSeek).catch(doSeek);
+      } else {
+        doSeek();
+      }
+    } else {
+      video.currentTime = clampedTime;
+    }
   }, []);
 
   // Listen for video events and sync with scroll
@@ -206,6 +221,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     if (!video) return;
 
     const handleSeeked = () => {
+      video.pause(); // Always pause after seek — critical on iOS
       renderFrameToCanvas();
       isSeekingRef.current = false;
       if (pendingTimeRef.current !== null) {
@@ -216,7 +232,6 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     };
 
     const handleLoadedData = () => {
-      video.pause();
       renderFrameToCanvas();
       const currentProgress = smoothProgress.get();
       if (video.duration) {
@@ -232,10 +247,32 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     video.addEventListener('seeked', handleSeeked);
     video.addEventListener('loadeddata', handleLoadedData);
     video.addEventListener('loadedmetadata', handleLoadedData);
+    video.addEventListener('canplay', handleLoadedData);
+    video.addEventListener('canplaythrough', handleLoadedData);
     video.addEventListener('error', handleError);
 
+    // iOS Safari REQUIRES play() before seek works.
+    // We play briefly then immediately pause to unlock frame decoding.
+    const unlockVideo = () => {
+      if (video.readyState >= 1) {
+        video.play()
+          .then(() => {
+            video.pause();
+            video.currentTime = 0;
+            handleLoadedData();
+          })
+          .catch(() => {
+            // Autoplay blocked — try loading directly
+            handleLoadedData();
+          });
+      }
+    };
+
     if (video.readyState >= 2) {
-      handleLoadedData();
+      unlockVideo();
+    } else {
+      video.addEventListener('loadedmetadata', unlockVideo, { once: true });
+      video.load();
     }
 
     // Attach requestVideoFrameCallback for continuous paint whenever browser decodes a frame
@@ -261,6 +298,8 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
       video.removeEventListener('seeked', handleSeeked);
       video.removeEventListener('loadeddata', handleLoadedData);
       video.removeEventListener('loadedmetadata', handleLoadedData);
+      video.removeEventListener('canplay', handleLoadedData);
+      video.removeEventListener('canplaythrough', handleLoadedData);
       video.removeEventListener('error', handleError);
     };
   }, [smoothProgress, applySeek, renderFrameToCanvas]);
@@ -361,6 +400,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     src="/videos/profile-scroll.mp4"
                     muted
                     playsInline
+                    autoPlay
                     preload="auto"
                     className="hidden pointer-events-none"
                   />
