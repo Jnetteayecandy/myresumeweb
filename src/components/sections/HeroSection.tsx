@@ -44,7 +44,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-white border-2 border-slate-200/90 shadow-md group-hover:border-blue-500 group-hover:shadow-lg transition-all duration-300">
           <div className="w-full h-full rounded-full overflow-hidden bg-slate-100">
             <img 
-              src="/profile.png" 
+              src="/profile-hero.png" 
               alt={personalInfo.name} 
               className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
             />

@@ -286,7 +286,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   const photoScale = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [1, 1.04, 0.98, 1.05, 1]
+    [1.18, 1.25, 1.15, 1.26, 1.18]
   );
 
   const photoTranslateZ = useTransform(
@@ -405,7 +405,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
             </motion.div>
 
             {/* Right Column: 3D Rotating Person Cutout with Parallax */}
-            <div className="lg:col-span-6 relative flex justify-center items-center h-[50vh] sm:h-[58vh]">
+            <div className="lg:col-span-6 relative flex justify-center items-center h-[56vh] sm:h-[65vh] lg:h-[70vh]">
               
               {/* 3D Rotating Avatar Stage */}
               <motion.div
@@ -424,7 +424,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 className="relative flex items-center justify-center w-full h-full"
               >
                 {/* Subtle soft backdrop blur circle */}
-                <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-blue-100/60 via-indigo-50/40 to-slate-100 blur-2xl -z-10" />
+                <div className="absolute w-80 sm:w-[460px] h-80 sm:h-[460px] rounded-full bg-gradient-to-tr from-blue-100/70 via-indigo-50/50 to-slate-100 blur-3xl -z-10" />
 
                 {/* THE PERSON (Chroma-Keyed Real-Time Canvas with Fallback Image) */}
                 <div className="relative group max-h-full flex items-end justify-center">
@@ -441,12 +441,12 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering) */}
                   <canvas
                     ref={canvasRef}
-                    className={`max-h-[50vh] sm:max-h-[60vh] w-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-opacity duration-300 pointer-events-none ${
+                    className={`max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] w-auto object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition-opacity duration-300 pointer-events-none ${
                       isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
-                      maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                      maskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
                     }}
                   />
 
@@ -455,7 +455,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <img
                       src="/profile.png"
                       alt="Wipaporn Wikornmetkul"
-                      className="max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-300"
+                      className="max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition-all duration-300"
                       style={{
                         maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
@@ -464,7 +464,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   )}
 
                   {/* Soft floor shadow */}
-                  <div className="absolute -bottom-2 w-3/4 h-8 bg-slate-400/20 rounded-full blur-xl pointer-events-none" />
+                  <div className="absolute -bottom-2 w-4/5 h-10 bg-slate-400/25 rounded-full blur-2xl pointer-events-none" />
                 </div>
 
                 {/* Floating 3D Badge 1: Stage Role */}
