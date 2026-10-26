@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from 'framer-motion';
 import { 
   Sparkles, 
@@ -41,9 +41,12 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isCanvasReady, setIsCanvasReady] = useState(false);
   const [hasVideoError, setHasVideoError] = useState(false);
+  const isSeekingRef = useRef(false);
+  const pendingTimeRef = useRef<number | null>(null);
   const { lang } = useLanguage();
   const t = translations[lang].showcase;
 
@@ -124,55 +127,148 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     }
   });
 
-  // Listen for video metadata and sync with scroll
+  // Real-time chroma keying to remove green screen from video frame
+  const renderFrameToCanvas = useCallback(() => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas || video.readyState < 2) return;
+
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+    if (!width || !height) return;
+
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    if (!ctx) return;
+
+    ctx.drawImage(video, 0, 0, width, height);
+    const frame = ctx.getImageData(0, 0, width, height);
+    const data = frame.data;
+    const len = data.length;
+
+    // Fast green key algorithm with despill and smooth edge alpha
+    for (let i = 0; i < len; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+
+      const maxRB = r > b ? r : b;
+      const diff = g - maxRB;
+
+      if (diff > 18) {
+        if (diff >= 58) {
+          data[i + 3] = 0; // Pure transparent green background
+        } else {
+          // Feathered semi-transparent edge
+          const factor = (diff - 18) / 40;
+          data[i + 3] = Math.round(data[i + 3] * (1 - factor));
+          data[i + 1] = maxRB; // Despill fringe green tint
+        }
+      } else if (g > maxRB) {
+        // Subtle despill on skin/hair boundaries
+        data[i + 1] = maxRB;
+      }
+    }
+
+    ctx.putImageData(frame, 0, 0);
+    setIsCanvasReady(true);
+  }, []);
+
+  const applySeek = useCallback((time: number) => {
+    const video = videoRef.current;
+    if (!video || !video.duration || isNaN(video.duration)) return;
+
+    const clampedTime = Math.min(Math.max(time, 0), video.duration - 0.03);
+
+    // If browser is still busy seeking previous frame, queue the latest requested timestamp
+    if (isSeekingRef.current) {
+      pendingTimeRef.current = clampedTime;
+      return;
+    }
+
+    if (Math.abs(video.currentTime - clampedTime) < 0.01) {
+      return;
+    }
+
+    isSeekingRef.current = true;
+    video.currentTime = clampedTime;
+  }, []);
+
+  // Listen for video events and sync with scroll
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleLoadedMetadata = () => {
-      setIsVideoReady(true);
-      setHasVideoError(false);
+    const handleSeeked = () => {
+      renderFrameToCanvas();
+      isSeekingRef.current = false;
+      if (pendingTimeRef.current !== null) {
+        const nextTime = pendingTimeRef.current;
+        pendingTimeRef.current = null;
+        applySeek(nextTime);
+      }
+    };
+
+    const handleLoadedData = () => {
       video.pause();
+      renderFrameToCanvas();
       const currentProgress = smoothProgress.get();
       if (video.duration) {
-        video.currentTime = Math.min(Math.max(currentProgress * video.duration, 0), video.duration - 0.03);
+        applySeek(currentProgress * video.duration);
       }
     };
 
     const handleError = () => {
-      // Fallback cleanly to /profile.png if video file doesn't exist yet
       setHasVideoError(true);
-      setIsVideoReady(false);
+      setIsCanvasReady(false);
     };
 
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('seeked', handleSeeked);
+    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('loadedmetadata', handleLoadedData);
     video.addEventListener('error', handleError);
 
-    if (video.readyState >= 1) {
-      handleLoadedMetadata();
+    if (video.readyState >= 2) {
+      handleLoadedData();
+    }
+
+    // Attach requestVideoFrameCallback for continuous paint whenever browser decodes a frame
+    let rVFCId: number | null = null;
+    let isMounted = true;
+    const onFrame = () => {
+      if (!isMounted) return;
+      renderFrameToCanvas();
+      if ('requestVideoFrameCallback' in video) {
+        rVFCId = (video as any).requestVideoFrameCallback(onFrame);
+      }
+    };
+
+    if ('requestVideoFrameCallback' in video) {
+      rVFCId = (video as any).requestVideoFrameCallback(onFrame);
     }
 
     return () => {
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      isMounted = false;
+      if (rVFCId !== null && 'cancelVideoFrameCallback' in video) {
+        (video as any).cancelVideoFrameCallback(rVFCId);
+      }
+      video.removeEventListener('seeked', handleSeeked);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('loadedmetadata', handleLoadedData);
       video.removeEventListener('error', handleError);
     };
-  }, [smoothProgress]);
+  }, [smoothProgress, applySeek, renderFrameToCanvas]);
 
   // Scrub video playback frame based on scroll progress
   useMotionValueEvent(smoothProgress, "change", (progress) => {
     const video = videoRef.current;
-    if (!video || !isVideoReady || hasVideoError) return;
-    const duration = video.duration;
-    if (!duration || isNaN(duration) || duration <= 0) return;
-
-    const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.03);
-    if (Math.abs(video.currentTime - targetTime) > 0.015) {
-      if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
-        (video as any).fastSeek(targetTime);
-      } else {
-        video.currentTime = targetTime;
-      }
-    }
+    if (!video || !video.duration || isNaN(video.duration)) return;
+    const targetTime = progress * video.duration;
+    applySeek(targetTime);
   });
 
   const photoRotateY = useTransform(
@@ -330,33 +426,32 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 {/* Subtle soft backdrop blur circle */}
                 <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-blue-100/60 via-indigo-50/40 to-slate-100 blur-2xl -z-10" />
 
-                {/* THE PERSON (Scroll-Driven Video Avatar with Fallback Image) */}
+                {/* THE PERSON (Chroma-Keyed Real-Time Canvas with Fallback Image) */}
                 <div className="relative group max-h-full flex items-end justify-center">
-                  {/* Scroll-scrubbed Video */}
+                  {/* Hidden Source Video */}
                   <video
                     ref={videoRef}
+                    src="/videos/profile-scroll.mp4"
                     muted
                     playsInline
                     preload="auto"
-                    className={`max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-opacity duration-300 pointer-events-none ${
-                      isVideoReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                    className="hidden pointer-events-none"
+                  />
+
+                  {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering) */}
+                  <canvas
+                    ref={canvasRef}
+                    className={`max-h-[50vh] sm:max-h-[60vh] w-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-opacity duration-300 pointer-events-none ${
+                      isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
                       maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                       WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                     }}
-                  >
-                    <source src="/videos/profile-scroll.mp4" type="video/mp4" />
-                    <source src="/videos/profile-scroll.mov" type="video/quicktime" />
-                    <source src="/videos/avatar-scroll.webm" type="video/webm" />
-                    <source src="/videos/avatar-scroll.mp4" type="video/mp4" />
-                    <source src="/videos/avatar-scroll.mov" type="video/quicktime" />
-                    <source src="/videos/avatar.mp4" type="video/mp4" />
-                    <source src="/videos/profile.mp4" type="video/mp4" />
-                  </video>
+                  />
 
-                  {/* Fallback Static Image (Shown when video is loading, errored, or file not placed yet) */}
-                  {(!isVideoReady || hasVideoError) && (
+                  {/* Fallback Static Image (Shown when video is loading, errored, or canvas not ready) */}
+                  {(!isCanvasReady || hasVideoError) && (
                     <img
                       src="/profile.png"
                       alt="Wipaporn Wikornmetkul"
