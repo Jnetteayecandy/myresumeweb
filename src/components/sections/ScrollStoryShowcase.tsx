@@ -332,7 +332,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-6 items-center flex-1 my-1 lg:my-2 z-10 overflow-hidden">
             
             {/* Avatar Column: Top on Mobile (order-1), Right Column on Desktop (order-2) */}
-            <div className="order-1 lg:order-2 lg:col-span-6 relative flex justify-center items-center h-[24vh] sm:h-[30vh] lg:h-[70vh]">
+            <div className="order-1 lg:order-2 lg:col-span-6 relative flex justify-center items-center h-[44vh] sm:h-[46vh] lg:h-[70vh]">
               
               {/* 3D Rotating Avatar Stage */}
               <motion.div
@@ -368,7 +368,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering, Fast Smooth Blend) */}
                   <canvas
                     ref={canvasRef}
-                    className={`max-h-[22vh] sm:max-h-[28vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
+                    className={`max-h-[42vh] sm:max-h-[44vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
                       isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
@@ -383,7 +383,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <img
                       src="/profile.png"
                       alt="Wipaporn Wikornmetkul"
-                      className="max-h-[22vh] sm:max-h-[28vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] transition-all duration-300"
+                      className="max-h-[42vh] sm:max-h-[44vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] transition-all duration-300"
                       style={{
                         maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
@@ -443,7 +443,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="order-2 lg:order-1 lg:col-span-6 space-y-1.5 sm:space-y-3 lg:space-y-4 px-1 lg:pl-8 flex flex-col justify-center"
+              className="order-2 lg:order-1 lg:col-span-6 space-y-1 sm:space-y-3 lg:space-y-4 px-1 lg:pl-8 flex flex-col justify-center"
             >
               <div className="inline-flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-[11px] sm:text-xs font-semibold text-blue-300 w-fit">
                 <Sparkles size={11} className="text-blue-400" />
