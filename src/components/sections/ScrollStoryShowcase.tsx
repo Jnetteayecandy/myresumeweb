@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from 'framer-motion';
 import { 
   Sparkles, 
@@ -40,7 +40,10 @@ interface StorySlide {
 export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpenWindow }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
   const { lang } = useLanguage();
   const t = translations[lang].showcase;
 
@@ -118,6 +121,57 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     if (step !== activeStep) {
       setActiveStep(step);
       sound.playClick(1000 + step * 80, 0.02);
+    }
+  });
+
+  // Listen for video metadata and sync with scroll
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoadedMetadata = () => {
+      setIsVideoReady(true);
+      setHasVideoError(false);
+      video.pause();
+      const currentProgress = smoothProgress.get();
+      if (video.duration) {
+        video.currentTime = Math.min(Math.max(currentProgress * video.duration, 0), video.duration - 0.03);
+      }
+    };
+
+    const handleError = () => {
+      // Fallback cleanly to /profile.png if video file doesn't exist yet
+      setHasVideoError(true);
+      setIsVideoReady(false);
+    };
+
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('error', handleError);
+
+    if (video.readyState >= 1) {
+      handleLoadedMetadata();
+    }
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('error', handleError);
+    };
+  }, [smoothProgress]);
+
+  // Scrub video playback frame based on scroll progress
+  useMotionValueEvent(smoothProgress, "change", (progress) => {
+    const video = videoRef.current;
+    if (!video || !isVideoReady || hasVideoError) return;
+    const duration = video.duration;
+    if (!duration || isNaN(duration) || duration <= 0) return;
+
+    const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.03);
+    if (Math.abs(video.currentTime - targetTime) > 0.015) {
+      if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
+        (video as any).fastSeek(targetTime);
+      } else {
+        video.currentTime = targetTime;
+      }
     }
   });
 
@@ -276,17 +330,42 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 {/* Subtle soft backdrop blur circle */}
                 <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-blue-100/60 via-indigo-50/40 to-slate-100 blur-2xl -z-10" />
 
-                {/* THE PERSON (User's Photo) */}
+                {/* THE PERSON (Scroll-Driven Video Avatar with Fallback Image) */}
                 <div className="relative group max-h-full flex items-end justify-center">
-                  <img
-                    src="/profile.png"
-                    alt="Wipaporn Wikornmetkul"
-                    className="max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-300"
+                  {/* Scroll-scrubbed Video */}
+                  <video
+                    ref={videoRef}
+                    muted
+                    playsInline
+                    preload="auto"
+                    className={`max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-opacity duration-300 pointer-events-none ${
+                      isVideoReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                    }`}
                     style={{
-                      maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
+                      maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                     }}
-                  />
+                  >
+                    <source src="/videos/avatar-scroll.webm" type="video/webm" />
+                    <source src="/videos/avatar-scroll.mp4" type="video/mp4" />
+                    <source src="/videos/avatar-scroll.mov" type="video/quicktime" />
+                    <source src="/videos/avatar.mp4" type="video/mp4" />
+                    <source src="/videos/profile.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* Fallback Static Image (Shown when video is loading, errored, or file not placed yet) */}
+                  {(!isVideoReady || hasVideoError) && (
+                    <img
+                      src="/profile.png"
+                      alt="Wipaporn Wikornmetkul"
+                      className="max-h-[50vh] sm:max-h-[60vh] object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-300"
+                      style={{
+                        maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
+                      }}
+                    />
+                  )}
+
                   {/* Soft floor shadow */}
                   <div className="absolute -bottom-2 w-3/4 h-8 bg-slate-400/20 rounded-full blur-xl pointer-events-none" />
                 </div>
