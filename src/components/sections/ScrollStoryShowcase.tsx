@@ -305,7 +305,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
         <div 
           ref={stageRef}
           onMouseMove={handleMouseMove}
-          className="relative w-full max-w-7xl h-[90vh] sm:h-[86vh] rounded-3xl border border-zinc-800/90 bg-zinc-950 text-zinc-100 shadow-[0_25px_70px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none"
+          className="relative w-full max-w-7xl h-[92vh] sm:h-[88vh] lg:h-[86vh] rounded-2xl sm:rounded-3xl border border-zinc-800/90 bg-zinc-950 text-zinc-100 shadow-[0_25px_70px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col justify-between p-4 sm:p-8 lg:p-10 select-none"
         >
           {/* Dynamic Ambient Glow behind the photo */}
           <div 
@@ -313,83 +313,26 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
           />
 
           {/* Top Stage Header */}
-          <div className="flex items-center justify-between border-b border-zinc-800/80 pb-4 z-20">
-            <div className="flex items-center space-x-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50 animate-pulse" />
-              <span className="font-mono text-xs tracking-wider text-zinc-400 uppercase font-bold">
+          <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3 sm:pb-4 z-20">
+            <div className="flex items-center space-x-2.5 sm:space-x-3">
+              <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50 animate-pulse" />
+              <span className="font-mono text-[10px] sm:text-xs tracking-wider text-zinc-400 uppercase font-bold">
                 {t.badge}
               </span>
             </div>
 
-            <div className="flex items-center space-x-2 text-xs font-mono text-zinc-400">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs font-mono text-zinc-400">
               <span className="text-blue-400 font-bold">{currentSlide.step}</span>
               <span>/</span>
               <span>0{slides.length}</span>
             </div>
           </div>
 
-          {/* Center Stage: Split Screen with 3D Rotating Person Portrait */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center flex-1 my-2 z-10">
+          {/* Center Stage: Split Screen on Desktop, Vertical Stack on Mobile */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-6 items-center flex-1 my-1 lg:my-2 z-10 overflow-hidden">
             
-            {/* Left Narrative Column */}
-            <motion.div 
-              key={`text-${activeStep}`}
-              initial={{ opacity: 0, x: -25 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="lg:col-span-6 space-y-4 pl-0 sm:pl-8"
-            >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-semibold text-blue-300">
-                <Sparkles size={12} className="text-blue-400" />
-                <span>{currentSlide.category}</span>
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
-                  {currentSlide.titlePrimary}
-                </h3>
-                <h4 className="text-base sm:text-xl font-bold text-blue-400 tracking-tight leading-snug">
-                  {currentSlide.titleSecondary}
-                </h4>
-              </div>
-
-              <p className="text-sm text-zinc-300 max-w-xl leading-relaxed">
-                {currentSlide.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 pt-1">
-                {currentSlide.tags.map((t, idx) => (
-                  <span key={idx} className="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-900/90 border border-zinc-800 text-zinc-200">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action Button if available */}
-              {currentSlide.ctaLabel && currentSlide.ctaAction && (
-                <div className="pt-2">
-                  <button
-                    onClick={() => {
-                      sound.playClick();
-                      currentSlide.ctaAction!();
-                    }}
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-2 transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40"
-                  >
-                    <span>{currentSlide.ctaLabel}</span>
-                    <ArrowUpRight size={14} />
-                  </button>
-                  {activeStep === 1 && (
-                    <div className="text-[11px] font-medium text-zinc-400 mt-1.5 pl-1">
-                      You can continue as guest
-                    </div>
-                  )}
-                </div>
-              )}
-            </motion.div>
-
-            {/* Right Column: 3D Rotating Person Cutout with Parallax */}
-            <div className="lg:col-span-6 relative flex justify-center items-center h-[56vh] sm:h-[65vh] lg:h-[70vh]">
+            {/* Avatar Column: Top on Mobile (order-1), Right Column on Desktop (order-2) */}
+            <div className="order-1 lg:order-2 lg:col-span-6 relative flex justify-center items-center h-[24vh] sm:h-[30vh] lg:h-[70vh]">
               
               {/* 3D Rotating Avatar Stage */}
               <motion.div
@@ -408,7 +351,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 className="relative flex items-center justify-center w-full h-full"
               >
                 {/* Subtle soft backdrop blur circle */}
-                <div className="absolute w-80 sm:w-[460px] h-80 sm:h-[460px] rounded-full bg-gradient-to-tr from-blue-900/25 via-indigo-900/15 to-transparent blur-3xl -z-10" />
+                <div className="absolute w-56 sm:w-80 lg:w-[460px] h-56 sm:h-80 lg:h-[460px] rounded-full bg-gradient-to-tr from-blue-900/25 via-indigo-900/15 to-transparent blur-2xl sm:blur-3xl -z-10" />
 
                 {/* THE PERSON (Chroma-Keyed Real-Time Canvas with Fallback Image) */}
                 <div className="relative group max-h-full flex items-end justify-center">
@@ -425,7 +368,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering, Fast Smooth Blend) */}
                   <canvas
                     ref={canvasRef}
-                    className={`max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
+                    className={`max-h-[22vh] sm:max-h-[28vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
                       isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
@@ -440,7 +383,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <img
                       src="/profile.png"
                       alt="Wipaporn Wikornmetkul"
-                      className="max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] transition-all duration-300"
+                      className="max-h-[22vh] sm:max-h-[28vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] transition-all duration-300"
                       style={{
                         maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
@@ -449,16 +392,16 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   )}
 
                   {/* Soft floor shadow */}
-                  <div className="absolute -bottom-2 w-4/5 h-10 bg-black/80 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute -bottom-2 w-4/5 h-6 sm:h-10 bg-black/80 rounded-full blur-xl sm:blur-2xl pointer-events-none" />
                 </div>
 
-                {/* Floating 3D Badge 1: Stage Role */}
+                {/* Floating 3D Badge 1: Visible on Tablet/Desktop Only to prevent Mobile Overlap */}
                 <motion.div
                   key={`badge-${activeStep}`}
                   initial={{ opacity: 0, y: 15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35 }}
-                  className={`absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border shadow-2xl backdrop-blur-xl flex items-center space-x-3 ${currentSlide.floatingBadge.color}`}
+                  className={`hidden md:flex absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border shadow-2xl backdrop-blur-xl items-center space-x-3 ${currentSlide.floatingBadge.color}`}
                   style={{ transform: 'translateZ(40px)' }}
                 >
                   <div className="p-2 rounded-xl bg-zinc-800/90 border border-zinc-700/60 shadow-xs">
@@ -474,13 +417,13 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   </div>
                 </motion.div>
 
-                {/* Floating 3D Badge 2: Key Metric */}
+                {/* Floating 3D Badge 2: Visible on Tablet/Desktop Only to prevent Mobile Overlap */}
                 <motion.div
                   key={`metric-${activeStep}`}
                   initial={{ opacity: 0, y: -15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35, delay: 0.1 }}
-                  className="absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-zinc-800 bg-zinc-900/95 backdrop-blur-xl shadow-2xl text-right font-mono"
+                  className="hidden md:block absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-zinc-800 bg-zinc-900/95 backdrop-blur-xl shadow-2xl text-right font-mono"
                   style={{ transform: 'translateZ(50px)' }}
                 >
                   <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-semibold">
@@ -493,10 +436,68 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
 
               </motion.div>
             </div>
+
+            {/* Left Narrative Column: Bottom on Mobile (order-2), Left Column on Desktop (order-1) */}
+            <motion.div 
+              key={`text-${activeStep}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="order-2 lg:order-1 lg:col-span-6 space-y-1.5 sm:space-y-3 lg:space-y-4 px-1 lg:pl-8 flex flex-col justify-center"
+            >
+              <div className="inline-flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-[11px] sm:text-xs font-semibold text-blue-300 w-fit">
+                <Sparkles size={11} className="text-blue-400" />
+                <span>{currentSlide.category}</span>
+              </div>
+
+              <div className="space-y-0.5 sm:space-y-1.5">
+                <h3 className="text-lg sm:text-2xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+                  {currentSlide.titlePrimary}
+                </h3>
+                <h4 className="text-xs sm:text-base lg:text-xl font-bold text-blue-400 tracking-tight leading-snug">
+                  {currentSlide.titleSecondary}
+                </h4>
+              </div>
+
+              <p className="text-xs sm:text-sm text-zinc-300 max-w-xl leading-relaxed line-clamp-2 sm:line-clamp-3 lg:line-clamp-none">
+                {currentSlide.description}
+              </p>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1 sm:gap-2 pt-0.5">
+                {currentSlide.tags.map((t, idx) => (
+                  <span key={idx} className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium bg-zinc-900/90 border border-zinc-800 text-zinc-200">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Action Button if available */}
+              {currentSlide.ctaLabel && currentSlide.ctaAction && (
+                <div className="pt-1 sm:pt-2 flex items-center space-x-3">
+                  <button
+                    onClick={() => {
+                      sound.playClick();
+                      currentSlide.ctaAction!();
+                    }}
+                    className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-1.5 sm:space-x-2 transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40"
+                  >
+                    <span>{currentSlide.ctaLabel}</span>
+                    <ArrowUpRight size={13} />
+                  </button>
+                  {activeStep === 1 && (
+                    <span className="text-[10px] sm:text-[11px] font-medium text-zinc-400">
+                      You can continue as guest
+                    </span>
+                  )}
+                </div>
+              )}
+            </motion.div>
+
           </div>
 
-          {/* Left Vertical Stepper (01, 02, 03, 04) */}
-          <div className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-5 z-20">
+          {/* Left Vertical Stepper (01, 02, 03, 04) - Desktop/Tablet Only */}
+          <div className="hidden lg:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 flex-col items-center space-y-5 z-20">
             {slides.map((s, index) => {
               const isActive = activeStep === index;
               return (
@@ -532,8 +533,8 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
             })}
           </div>
 
-          {/* Right Vertical "SCROLL TO EXPLORE" Indicator */}
-          <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-3 z-20 select-none">
+          {/* Right Vertical "SCROLL TO EXPLORE" Indicator - Desktop Only */}
+          <div className="hidden lg:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex-col items-center space-y-3 z-20 select-none">
             <span 
               className="text-[10px] font-mono tracking-[0.25em] text-zinc-500 uppercase font-semibold rotate-90 origin-center whitespace-nowrap"
               style={{ writingMode: 'vertical-rl' }}

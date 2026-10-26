@@ -41,7 +41,7 @@ export const ResumeWindow: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
               <img 
-                src="/profile-hero.png" 
+                src="/profile-hero.png?v=2" 
                 alt={t.name} 
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover object-top border border-slate-200 bg-slate-50"
               />
