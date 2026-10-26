@@ -346,6 +346,8 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                       WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                     }}
                   >
+                    <source src="/videos/profile-scroll.mp4" type="video/mp4" />
+                    <source src="/videos/profile-scroll.mov" type="video/quicktime" />
                     <source src="/videos/avatar-scroll.webm" type="video/webm" />
                     <source src="/videos/avatar-scroll.mp4" type="video/mp4" />
                     <source src="/videos/avatar-scroll.mov" type="video/quicktime" />
