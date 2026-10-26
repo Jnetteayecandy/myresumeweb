@@ -47,6 +47,8 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   const [hasVideoError, setHasVideoError] = useState(false);
   const isSeekingRef = useRef(false);
   const pendingTimeRef = useRef<number | null>(null);
+  const alphaBufferRef = useRef<Uint8Array | null>(null);
+  const tempBlurRef = useRef<Uint8Array | null>(null);
   const { lang } = useLanguage();
   const t = translations[lang].showcase;
 
@@ -160,17 +162,67 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
       const diff = g - maxRB;
 
       if (diff > 18) {
-        if (diff >= 58) {
+        if (diff >= 55) {
           data[i + 3] = 0; // Pure transparent green background
         } else {
           // Feathered semi-transparent edge
-          const factor = (diff - 18) / 40;
+          const factor = (diff - 18) / 37;
           data[i + 3] = Math.round(data[i + 3] * (1 - factor));
           data[i + 1] = maxRB; // Despill fringe green tint
         }
       } else if (g > maxRB) {
         // Subtle despill on skin/hair boundaries
         data[i + 1] = maxRB;
+      }
+    }
+
+    // Step 2: Inward alpha feathering (soft blurred edge along the silhouette so it blends in naturally)
+    const numPixels = width * height;
+    if (!alphaBufferRef.current || alphaBufferRef.current.length !== numPixels) {
+      alphaBufferRef.current = new Uint8Array(numPixels);
+      tempBlurRef.current = new Uint8Array(numPixels);
+    }
+    const alphaSrc = alphaBufferRef.current;
+    const tempBlur = tempBlurRef.current!;
+
+    for (let i = 0; i < numPixels; i++) {
+      alphaSrc[i] = data[i * 4 + 3];
+    }
+
+    // Horizontal 5-tap feather pass
+    const r = 2;
+    for (let y = 0; y < height; y++) {
+      const row = y * width;
+      for (let x = 0; x < width; x++) {
+        let sum = 0;
+        let count = 0;
+        for (let dx = -r; dx <= r; dx++) {
+          const nx = x + dx;
+          if (nx >= 0 && nx < width) {
+            sum += alphaSrc[row + nx];
+            count++;
+          }
+        }
+        tempBlur[row + x] = (sum / count) | 0;
+      }
+    }
+
+    // Vertical 5-tap feather pass + inward blend
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        let sum = 0;
+        let count = 0;
+        for (let dy = -r; dy <= r; dy++) {
+          const ny = y + dy;
+          if (ny >= 0 && ny < height) {
+            sum += tempBlur[ny * width + x];
+            count++;
+          }
+        }
+        const avg = (sum / count) | 0;
+        const orig = alphaSrc[y * width + x];
+        // Only soften inward from the border; never leak green background outward
+        data[(y * width + x) * 4 + 3] = avg < orig ? avg : orig;
       }
     }
 
@@ -438,15 +490,16 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     className="hidden pointer-events-none"
                   />
 
-                  {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering) */}
+                  {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering, Soft Natural Edges) */}
                   <canvas
                     ref={canvasRef}
-                    className={`max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] w-auto object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition-opacity duration-300 pointer-events-none ${
+                    className={`max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
                       isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
-                      maskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
+                      filter: 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 40px rgba(219, 234, 254, 0.55)) drop-shadow(0 18px 36px rgba(15, 23, 42, 0.12))',
+                      maskImage: 'linear-gradient(to bottom, black 82%, transparent 98%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 82%, transparent 98%)',
                     }}
                   />
 
