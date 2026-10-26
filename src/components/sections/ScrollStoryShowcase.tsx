@@ -68,31 +68,31 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     offset: ["start start", "end end"]
   });
 
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 420, damping: 36, restDelta: 0.001 });
 
   const slideIcons = [
-    <GraduationCap size={16} className="text-blue-600" />,
-    <Users size={16} className="text-emerald-600" />,
-    <Code2 size={16} className="text-indigo-600" />,
-    <Camera size={16} className="text-amber-600" />
+    <GraduationCap size={16} className="text-blue-400" />,
+    <Users size={16} className="text-emerald-400" />,
+    <Code2 size={16} className="text-indigo-400" />,
+    <Camera size={16} className="text-amber-400" />
   ];
 
   const slideColors = [
     {
-      badge: 'border-blue-200 bg-blue-50/90 text-blue-900',
-      glow: 'from-blue-200/40 via-indigo-100/30 to-transparent'
+      badge: 'border-blue-500/30 bg-zinc-900/95 text-blue-300',
+      glow: 'from-blue-600/25 via-indigo-600/15 to-transparent'
     },
     {
-      badge: 'border-emerald-200 bg-emerald-50/90 text-emerald-900',
-      glow: 'from-emerald-200/40 via-teal-100/30 to-transparent'
+      badge: 'border-emerald-500/30 bg-zinc-900/95 text-emerald-300',
+      glow: 'from-emerald-600/25 via-teal-600/15 to-transparent'
     },
     {
-      badge: 'border-indigo-200 bg-indigo-50/90 text-indigo-900',
-      glow: 'from-indigo-200/40 via-blue-100/30 to-transparent'
+      badge: 'border-indigo-500/30 bg-zinc-900/95 text-indigo-300',
+      glow: 'from-indigo-600/25 via-blue-600/15 to-transparent'
     },
     {
-      badge: 'border-amber-200 bg-amber-50/90 text-amber-900',
-      glow: 'from-amber-200/40 via-orange-100/30 to-transparent'
+      badge: 'border-amber-500/30 bg-zinc-900/95 text-amber-300',
+      glow: 'from-amber-600/25 via-orange-600/15 to-transparent'
     }
   ];
 
@@ -152,7 +152,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     const data = frame.data;
     const len = data.length;
 
-    // Fast green key algorithm with despill and smooth edge alpha
+    // Fast, lightweight chroma key with despill and soft edge falloff
     for (let i = 0; i < len; i += 4) {
       const r = data[i];
       const g = data[i + 1];
@@ -161,68 +161,18 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
       const maxRB = r > b ? r : b;
       const diff = g - maxRB;
 
-      if (diff > 18) {
-        if (diff >= 55) {
+      if (diff > 16) {
+        if (diff >= 48) {
           data[i + 3] = 0; // Pure transparent green background
         } else {
           // Feathered semi-transparent edge
-          const factor = (diff - 18) / 37;
+          const factor = (diff - 16) / 32;
           data[i + 3] = Math.round(data[i + 3] * (1 - factor));
           data[i + 1] = maxRB; // Despill fringe green tint
         }
       } else if (g > maxRB) {
         // Subtle despill on skin/hair boundaries
         data[i + 1] = maxRB;
-      }
-    }
-
-    // Step 2: Inward alpha feathering (soft blurred edge along the silhouette so it blends in naturally)
-    const numPixels = width * height;
-    if (!alphaBufferRef.current || alphaBufferRef.current.length !== numPixels) {
-      alphaBufferRef.current = new Uint8Array(numPixels);
-      tempBlurRef.current = new Uint8Array(numPixels);
-    }
-    const alphaSrc = alphaBufferRef.current;
-    const tempBlur = tempBlurRef.current!;
-
-    for (let i = 0; i < numPixels; i++) {
-      alphaSrc[i] = data[i * 4 + 3];
-    }
-
-    // Horizontal 5-tap feather pass
-    const r = 2;
-    for (let y = 0; y < height; y++) {
-      const row = y * width;
-      for (let x = 0; x < width; x++) {
-        let sum = 0;
-        let count = 0;
-        for (let dx = -r; dx <= r; dx++) {
-          const nx = x + dx;
-          if (nx >= 0 && nx < width) {
-            sum += alphaSrc[row + nx];
-            count++;
-          }
-        }
-        tempBlur[row + x] = (sum / count) | 0;
-      }
-    }
-
-    // Vertical 5-tap feather pass + inward blend
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        let sum = 0;
-        let count = 0;
-        for (let dy = -r; dy <= r; dy++) {
-          const ny = y + dy;
-          if (ny >= 0 && ny < height) {
-            sum += tempBlur[ny * width + x];
-            count++;
-          }
-        }
-        const avg = (sum / count) | 0;
-        const orig = alphaSrc[y * width + x];
-        // Only soften inward from the border; never leak green background outward
-        data[(y * width + x) * 4 + 3] = avg < orig ? avg : orig;
       }
     }
 
@@ -323,29 +273,11 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
     applySeek(targetTime);
   });
 
-  const photoRotateY = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [-6, 12, -8, 10, 0]
-  );
-
-  const photoRotateX = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [3, -3, 4, -2, 0]
-  );
-
-  const photoScale = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [1.18, 1.25, 1.15, 1.26, 1.18]
-  );
-
-  const photoTranslateZ = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [0, 50, -20, 60, 0]
-  );
+  // Stable, smooth perspective tilt that harmonizes with the video's natural rotation without wobbling
+  const photoRotateY = useTransform(smoothProgress, [0, 1], [-2, 2]);
+  const photoRotateX = useTransform(smoothProgress, [0, 1], [1, -1]);
+  const photoScale = useTransform(smoothProgress, [0, 0.5, 1], [1.22, 1.25, 1.22]);
+  const photoTranslateZ = useTransform(smoothProgress, [0, 1], [0, 15]);
 
   const scrollToStep = (index: number) => {
     if (!containerRef.current) return;
@@ -363,17 +295,17 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
   return (
     <div 
       ref={containerRef} 
-      className="relative h-[420vh] bg-slate-100/50 text-slate-800"
+      className="relative h-[420vh] bg-slate-100/50 text-slate-100"
       style={{ perspective: '1400px' }}
     >
       {/* Sticky Stage Frame */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center p-3 sm:p-8 overflow-hidden">
         
-        {/* Main Cinema Viewport Container */}
+        {/* Main Cinema Viewport Container (Black Card Theme) */}
         <div 
           ref={stageRef}
           onMouseMove={handleMouseMove}
-          className="relative w-full max-w-7xl h-[90vh] sm:h-[86vh] rounded-3xl border border-slate-200/90 bg-white shadow-xl overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none"
+          className="relative w-full max-w-7xl h-[90vh] sm:h-[86vh] rounded-3xl border border-zinc-800/90 bg-zinc-950 text-zinc-100 shadow-[0_25px_70px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none"
         >
           {/* Dynamic Ambient Glow behind the photo */}
           <div 
@@ -381,16 +313,16 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
           />
 
           {/* Top Stage Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4 z-20">
+          <div className="flex items-center justify-between border-b border-zinc-800/80 pb-4 z-20">
             <div className="flex items-center space-x-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-sm animate-pulse" />
-              <span className="font-mono text-xs tracking-wider text-slate-500 uppercase font-bold">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50 animate-pulse" />
+              <span className="font-mono text-xs tracking-wider text-zinc-400 uppercase font-bold">
                 {t.badge}
               </span>
             </div>
 
-            <div className="flex items-center space-x-2 text-xs font-mono text-slate-500">
-              <span className="text-blue-700 font-bold">{currentSlide.step}</span>
+            <div className="flex items-center space-x-2 text-xs font-mono text-zinc-400">
+              <span className="text-blue-400 font-bold">{currentSlide.step}</span>
               <span>/</span>
               <span>0{slides.length}</span>
             </div>
@@ -407,28 +339,28 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
               transition={{ duration: 0.35, ease: 'easeOut' }}
               className="lg:col-span-6 space-y-4 pl-0 sm:pl-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-xs font-semibold text-blue-700">
-                <Sparkles size={12} className="text-blue-600" />
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-semibold text-blue-300">
+                <Sparkles size={12} className="text-blue-400" />
                 <span>{currentSlide.category}</span>
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
                   {currentSlide.titlePrimary}
                 </h3>
-                <h4 className="text-base sm:text-xl font-bold text-blue-700 tracking-tight leading-snug">
+                <h4 className="text-base sm:text-xl font-bold text-blue-400 tracking-tight leading-snug">
                   {currentSlide.titleSecondary}
                 </h4>
               </div>
 
-              <p className="text-sm text-slate-600 max-w-xl leading-relaxed">
+              <p className="text-sm text-zinc-300 max-w-xl leading-relaxed">
                 {currentSlide.description}
               </p>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {currentSlide.tags.map((t, idx) => (
-                  <span key={idx} className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 border border-slate-200 text-slate-700">
+                  <span key={idx} className="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-900/90 border border-zinc-800 text-zinc-200">
                     {t}
                   </span>
                 ))}
@@ -442,13 +374,13 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                       sound.playClick();
                       currentSlide.ctaAction!();
                     }}
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center space-x-2 transition-all shadow-sm hover:shadow-md"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-2 transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40"
                   >
                     <span>{currentSlide.ctaLabel}</span>
                     <ArrowUpRight size={14} />
                   </button>
                   {activeStep === 1 && (
-                    <div className="text-[11px] font-medium text-slate-500 mt-1.5 pl-1">
+                    <div className="text-[11px] font-medium text-zinc-400 mt-1.5 pl-1">
                       You can continue as guest
                     </div>
                   )}
@@ -476,7 +408,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                 className="relative flex items-center justify-center w-full h-full"
               >
                 {/* Subtle soft backdrop blur circle */}
-                <div className="absolute w-80 sm:w-[460px] h-80 sm:h-[460px] rounded-full bg-gradient-to-tr from-blue-100/70 via-indigo-50/50 to-slate-100 blur-3xl -z-10" />
+                <div className="absolute w-80 sm:w-[460px] h-80 sm:h-[460px] rounded-full bg-gradient-to-tr from-blue-900/25 via-indigo-900/15 to-transparent blur-3xl -z-10" />
 
                 {/* THE PERSON (Chroma-Keyed Real-Time Canvas with Fallback Image) */}
                 <div className="relative group max-h-full flex items-end justify-center">
@@ -490,16 +422,16 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     className="hidden pointer-events-none"
                   />
 
-                  {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering, Soft Natural Edges) */}
+                  {/* Real-Time Chroma-Keyed Canvas (Green Screen Removed, Zero Flickering, Fast Smooth Blend) */}
                   <canvas
                     ref={canvasRef}
                     className={`max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] w-auto object-contain transition-opacity duration-300 pointer-events-none ${
                       isCanvasReady && !hasVideoError ? 'opacity-100' : 'opacity-0 absolute inset-0'
                     }`}
                     style={{
-                      filter: 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 40px rgba(219, 234, 254, 0.55)) drop-shadow(0 18px 36px rgba(15, 23, 42, 0.12))',
-                      maskImage: 'linear-gradient(to bottom, black 82%, transparent 98%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 82%, transparent 98%)',
+                      filter: 'drop-shadow(0 0 25px rgba(59, 130, 246, 0.18)) drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9))',
+                      maskImage: 'linear-gradient(to bottom, black 84%, transparent 99%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 84%, transparent 99%)',
                     }}
                   />
 
@@ -508,7 +440,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <img
                       src="/profile.png"
                       alt="Wipaporn Wikornmetkul"
-                      className="max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition-all duration-300"
+                      className="max-h-[58vh] sm:max-h-[66vh] lg:max-h-[72vh] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] transition-all duration-300"
                       style={{
                         maskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 98%)',
@@ -517,7 +449,7 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   )}
 
                   {/* Soft floor shadow */}
-                  <div className="absolute -bottom-2 w-4/5 h-10 bg-slate-400/25 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute -bottom-2 w-4/5 h-10 bg-black/80 rounded-full blur-2xl pointer-events-none" />
                 </div>
 
                 {/* Floating 3D Badge 1: Stage Role */}
@@ -526,17 +458,17 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   initial={{ opacity: 0, y: 15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35 }}
-                  className={`absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border shadow-lg flex items-center space-x-3 ${currentSlide.floatingBadge.color}`}
+                  className={`absolute -bottom-2 sm:bottom-4 -left-2 sm:left-4 z-30 p-3 sm:p-3.5 rounded-2xl border shadow-2xl backdrop-blur-xl flex items-center space-x-3 ${currentSlide.floatingBadge.color}`}
                   style={{ transform: 'translateZ(40px)' }}
                 >
-                  <div className="p-2 rounded-xl bg-white shadow-xs">
+                  <div className="p-2 rounded-xl bg-zinc-800/90 border border-zinc-700/60 shadow-xs">
                     {currentSlide.floatingBadge.icon}
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-900">
+                    <div className="text-xs font-bold text-white">
                       {currentSlide.floatingBadge.title}
                     </div>
-                    <div className="text-[11px] text-slate-600 font-medium">
+                    <div className="text-[11px] text-zinc-400 font-medium">
                       {currentSlide.floatingBadge.subtitle}
                     </div>
                   </div>
@@ -548,13 +480,13 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                   initial={{ opacity: 0, y: -15, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35, delay: 0.1 }}
-                  className="absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md shadow-lg text-right font-mono"
+                  className="absolute top-2 sm:top-6 -right-2 sm:right-6 z-30 p-3 rounded-2xl border border-zinc-800 bg-zinc-900/95 backdrop-blur-xl shadow-2xl text-right font-mono"
                   style={{ transform: 'translateZ(50px)' }}
                 >
-                  <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">
+                  <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-semibold">
                     {currentSlide.metrics[0].label}
                   </div>
-                  <div className="text-sm font-bold text-blue-700 mt-0.5">
+                  <div className="text-sm font-bold text-blue-400 mt-0.5">
                     {currentSlide.metrics[0].value}
                   </div>
                 </motion.div>
@@ -577,20 +509,20 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
                     <span 
                       className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                         isActive 
-                          ? 'bg-blue-600 shadow-sm scale-125' 
-                          : 'bg-slate-300 group-hover:bg-slate-400'
+                          ? 'bg-blue-500 shadow-sm shadow-blue-500/80 scale-125' 
+                          : 'bg-zinc-700 group-hover:bg-zinc-500'
                       }`} 
                     />
                     {isActive && (
-                      <span className="absolute w-4 h-4 rounded-full border border-blue-500/50 animate-ping" />
+                      <span className="absolute w-4 h-4 rounded-full border border-blue-400/50 animate-ping" />
                     )}
                   </div>
 
                   <span 
                     className={`font-mono text-xs transition-colors duration-200 hidden sm:inline ${
                       isActive 
-                        ? 'text-blue-700 font-bold' 
-                        : 'text-slate-400 group-hover:text-slate-600'
+                        ? 'text-blue-400 font-bold' 
+                        : 'text-zinc-500 group-hover:text-zinc-300'
                     }`}
                   >
                     {s.step}
@@ -603,28 +535,28 @@ export const ScrollStoryShowcase: React.FC<ScrollStoryShowcaseProps> = ({ onOpen
           {/* Right Vertical "SCROLL TO EXPLORE" Indicator */}
           <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-3 z-20 select-none">
             <span 
-              className="text-[10px] font-mono tracking-[0.25em] text-slate-400 uppercase font-semibold rotate-90 origin-center whitespace-nowrap"
+              className="text-[10px] font-mono tracking-[0.25em] text-zinc-500 uppercase font-semibold rotate-90 origin-center whitespace-nowrap"
               style={{ writingMode: 'vertical-rl' }}
             >
               {t.scrollIndicator}
             </span>
-            <div className="w-[2px] h-14 bg-slate-200 rounded-full overflow-hidden relative">
+            <div className="w-[2px] h-14 bg-zinc-800 rounded-full overflow-hidden relative">
               <motion.div 
                 style={{ scaleY: scrollYProgress, originY: 0 }}
-                className="w-full h-full bg-blue-600"
+                className="w-full h-full bg-blue-500"
               />
             </div>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
           </div>
 
           {/* Bottom Stage Footer */}
-          <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-mono text-slate-500 z-20">
+          <div className="flex items-center justify-between border-t border-zinc-800/80 pt-3 text-[11px] font-mono text-zinc-400 z-20">
             <div className="flex items-center space-x-3">
               <span>{t.footerLeft}</span>
               <span>•</span>
-              <span className="text-blue-700 font-semibold">{t.footerCenter}</span>
+              <span className="text-blue-400 font-semibold">{t.footerCenter}</span>
             </div>
-            <div className="hidden sm:inline">
+            <div className="hidden sm:inline text-zinc-500">
               {t.footerRight}
             </div>
           </div>
